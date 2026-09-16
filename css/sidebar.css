@@ -25,11 +25,13 @@
 /* 🏷️ BRAND ZONE */
 .sidebar-brand,
 .brand-zone {
-  padding: 16px 18px 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  padding: 16px 18px 12px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  position: relative !important;
   border-bottom: 1px solid #f1f5f9;
   background: #ffffff;
   flex-shrink: 0;
@@ -47,9 +49,9 @@
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   padding: 0;
   flex-shrink: 0;
 }
@@ -58,6 +60,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: left center;
   display: block;
 }
 
@@ -72,10 +75,11 @@
   letter-spacing: -0.1px;
   color: #1e3a8a !important; /* Deep Royal Blue */
   text-transform: uppercase;
+  text-align: left !important;
   white-space: normal;
   line-height: 1.25;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  max-width: 195px;
   word-break: break-word;
 }
 
@@ -442,15 +446,50 @@
     transform: translateX(0) !important;
   }
 
-  .sidebar-light .brand-zone, .sidebar .brand-zone, aside .brand-zone {
+  .sidebar-light .brand-zone, .sidebar .brand-zone, aside .brand-zone, .sidebar .sidebar-brand, aside .sidebar-brand, .sidebar-brand {
     display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 16px 18px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    padding: 16px 18px 12px 18px !important;
+    position: relative !important;
   }
 
   .btn-close-sidebar {
     display: inline-flex !important;
+    position: absolute !important;
+    top: 14px !important;
+    right: 14px !important;
+    margin: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #e2e8f0 !important;
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    overflow: hidden !important;
+  }
+
+  .btn-close-sidebar .material-symbols-outlined {
+    font-size: 20px !important;
+    line-height: 1 !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .main-content {

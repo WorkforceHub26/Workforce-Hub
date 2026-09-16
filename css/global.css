@@ -419,33 +419,46 @@ body.sidebar-open {
 /* 📱 Mobile Drawer Close Button */
 .btn-close-sidebar {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
-  border-radius: 50%;
-  border: 1px solid #cbd5e1;
-  background: #f8fafc;
-  color: #64748b;
-  cursor: pointer;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  cursor: pointer !important;
   margin-left: auto;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  outline: none !important;
+  overflow: hidden !important;
 }
 
 .btn-close-sidebar:hover, .btn-close-sidebar:active {
-  background: #fee2e2;
-  color: #ef4444;
-  border-color: #fca5a5;
+  background: #fee2e2 !important;
+  color: #ef4444 !important;
+  border-color: #fca5a5 !important;
   transform: scale(1.06);
 }
 
 .btn-close-sidebar .material-symbols-outlined {
-  font-size: 20px;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* 📊 Responsive Table Wrappers & Touch Optimization */
@@ -949,6 +962,36 @@ html, body {
   font-weight: 700 !important;
 }
 
+.lang-text-short {
+  display: none !important;
+}
+
+.lang-text-full {
+  display: inline !important;
+}
+
+@media (max-width: 768px) {
+  .lang-text-full {
+    display: none !important;
+  }
+  .lang-text-short {
+    display: inline !important;
+  }
+  .lang-switcher button,
+  .lang-switcher .lang-btn,
+  #globalLangSwitcherContainer .lang-btn {
+    padding: 3px 8px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    min-height: 24px !important;
+    height: 24px !important;
+  }
+  #globalLangSwitcherContainer {
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+  }
+}
+
 .lang-switcher button:hover:not(.active) {
   color: #0f172a !important;
   background: rgba(15, 23, 42, 0.03) !important;
@@ -1379,6 +1422,7 @@ button.btn-primary:hover,
   body.desktop-sidebar-collapsed .brand-zone {
     padding: 14px 0 !important;
     justify-content: center !important;
+    align-items: center !important;
     gap: 0 !important;
   }
 
@@ -2975,3 +3019,264 @@ button:active,
 .btn-sla-refresh span {
   color: #ffffff !important;
 }
+
+/* ==========================================================================
+   📱 GLOBAL NATIVE MOBILE BOTTOM NAVIGATION BAR
+   ========================================================================== */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(226, 232, 240, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 12px max(6px, env(safe-area-inset-bottom)) 12px;
+  z-index: 1000;
+  box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.05);
+}
+
+@media (min-width: 1025px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  body:has(.mobile-bottom-nav) .main-content,
+  body:has(.mobile-bottom-nav) .page-container,
+  body:has(.mobile-bottom-nav) .dashboard-container,
+  body:has(.mobile-bottom-nav) .profile-wrapper,
+  body:has(.mobile-bottom-nav) .leave-form-container,
+  body:has(.mobile-bottom-nav) .rules-page-container,
+  body:has(.mobile-bottom-nav) .news-hub-container,
+  body:has(.mobile-bottom-nav) .page,
+  body:has(.mobile-bottom-nav) .content-body {
+    padding-bottom: max(88px, calc(76px + env(safe-area-inset-bottom))) !important;
+  }
+
+  /* Raise floating action buttons above mobile bottom bar */
+  body:has(.mobile-bottom-nav) #hrChatbotFab {
+    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
+    right: 16px !important;
+  }
+
+  body:has(.mobile-bottom-nav) .form-fab-btn,
+  body:has(.mobile-bottom-nav) #form-leave-guide-fab {
+    bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+  }
+
+  body:has(.mobile-bottom-nav) .bottom-actions {
+    bottom: calc(68px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-decoration: none;
+  color: #64748b;
+  position: relative;
+  padding: 4px 10px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  user-select: none;
+  min-width: 58px;
+}
+
+.bottom-nav-item .material-symbols-outlined {
+  font-size: 22px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.bottom-nav-item .nav-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.bottom-nav-item.active {
+  color: #0f766e;
+}
+
+.bottom-nav-item.active .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 700;
+  transform: translateY(-1px);
+}
+
+.bottom-nav-item.active .nav-label {
+  font-weight: 800;
+}
+
+.nav-active-dot {
+  position: absolute;
+  bottom: 0px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #0f766e;
+}
+
+/* Center Prominent Action in Bottom Nav (+ FAB) */
+.bottom-nav-item.primary-action {
+  color: #0f766e;
+  margin-top: -16px;
+}
+
+.bottom-nav-item.primary-action .center-fab-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bottom-nav-item.primary-action .center-fab-icon .material-symbols-outlined {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.bottom-nav-item.primary-action:hover .center-fab-icon {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 22px rgba(13, 148, 136, 0.5);
+}
+
+.bottom-nav-item.primary-action:active .center-fab-icon {
+  transform: scale(0.94);
+}
+
+/* ==========================================================================
+   📱 BORDERLESS HEADER ICONS & PROFILE (MOBILE & DESKTOP GLOBAL)
+   ========================================================================== */
+div#appLayout > main > header,
+.page-header-row.mobile-appbar,
+.page-header-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  grid-template-columns: none !important;
+  grid-template-rows: none !important;
+}
+
+div#appLayout > main > header > div:nth-of-type(1),
+.appbar-left-zone {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  flex-wrap: nowrap !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+div#appLayout > main > header > div:nth-of-type(2),
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2),
+.appbar-right-zone {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+  border-top: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding-top: 0 !important;
+}
+
+div#appLayout > main > header > div:nth-of-type(2)::before,
+div#appLayout > main > header > div:nth-of-type(2)::after,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2)::before,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2)::after,
+.appbar-right-zone::before,
+.appbar-right-zone::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+}
+
+.appbar-title-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+  min-width: 0 !important;
+}
+
+.appbar-main-title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.appbar-subtitle-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 5px !important;
+  margin-top: 2px !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+
+.appbar-subtext {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-align: left !important;
+}
+
+div#appLayout > main > header > div:nth-of-type(2) > div:nth-of-type(3),
+div#appLayout > main > header > div:nth-of-type(2) > div:nth-of-type(2),
+.appbar-right-zone .notif-wrapper,
+.appbar-right-zone .user-profile-pill,
+.appbar-right-zone .mobile-menu-btn,
+.appbar-right-zone .app-icon-btn,
+.appbar-left-zone .btn-header-back-app {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.appbar-right-zone .user-profile-avatar {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  display: block !important;
+}
+
+

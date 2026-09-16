@@ -5,21 +5,328 @@
 @import url('./home.css');
 
 /* ==========================================================================
+   📱 1. NATIVE MOBILE APP BAR (HEADER) - STRICT HORIZONTAL LAYOUT
+   ========================================================================== */
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
+.page-header-row.mobile-appbar,
+.page-header-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 12px 20px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 40 !important;
+  margin-bottom: 20px !important;
+  grid-template-columns: none !important;
+  grid-template-rows: none !important;
+}
+
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1),
+.appbar-left-zone {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2),
+.appbar-right-zone {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  border-top: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding-top: 0 !important;
+}
+
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2)::before,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2)::after,
+.appbar-right-zone::before,
+.appbar-right-zone::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+}
+
+.appbar-title-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.appbar-main-title {
+  font-family: 'Kanit', 'Sarabun', -apple-system, sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.3px !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.appbar-subtitle-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 5px !important;
+  margin-top: 2px !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+
+.appbar-live-dot {
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background: #10b981 !important;
+  display: inline-block !important;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6) !important;
+  animation: pulseLiveDot 2s infinite ease-in-out !important;
+  flex-shrink: 0 !important;
+}
+
+@keyframes pulseLiveDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.appbar-subtext {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-align: left !important;
+}
+
+/* 🌟 BORDERLESS ACTION BUTTONS & AVATAR (NO BOXES, NO FRAMES, NO SHADOWS) */
+.page-header-row.mobile-appbar .btn-header-back-app,
+.page-header-row.mobile-appbar .app-icon-btn,
+.page-header-row.mobile-appbar .notif-btn,
+.page-header-row.mobile-appbar #notificationBtn,
+.page-header-row.mobile-appbar .user-profile-pill,
+.page-header-row.mobile-appbar .user-profile-avatar,
+.page-header-row.mobile-appbar .mobile-menu-btn,
+.page-header-row.mobile-appbar .borderless-action-btn,
+.page-header-row.mobile-appbar .notif-wrapper,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3),
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2),
+.app-icon-btn,
+.notif-btn,
+.mobile-menu-btn,
+.borderless-action-btn {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #334155 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: none !important;
+  position: relative !important;
+  padding: 0 !important;
+}
+
+.page-header-row.mobile-appbar .btn-header-back-app:hover,
+.page-header-row.mobile-appbar .app-icon-btn:hover,
+.page-header-row.mobile-appbar .notif-btn:hover,
+.page-header-row.mobile-appbar #notificationBtn:hover,
+.page-header-row.mobile-appbar .mobile-menu-btn:hover,
+.page-header-row.mobile-appbar .borderless-action-btn:hover,
+.app-icon-btn:hover,
+.notif-btn:hover,
+.mobile-menu-btn:hover,
+.borderless-action-btn:hover {
+  background: rgba(15, 23, 42, 0.06) !important;
+  color: #0f172a !important;
+}
+
+.app-icon-btn:active,
+.notif-btn:active,
+.mobile-menu-btn:active,
+.borderless-action-btn:active {
+  transform: scale(0.92);
+}
+
+.user-profile-pill,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+}
+
+.user-profile-pill:hover,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3):hover {
+  opacity: 0.85;
+}
+
+.user-profile-avatar {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  display: block !important;
+}
+
+.user-profile-meta {
+  display: none !important;
+}
+
+.notif-wrapper,
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.notif-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 9999px;
+  min-width: 16px;
+  height: 16px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
+  border: 1.5px solid #ffffff;
+}
+
+/* ==========================================================================
+   🎛️ TABS FOR SWITCHING (SEGMENTED CONTROL)
+   ========================================================================== */
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button#tabCompanyHolidays:nth-of-type(1),
+button#tabCompanyHolidays,
+.holiday-tabs-wrapper,
+.holiday-tabs-container,
+.holiday-tab-btn {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.holiday-tab-btn {
+  padding: 9px 20px;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 14.5px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.holiday-tab-btn:hover {
+  color: #0f172a;
+}
+
+.holiday-tab-btn.active {
+  background: #0d9488;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.35);
+}
+
+#companyHolidaysWrapper {
+  padding: 0 24px;
+}
+
+/* ==========================================================================
    🌟 HERO UPCOMING HOLIDAY BANNER
    ========================================================================== */
 .holiday-hero-banner {
-  background: linear-gradient(135deg, #0d9488 0%, #0b845c 50%, #064e3b 100%);
-  border-radius: var(--radius-lg, 16px);
-  padding: 28px 32px;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
+  border-radius: 18px;
+  padding: 24px 28px;
   color: #ffffff;
-  margin-bottom: 28px;
-  box-shadow: 0 12px 30px -6px rgba(15, 164, 114, 0.35);
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   overflow: hidden;
-  animation: fluidPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: fluidPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .holiday-hero-banner::before {
@@ -914,11 +1221,13 @@ div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-ty
   .topbar-right {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    width: 100% !important;
+    justify-content: flex-end !important;
+    width: auto !important;
     gap: 8px !important;
-    padding-top: 8px !important;
-    border-top: 1px solid #f1f5f9 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    border: none !important;
+    box-shadow: none !important;
     margin: 0 !important;
   }
 
@@ -1218,6 +1527,80 @@ div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-typ
   box-sizing: border-box !important;
 }
 
+.company-summary-panel-top,
+#companySummarySidebar.company-summary-panel-top {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin-bottom: 24px !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02) !important;
+  padding: 0 !important;
+}
+
+.company-summary-panel-top .sidebar-content {
+  padding: 20px 24px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#companySummaryTitle {
+  width: 100% !important;
+  display: block !important;
+}
+
+.company-summary-list-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+
+.company-summary-list-row {
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+}
+
+.company-summary-list-row:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06) !important;
+  transform: translateY(-1px);
+}
+
+.company-summary-list-row.is-expanded {
+  border-color: #94a3b8 !important;
+  box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.08) !important;
+}
+
+.holiday-date-main-text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  line-height: 1.45 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+  text-align: left !important;
+}
+
+.btn-jump-to-calendar:hover {
+  background: #dcfce7 !important;
+  border-color: #86efac !important;
+  transform: scale(1.02);
+}
+
 .team-summary-sidebar {
   width: 320px;
   max-width: 100%;
@@ -1410,6 +1793,134 @@ div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-typ
 
 /* 📱 MOBILE / TABLET CALENDAR OPTIMIZATION (IOS & ANDROID) */
 @media (max-width: 768px) {
+  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
+  .page-header-row.mobile-appbar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 14px !important;
+    grid-template-columns: none !important;
+    grid-template-rows: none !important;
+  }
+
+  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1),
+  .appbar-left-zone {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    flex-wrap: nowrap !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2),
+  .appbar-right-zone {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .holiday-tabs-wrapper {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  .holiday-tabs-container {
+    width: 100%;
+    display: flex;
+  }
+
+  .holiday-tab-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 13.5px;
+  }
+
+  #companyHolidaysWrapper {
+    padding: 0 16px;
+  }
+
+  .holiday-hero-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 18px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .holiday-hero-banner .hero-content h2 {
+    font-size: 20px;
+  }
+
+  .holiday-hero-banner .hero-countdown-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    box-sizing: border-box;
+  }
+
+  .holiday-hero-banner .countdown-number {
+    font-size: 28px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .holiday-controls-panel {
+    padding: 14px 16px;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls-left {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .search-box {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .select-group {
+    width: 100%;
+  }
+
+  .select-group select {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .controls-right {
+    justify-content: space-between;
+    width: 100%;
+  }
+
   #companyCalendarLayout,
   .team-calendar-layout {
     gap: 16px !important;
@@ -1629,3 +2140,40 @@ div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-typ
   50% { transform: scale(1.08); }
   100% { transform: scale(1.04); }
 }
+
+/* 🎯 Focus-Mode Selected Element: Summary Sidebar Content */
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companySummarySidebar > div:nth-of-type(1),
+#companySummarySidebar .sidebar-content {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#companyCalendarLayout {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+#companyCalendarLayout .team-calendar-main {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 🎯 Focus-Mode Hide Rules for Selected Holiday Elements */
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div#companySummarySidebar:nth-of-type(2) > button:nth-of-type(1) > span#companySidebarIcon:nth-of-type(1),
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div#companySummarySidebar:nth-of-type(2) > button:nth-of-type(1),
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1) > span:nth-of-type(1),
+div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > section:nth-of-type(2),
+.toggle-sidebar-btn,
+.cal-title-icon,
+.holiday-controls-panel {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+

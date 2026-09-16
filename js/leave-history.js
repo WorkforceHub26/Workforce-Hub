@@ -414,11 +414,25 @@ function renderSummary() {
   // Pending count
   const sumPending = yearlyRows.filter(item => item.status === "pending").length;
 
+  // Cancel requested count
+  const sumCancelReq = yearlyRows.filter(item => item.status === "cancel_requested").length;
+
+  // Rejected or Cancelled count
+  const sumRejectedCancelled = yearlyRows.filter(item => item.status === "rejected" || item.status === "cancelled").length;
+
   // Update DOM metrics smoothly
   setText("sumAll", sumAll);
   setText("sumDays", sumDays.toFixed(1).replace(/\.0$/, ""));
   setText("sumApproved", sumApproved);
   setText("sumPending", sumPending);
+  setText("sumRejectedCancelled", sumRejectedCancelled);
+
+  // Update status filter chip counts
+  setText("chipCountAll", sumAll);
+  setText("chipCountPending", sumPending);
+  setText("chipCountApproved", sumApproved);
+  setText("chipCountCancelReq", sumCancelReq);
+  setText("chipCountRejected", sumRejectedCancelled);
 }
 
 function translateLeaveTypeName(name) {
@@ -509,12 +523,20 @@ function selectYearFilter(year) {
 function filterLeaveHistory(type, element) {
   currentFilter = type || currentFilter || 'all';
 
-  if (element) {
-    document.querySelectorAll('.sum-card').forEach(el => {
+  // Synchronize active states across summary cards and mobile metric pills
+  document.querySelectorAll('.sum-card, .metric-pill').forEach(el => {
+    const cardStatus = el.getAttribute('data-filter-status');
+    if (cardStatus) {
+      el.classList.toggle('active', cardStatus === currentFilter);
+    } else {
       el.classList.remove('active');
-    });
-    element.classList.add('active');
-  }
+    }
+  });
+
+  // Synchronize active states across status filter tab pills
+  document.querySelectorAll('.status-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-status') === currentFilter);
+  });
 
   let rows = [...myLeaveRows];
   
@@ -528,6 +550,8 @@ function filterLeaveHistory(type, element) {
     rows = rows.filter(item => item.status === 'approved');
   } else if (currentFilter === 'cancel_requested') {
     rows = rows.filter(item => item.status === 'cancel_requested');
+  } else if (currentFilter === 'rejected_cancelled') {
+    rows = rows.filter(item => item.status === 'rejected' || item.status === 'cancelled');
   }
   
   // 3. FILTER BY LEAVE TYPE
@@ -541,11 +565,9 @@ function filterLeaveHistory(type, element) {
       }
       return rawLeaveTypeName === currentTypeFilter;
     });
-  } else if (currentFilter === 'rejected_cancelled') {
-    rows = rows.filter(item => item.status === 'rejected' || item.status === 'cancelled');
   }
 
-  // 3. FILTER BY LIVE SEARCH BAR
+  // 4. FILTER BY LIVE SEARCH BAR
   const searchTerm = (document.getElementById("historySearchInput")?.value || "").trim().toLowerCase();
   if (searchTerm) {
     rows = rows.filter(item => {
@@ -583,7 +605,7 @@ function renderRows() {
     emptyHistory: "ไม่พบรายการใบลาตามเงื่อนไขที่เลือก",
     statusPending: "รออนุมัติ",
     statusApproved: "อนุมัติแล้ว",
-    statusCancelReq: "รออนุมัติยกเลิก",
+    statusCancelReq: "รอพิจารณายกเลิก",
     statusCancelled: "ยกเลิกแล้ว",
     statusRejected: "ไม่อนุมัติ",
     btnDirectCancel: "ยกเลิกคำขอ",
@@ -594,7 +616,19 @@ function renderRows() {
   };
   
   if (!filteredLeaveRows.length) {
-    tableBody.innerHTML = `<div class="empty-history-cell" style="text-align: center; padding: 20px; color: #64748b;">${t.emptyHistory || "ไม่พบรายการใบลาตามเงื่อนไขที่เลือก"}</div>`;
+    tableBody.innerHTML = `
+      <div class="empty-history-cell">
+        <div class="empty-icon-wrap">
+          <span class="material-symbols-outlined">event_busy</span>
+        </div>
+        <div class="empty-title">ไม่พบประวัติการลา</div>
+        <div class="empty-subtitle">${t.emptyHistory || "ไม่มีรายการใบลาตามเงื่อนไขหรือปีที่เลือก"}</div>
+        <button type="button" class="btn-empty-action" onclick="goToLeaveForm()">
+          <span class="material-symbols-outlined">add</span>
+          <span>ยื่นใบลาใหม่</span>
+        </button>
+      </div>
+    `;
     return;
   }
 
@@ -648,17 +682,17 @@ function renderRows() {
       displayStatus = t.statusApproved || "อนุมัติแล้ว";
     } 
     else if (item.status === "cancel_requested") {
-      displayStatus = t.statusCancelReq || "รออนุมัติยกเลิก";
+      displayStatus = t.statusCancelReq || "รอพิจารณายกเลิก";
       statusClass = "pending";
     } 
     else if (item.status === "cancelled") {
-      displayStatus = t.statusCancelled || "ยกเลิก";
+      displayStatus = t.statusCancelled || "ยกเลิกแล้ว";
       statusClass = "cancelled";
     } 
     else if (item.status === "rejected") {
       const comment = item.approval_comment || "";
       if (comment.includes("ยกเลิก")) {
-        displayStatus = t.statusCancelled || "ยกเลิก";
+        displayStatus = t.statusCancelled || "ยกเลิกแล้ว";
         statusClass = "cancelled"; 
       } else {
         displayStatus = t.statusRejected || "ไม่อนุมัติ";
@@ -670,20 +704,21 @@ function renderRows() {
     const catDetails = getLeaveTypeDetails(leaveTypeName);
 
     const displayTypeName = highlightMatch(catDetails.title, searchTerm);
-    const displayReason = highlightMatch(item.reason || "พักผ่อนประจำปี", searchTerm);
+    const displayReason = highlightMatch(item.reason || "ไม่มีระบุเหตุผล", searchTerm);
 
     let cardActionHtml = "";
     if (item.status === "pending" || item.status === "approved") {
       cardActionHtml = `
-        <button type="button" class="btn-cancel-card-action" onclick="event.stopPropagation(); directCancelLeave('${item.id}')" style="display: inline-flex; align-items: center; gap: 6px; background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; padding: 6px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 2px rgba(220, 38, 38, 0.1);" title="ยกเลิกใบลา">
-          <span class="material-symbols-outlined" style="font-size: 16px;">cancel</span>
+        <button type="button" class="btn-cancel-card-action" onclick="event.stopPropagation(); directCancelLeave('${item.id}')" title="ยกเลิกใบลา">
+          <span class="material-symbols-outlined">cancel</span>
           <span>ยกเลิกใบลา</span>
         </button>
       `;
     } else if (item.status === "cancel_requested") {
       cardActionHtml = `
-        <span style="font-size: 0.82rem; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 5px 12px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
-          <span class="material-symbols-outlined" style="font-size: 15px;">hourglass_top</span>รอพิจารณายกเลิก
+        <span class="status-badge-pending-cancel">
+          <span class="material-symbols-outlined" style="font-size: 14px;">hourglass_top</span>
+          <span>รอพิจารณายกเลิก</span>
         </span>
       `;
     }
@@ -692,43 +727,78 @@ function renderRows() {
     const isRejectedStatus = item.status === 'rejected' && item.approval_comment && !item.approval_comment.includes('ยกเลิก');
 
     const reasonAlertBoxHtml = hasCancelReason && (item.cancel_reason || item.approval_comment) ? `
-      <div style="margin-top: 10px; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.82rem; color: #475569; display: flex; align-items: flex-start; gap: 6px;">
-        <span class="material-symbols-outlined" style="font-size: 16px; margin-top: 1px; flex-shrink: 0; color: #64748b;">info</span>
+      <div class="reason-alert-box cancel">
+        <span class="material-symbols-outlined">info</span>
         <div>
-          <strong style="color: #1e293b;">เหตุผลการยกเลิก:</strong> ${escapeHtml(item.cancel_reason || item.approval_comment)}
+          <strong>เหตุผลการยกเลิก:</strong> ${escapeHtml(item.cancel_reason || item.approval_comment)}
         </div>
       </div>
     ` : isRejectedStatus ? `
-      <div style="margin-top: 10px; padding: 8px 12px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; font-size: 0.82rem; color: #be123c; display: flex; align-items: flex-start; gap: 6px;">
-        <span class="material-symbols-outlined" style="font-size: 16px; margin-top: 1px; flex-shrink: 0; color: #dc2626;">cancel</span>
+      <div class="reason-alert-box reject">
+        <span class="material-symbols-outlined">cancel</span>
         <div>
-          <strong style="color: #9f1239;">เหตุผลที่ไม่อนุมัติ (จากผู้อนุมัติ):</strong> ${escapeHtml(item.approval_comment)}
+          <strong>เหตุผลที่ไม่อนุมัติ:</strong> ${escapeHtml(item.approval_comment)}
         </div>
       </div>
     ` : '';
 
+    let formattedSubmitted = "";
+    if (item.created_at) {
+      try {
+        const d = new Date(item.created_at);
+        if (!isNaN(d.getTime())) {
+          formattedSubmitted = d.toLocaleDateString("th-TH", { day: "numeric", month: "short", year: "2-digit" });
+        }
+      } catch (e) {}
+    }
+
     return `
-      <div id="card-${item.id}" class="leave-card ${isOverdue ? 'card-overdue' : ''}" onclick="previewLeaveModalFromHistory('${item.id}')" style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s ease;">
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+      <div id="card-${item.id}" class="leave-card ${isOverdue ? 'card-overdue' : ''}" onclick="previewLeaveModalFromHistory('${item.id}')">
+        <!-- Card Top Bar: Icon, Name, Date submitted, Status pill -->
+        <div class="leave-card-header">
           <div class="leave-type-flex">
-            <div class="leave-type-icon-wrapper ${catDetails.colorClass}" style="width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+            <div class="leave-type-icon-wrapper ${catDetails.colorClass}">
               <span class="material-symbols-outlined">${catDetails.icon}</span>
             </div>
             <div class="leave-type-text-stack">
-              <span class="leave-type-main-title" style="font-weight: 600; display: block;">${displayTypeName}</span>
-              <span class="leave-type-reason-subtitle" style="font-size: 0.85rem; color: #64748b;">${displayReason}</span>
+              <span class="leave-type-main-title">${displayTypeName}</span>
+              <span class="leave-created-date">${formattedSubmitted ? `ยื่นเมื่อ ${formattedSubmitted}` : ''}</span>
             </div>
           </div>
-          <span class="pvt-status-pill ${statusClass}" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 20px;">${displayStatus}</span>
+          <span class="pvt-status-pill ${statusClass}">
+            <span class="status-dot"></span>
+            <span>${displayStatus}</span>
+          </span>
+        </div>
+
+        <!-- Date Range & Duration Banner -->
+        <div class="leave-card-date-banner">
+          <div class="date-range-wrap">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span class="date-range-text">${formattedRange}</span>
+          </div>
+          <span class="day-count-badge">${formatDuration(item.total_days, item.leave_hours)}</span>
+        </div>
+
+        <!-- Reason / Note -->
+        <div class="leave-reason-wrap">
+          <span class="material-symbols-outlined reason-quote-icon">format_quote</span>
+          <span class="reason-text">${displayReason}</span>
+          ${item.attachment_url ? `
+            <span class="attachment-pill" title="มีไฟล์แนบ">
+              <span class="material-symbols-outlined">attachment</span>
+              <span>แนบไฟล์</span>
+            </span>` : ''}
         </div>
 
         ${reasonAlertBoxHtml}
         
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #475569; margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e2e8f0; flex-wrap: wrap; gap: 8px;">
-          <div style="display: flex; align-items: center; gap: 6px; font-size: 0.88rem; color: #475569;">
-            <span class="material-symbols-outlined" style="font-size: 18px; color: #0d9488;">calendar_month</span>
-            <span>${formattedRange}</span>
-            <span class="day-count-indicator" style="font-weight: 700; color: #0f172a; margin-left: 6px;">(${formatDuration(item.total_days, item.leave_hours)})</span>
+        <!-- Card Footer -->
+        <div class="leave-card-footer">
+          <div class="tap-detail-hint">
+            <span class="material-symbols-outlined">timeline</span>
+            <span>ดูขั้นตอนอนุมัติ</span>
+            <span class="material-symbols-outlined chevron-icon">chevron_right</span>
           </div>
           ${cardActionHtml}
         </div>

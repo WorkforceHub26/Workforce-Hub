@@ -149,7 +149,7 @@
       <!--  ปุ่มกดยื่นใบลา (Action CTA) -->
       <div class="sidebar-cta-wrap">
         <button type="button" class="sidebar-cta-btn" onclick="goToLeaveForm()" title="ยื่นใบลาออนไลน์">
-          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 22px; height: 22px; object-fit: contain; filter: brightness(0) invert(1);" />
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
           <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
         </button>
       </div>
@@ -407,13 +407,13 @@
 
         <!-- ส่วนแสดงสิทธิ์วันลาคงเหลือ -->
         <div class="leave-section">
-          <div class="leave-header-row" style="flex-wrap: wrap; gap: 10px;">
+          <div class="leave-header-row">
             <h2>สิทธิ์วันลาคงเหลือ</h2>
-            <div class="leave-header-controls" style="margin-left: auto;">
+            <div class="leave-header-controls">
               <select id="yearFilter" onchange="handleYearChange(this.value)" class="year-select">
               </select>
               <button type="button" class="btn-toggle-icon" onclick="toggleSection('leaveBalancesContainer', this)" title="ซ่อน/แสดง สิทธิ์วันลา">
-                <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" style="width: 24px; height: 24px; color: currentColor;" />
+                <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" style="width: 22px; height: 22px; color: currentColor;" />
               </button>
             </div>
           </div>
@@ -427,12 +427,15 @@
         <section class="recent-card">
           <div class="section-head">
             <h2>รายการล่าสุด</h2>
-            <button onclick="goToLeaveHistory()">ดูทั้งหมด</button>
-                    
-            <button type="button" class="btn-toggle-icon" onclick="toggleSection('recentList', this)">
-              <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" style="width: 24px; height: 24px; color: currentColor;" />
-            </button>
-            <!-- กล่องรายการต้องใส่ id="recentList" -->
+            <div class="section-head-controls">
+              <button type="button" class="btn-view-all" onclick="goToLeaveHistory()" title="ดูประวัติการลาทั้งหมด">
+                <span>ดูทั้งหมด</span>
+                <span class="material-symbols-outlined" style="font-size: 16px;">chevron_right</span>
+              </button>
+              <button type="button" class="btn-toggle-icon" onclick="toggleSection('recentList', this)" title="ซ่อน/แสดง รายการล่าสุด">
+                <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" alt="toggle" style="width: 18px; height: 18px; object-fit: contain; display: block;" />
+              </button>
+            </div>
           </div>
           <div id="recentList" class="recent-list">
             <div class="empty-state">กำลังโหลดรายการลา...</div>
@@ -497,30 +500,56 @@
         </section>
 
       </div>
+
+      <!-- 📱 NATIVE MOBILE BOTTOM NAVIGATION BAR -->
+      <nav class="mobile-bottom-nav">
+        <a href="/pages/user/index-user.html" class="bottom-nav-item active">
+          <span class="material-symbols-outlined">home</span>
+          <span class="nav-label">หน้าหลัก</span>
+          <span class="nav-active-dot"></span>
+        </a>
+        <a href="/pages/user/leave-user.html" class="bottom-nav-item primary-action" title="ยื่นใบลาใหม่">
+          <div class="center-fab-icon">
+            <span class="material-symbols-outlined">add</span>
+          </div>
+          <span class="nav-label">ยื่นใบลา</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="bottom-nav-item">
+          <span class="material-symbols-outlined">receipt_long</span>
+          <span class="nav-label">ประวัติลา</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="bottom-nav-item">
+          <span class="material-symbols-outlined">person</span>
+          <span class="nav-label">ข้อมูลฉัน</span>
+        </a>
+      </nav>
+
     </main>
   </div>
 
-  <!--  VISUAL PROGRESS TRACKER MODAL (STEPPER TIMELINE) -->
-  <div class="pvt-modal-overlay" id="visualTimelineModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 16px;">
-    <div class="pvt-modal-card" style="background: #ffffff; width: 100%; max-width: 580px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
-      <div class="modal-header" style="padding: 18px 24px; background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%); color: #ffffff; display: flex; align-items: center; justify-content: space-between;">
+  <!-- 🔍 LEAVE DETAIL MODAL -->
+  <div class="pvt-modal-overlay" id="visualTimelineModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+    <div class="pvt-modal-card" style="background: #ffffff; width: 100%; max-width: 380px; border-radius: 24px; box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
+      <div class="modal-header" id="visualTimelineHeader" style="padding: 16px 22px; background: #ffffff; color: #0f172a; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9;">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <span class="material-symbols-outlined" style="font-size: 26px;">timeline</span>
+          <div style="width: 34px; height: 34px; border-radius: 10px; background: #eff6ff; display: flex; align-items: center; justify-content: center; color: #2563eb; border: 1px solid #dbeafe;">
+            <span class="material-symbols-outlined" id="visualTimelineHeaderIcon" style="font-size: 20px;">description</span>
+          </div>
           <div>
-            <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #ffffff;">ติดตามสถานะใบลา (Visual Progress Tracker)</h3>
-            <span style="font-size: 12px; opacity: 0.85;">ตรวจสอบขั้นตอนการพิจารณาตามลำดับสายงาน</span>
+            <h3 id="visualTimelineTitle" style="margin: 0; font-size: 15px; font-weight: 700; color: #0f172a; line-height: 1.2;">รายละเอียดคำขอลา</h3>
+            <span id="visualTimelineSubtitle" style="font-size: 11.5px; color: #64748b;">ผลการพิจารณาคำขอลา</span>
           </div>
         </div>
-        <button type="button" onclick="closeVisualTimelineModal()" style="background: rgba(255,255,255,0.2); border: none; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-          <span class="material-symbols-outlined">close</span>
+        <button type="button" onclick="closeVisualTimelineModal()" aria-label="ปิดหน้าต่าง" style="background: #f1f5f9; border: none; color: #64748b; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;">
+          <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
         </button>
       </div>
 
-      <div class="modal-body" id="visualTimelineBody" style="padding: 24px; overflow-y: auto;">
+      <div class="visual-timeline-body" id="visualTimelineBody" style="padding: 20px 24px 24px 24px !important; margin: 0 !important; overflow-y: auto; width: 100%; box-sizing: border-box;">
         <!-- Loading state -->
-        <div style="text-align: center; padding: 40px; color: #64748b;">
-          <span class="material-symbols-outlined" style="font-size: 36px; animation: spin 1s linear infinite;">sync</span>
-          <p style="margin-top: 8px;">กำลังโหลดข้อมูลขั้นตอนการอนุมัติ...</p>
+        <div style="text-align: center; padding: 36px 20px; color: #64748b;">
+          <span class="material-symbols-outlined" style="font-size: 32px; animation: spin 1s linear infinite; color: #2563eb;">sync</span>
+          <p style="margin-top: 8px; font-size: 13px; color: #64748b;">กำลังโหลดข้อมูล...</p>
         </div>
       </div>
     </div>

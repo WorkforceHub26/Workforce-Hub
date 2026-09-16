@@ -317,26 +317,49 @@ async function fetchUserExistingLeaveDates(employeeId) {
 // ==========================================
 async function loadCompanyHolidays() {
   const sb = window.pvtSupabase?.getClient();
-  if (!sb) return [];
+  if (!sb) {
+    if (typeof defaultHolidays2026 !== 'undefined') {
+      holidaysData = defaultHolidays2026;
+      cachedHolidays = holidaysData.map(h => h.holiday_date);
+      if (document.getElementById('companySummarySidebar') && typeof window.renderCompanySummarySidebar === 'function') {
+        window.renderCompanySummarySidebar(holidaysData, null, true);
+      }
+      return cachedHolidays;
+    }
+    return [];
+  }
 
   const currentYear = new Date().getFullYear();
   try {
     const { data: holidays, error } = await sb
       .from('holidays')
-      .select('holiday_date')
+      .select('*')
       .gte('holiday_date', `${currentYear - 1}-01-01`)
-      .lte('holiday_date', `${currentYear + 1}-12-31`);
+      .lte('holiday_date', `${currentYear + 1}-12-31`)
+      .order('holiday_date', { ascending: true });
 
-    if (error) {
-      console.warn('⚠️ ไม่สามารถดึงวันหยุดบริษัทได้:', error.message);
-      return [];
+    if (error || !holidays || holidays.length === 0) {
+      console.warn('⚠️ ไม่สามารถดึงวันหยุดบริษัทจาก Supabase ได้ ใช้ข้อมูลสำรองแทน');
+      holidaysData = (typeof defaultHolidays2026 !== 'undefined') ? defaultHolidays2026 : [];
+    } else {
+      holidaysData = holidays;
     }
 
-    cachedHolidays = (holidays || []).map(h => h.holiday_date);
+    cachedHolidays = (holidaysData || []).map(h => h.holiday_date);
+    
+    if (document.getElementById('companySummarySidebar') && typeof window.renderCompanySummarySidebar === 'function') {
+      window.renderCompanySummarySidebar(holidaysData, null, true);
+    }
+
     return cachedHolidays;
   } catch (err) {
     console.error('❌ ดึงวันหยุดล้มเหลว:', err);
-    return [];
+    holidaysData = (typeof defaultHolidays2026 !== 'undefined') ? defaultHolidays2026 : [];
+    cachedHolidays = holidaysData.map(h => h.holiday_date);
+    if (document.getElementById('companySummarySidebar') && typeof window.renderCompanySummarySidebar === 'function') {
+      window.renderCompanySummarySidebar(holidaysData, null, true);
+    }
+    return cachedHolidays;
   }
 }
 

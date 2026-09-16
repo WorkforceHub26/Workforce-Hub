@@ -22,6 +22,8 @@ function safeEscapeHtml(str) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[m]));
 }
+const escapeHtml = safeEscapeHtml;
+window.escapeHtml = safeEscapeHtml;
 
 function formatThaiDate(dateStr) {
   if (!dateStr) return "-";
@@ -270,6 +272,7 @@ window.loadRecentLeaves = async function(profile) {
     (typesRes?.data || []).forEach(t => {
       typeMap[t.id] = t.leave_name;
     });
+    window.leaveTypesMap = typeMap;
 
     // ดึงวันลาคงเหลือโดยใช้ helper
     let userBalances = [];
@@ -409,48 +412,37 @@ window.loadRecentLeaves = async function(profile) {
           ? window.PVTSDK.formatLeaveDurationFriendly(item.total_days, item.leave_hours)
           : `${item.total_days} ${unitDays}`;
 
+        const isSameDay = item.start_date === item.end_date;
+        const dateRangeText = isSameDay 
+          ? formatThaiDate(item.start_date)
+          : `${formatThaiDate(item.start_date)} - ${formatThaiDate(item.end_date)}`;
+
         return `
-          <article class="recent-item" style="margin-bottom: 12px; padding: 14px 16px; background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid ${typeConfig.borderAccent}; border-radius: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: all 0.2s ease;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: ${typeConfig.iconBg}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid ${typeConfig.tagBg};">
-                  <span class="material-symbols-outlined" style="font-size: 20px; color: ${typeConfig.iconColor};">${typeConfig.icon}</span>
-                </div>
-                <div>
-                  <strong class="leave-type-title" data-raw-cat="${safeEscapeHtml(rawName)}" style="font-size: 15px; font-weight: 700; color: #0f172a; display: block; line-height: 1.2;">${leaveName}</strong>
-                  <span style="font-size: 11px; background: ${typeConfig.tagBg}; color: ${typeConfig.tagColor}; padding: 1px 6px; border-radius: 6px; font-weight: 600; display: inline-block; margin-top: 2px;">คำขอลา</span>
-                </div>
+          <div class="compact-leave-item" onclick="openVisualTimelineModal('${item.id}')" role="button" tabindex="0" title="แตะเพื่อดูรายละเอียดและขั้นตอนการอนุมัติ">
+            <div class="compact-item-icon" style="background: ${typeConfig.iconBg}; border-color: ${typeConfig.tagBg};">
+              <span class="material-symbols-outlined" style="font-size: 20px; color: ${typeConfig.iconColor};">${typeConfig.icon}</span>
+            </div>
+            <div class="compact-item-content">
+              <div class="compact-item-top">
+                <span class="compact-leave-name" data-raw-cat="${safeEscapeHtml(rawName)}">${leaveName}</span>
+                <span class="compact-leave-duration">(${durationDisplay})</span>
               </div>
-              <span class="status ${item.status}" data-raw-status="${item.status}" style="font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); ${badgeStyle}">
-                <span class="material-symbols-outlined" style="font-size: 14px;">${statusIcon}</span>
+              <div class="compact-item-date">
+                <span class="material-symbols-outlined" style="font-size: 13px; color: #94a3b8;">calendar_month</span>
+                <span>${dateRangeText}</span>
+              </div>
+            </div>
+            <div class="compact-item-status">
+              <span class="status ${item.status} compact-status-badge" data-raw-status="${item.status}" style="${badgeStyle}">
+                <span class="material-symbols-outlined" style="font-size: 13px;">${statusIcon}</span>
                 ${displayStatus}
               </span>
+              <span class="material-symbols-outlined compact-chevron" style="font-size: 18px; color: #94a3b8;">chevron_right</span>
             </div>
-
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 10px; border-radius: 8px; font-size: 12.5px; color: #334155; display: inline-flex; align-items: center; gap: 6px;">
-                <span class="material-symbols-outlined" style="font-size: 15px; color: #64748b;">calendar_month</span>
-                <span>${labelDates}</span>
-                <strong style="color: #0f172a;">${formatThaiDate(item.start_date)} - ${formatThaiDate(item.end_date)}</strong>
-              </div>
-
-              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 5px 10px; border-radius: 8px; font-size: 12.5px; color: #166534; display: inline-flex; align-items: center; gap: 6px;">
-                <span class="material-symbols-outlined" style="font-size: 15px; color: #10b981;">schedule</span>
-                <span>${labelDuration}</span>
-                <strong style="color: #047857;">${durationDisplay}</strong>
-              </div>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; align-items: center; border-top: 1px dashed #f1f5f9; padding-top: 8px;">
-              <button type="button" class="btn-timeline-stepper" onclick="openVisualTimelineModal('${item.id}')" style="padding: 5px 12px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border: 1px solid #99f6e4; color: #0d9488; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 1px 3px rgba(13,148,136,0.1); transition: all 0.2s;">
-                <span class="material-symbols-outlined" style="font-size: 16px;">timeline</span>
-                ติดตามขั้นตอน (Stepper)
-              </button>
-            </div>
-          </article>
+          </div>
         `;
       }).join(""); 
-      recentList.innerHTML = `<div style="max-height: 420px; overflow-y: auto; padding-right: 5px;">${listHtml}</div>`;
+      recentList.innerHTML = `<div style="max-height: 420px; overflow-y: auto; padding: 2px 0;">${listHtml}</div>`;
     }
   } catch (error) {
     console.error("❌ loadRecentLeaves Error:", error);
@@ -2017,25 +2009,27 @@ function renderQuotaCards(quotas) {
 
         <div class="micro-card-grid">
           <div class="micro-stat-box used">
-            <span class="stat-label">ใช้ไปเท่าไหร่</span>
+            <span class="stat-label">ใช้ไปแล้ว</span>
             <div class="stat-value-group">
               <span class="stat-num" style="color: #2563eb;">${totalSumUsed}</span>
               <span class="stat-unit">วัน</span>
             </div>
           </div>
           <div class="micro-stat-box pending">
-            <span class="stat-label">ใบลารออนุมัติ</span>
+            <span class="stat-label">รออนุมัติ</span>
             <div class="stat-value-group">
               <span class="stat-num" style="color: #d97706;">${leaveStats.pendingCount}</span>
-              <span class="stat-unit">รายการ (${leaveStats.pendingDays} วัน)</span>
+              <span class="stat-unit">รายการ</span>
             </div>
+            ${leaveStats.pendingDays > 0 ? `<span style="font-size: 10px; color: #b45309; font-weight: 600; line-height: 1;">(${leaveStats.pendingDays} วัน)</span>` : ''}
           </div>
           <div class="micro-stat-box approved">
             <span class="stat-label">อนุมัติแล้ว</span>
             <div class="stat-value-group">
               <span class="stat-num" style="color: #059669;">${leaveStats.approvedCount}</span>
-              <span class="stat-unit">รายการ (${leaveStats.approvedDays} วัน)</span>
+              <span class="stat-unit">รายการ</span>
             </div>
+            ${leaveStats.approvedDays > 0 ? `<span style="font-size: 10px; color: #047857; font-weight: 600; line-height: 1;">(${leaveStats.approvedDays} วัน)</span>` : ''}
           </div>
         </div>
 
@@ -3195,7 +3189,7 @@ window.checkSmartNudges = async function(profile, quotas) {
 };
 
 /* ==========================================================================
-   📍 17. Visual Progress Tracker Modal (Timeline Stepper)
+   📍 17. Leave Request Detail Modal (Compact Approval Status)
    ========================================================================== */
 window.openVisualTimelineModal = async function(leaveId) {
   const modal = document.getElementById('visualTimelineModal');
@@ -3204,234 +3198,334 @@ window.openVisualTimelineModal = async function(leaveId) {
 
   modal.style.display = 'flex';
   body.innerHTML = `
-    <div style="text-align: center; padding: 40px; color: #64748b;">
+    <div style="text-align: center; padding: 36px 20px; color: #64748b;">
       <span class="material-symbols-outlined" style="font-size: 36px; animation: spin 1s linear infinite;">sync</span>
-      <p style="margin-top: 8px;">กำลังโหลดข้อมูลขั้นตอนการอนุมัติ...</p>
+      <p style="margin-top: 8px; font-size: 13.5px;">กำลังโหลดข้อมูล...</p>
     </div>
   `;
 
-  let req = (window.recentLeaveRequestsCache || []).find(r => String(r.id) === String(leaveId));
-
-  if (!req) {
-    const sb = getSafeSupabaseClient();
-    if (sb) {
-      try {
-        const { data } = await sb
-          .from('leave_requests')
-          .select('*, leave_types(leave_name), employees(full_name, employee_code, role, department_id, departments!department_id(department_name), positions(position_name))')
-          .eq('id', leaveId)
-          .single();
-        req = data;
-      } catch (e) {
-        console.error("Fetch leave detail failed:", e);
-      }
-    }
-  }
-
-  if (!req) {
-    body.innerHTML = `<div style="padding: 30px; text-align: center; color: #ef4444;">ไม่พบข้อมูลใบลาที่ต้องการตรวจสอบ</div>`;
-    return;
-  }
-
-  const leaveName = req.leave_types?.leave_name || "วันลา";
-  const startDate = formatThaiDate(req.start_date);
-  const endDate = formatThaiDate(req.end_date);
-  const days = req.total_days || 0;
-  const reason = req.reason || "-";
-
-  // ตรวจสอบสายอนุมัติของแผนก/พนักงาน
-  const reqEmp = req.employees || {};
-  const reqDeptId = req.department_id || reqEmp.department_id;
-  const applicantRole = String(reqEmp.role || '').toLowerCase();
-  const applicantPos = String(reqEmp.positions?.position_name || '').toLowerCase();
-  const isApplicantLeader = applicantRole === 'leader' || applicantRole.includes('leader') || applicantRole.includes('supervisor') || applicantPos.includes('หัวหน้า');
-  const isApplicantManager = applicantRole === 'manager' || applicantRole.includes('manager') || applicantPos.includes('ผู้จัดการ');
-  const isApplicantExecutive = applicantRole === 'director' || applicantRole === 'executive' || applicantRole === 'owner' || applicantPos.includes('ผู้อำนวยการ') || applicantPos.includes('ผู้บริหาร');
-
-  let hasL1 = false;
-  let hasL2 = false;
-
-  const deptName = String(req.departments?.department_name || reqEmp.departments?.department_name || '').toLowerCase();
-  const isHrDept = deptName.includes('บุคคล') || deptName.includes('hr') || deptName.includes('ทรัพยากรบุคคล') || applicantRole === 'hr' || applicantRole.includes('hr');
-
-  // ตรวจสอบจาก department_approvers cache หรือคำนวณสด
   try {
-    const sb = getSafeSupabaseClient();
-    if (sb && reqDeptId) {
-      const [apprvRes] = await Promise.all([
-        sb.from("department_approvers").select("supervisor_id, manager_id").eq("department_id", reqDeptId).maybeSingle()
-      ]);
-      const apprv = apprvRes.data;
-      if (apprv) {
-        hasL1 = Boolean(apprv.supervisor_id);
-        hasL2 = Boolean(apprv.manager_id);
+    let req = (window.recentLeaveRequestsCache || []).find(r => String(r.id) === String(leaveId));
+
+    if (!req) {
+      const sb = getSafeSupabaseClient();
+      if (sb) {
+        try {
+          const { data } = await sb
+            .from('leave_requests')
+            .select('*, leave_types(leave_name)')
+            .eq('id', leaveId)
+            .maybeSingle();
+          req = data;
+        } catch (e) {
+          console.error("Fetch leave detail failed:", e);
+        }
       }
     }
-  } catch (e) {
-    console.warn("Could not check dept approvers for timeline modal:", e);
-  }
 
-  // แผนกบุคคล (HR) ไม่มีหัวหน้า มีแต่ผู้จัดการฝ่าย
-  if (isHrDept) {
-    hasL1 = false;
-    hasL2 = true;
-  }
-
-  // Individual override check
-  if (!isHrDept && reqEmp.l1_approver_id) hasL1 = true;
-  if (reqEmp.l2_approver_id) hasL2 = true;
-
-  if (isApplicantLeader) hasL1 = false;
-  if (isApplicantManager || isApplicantExecutive) {
-    hasL1 = false;
-    hasL2 = false;
-  }
-
-  // Step calculations
-  const l1Status = req.manager_status || 'pending';
-  const l2Status = req.director_status || 'pending';
-  const finalStatus = req.status || 'pending';
-
-  const getStepBadge = (status) => {
-    if (status === 'approved') return `<span style="background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 13px;">check_circle</span> อนุมัติแล้ว</span>`;
-    if (status === 'rejected') return `<span style="background: #fee2e2; color: #b91c1c; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 13px;">cancel</span> ไม่อนุมัติ</span>`;
-    return `<span style="background: #fef3c7; color: #b45309; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 13px;">hourglass_top</span> กำลังรอพิจารณา</span>`;
-  };
-
-  const getCircleIcon = (status) => {
-    if (status === 'approved') return { bg: '#10b981', color: '#fff', icon: 'check' };
-    if (status === 'rejected') return { bg: '#ef4444', color: '#fff', icon: 'close' };
-    return { bg: '#f59e0b', color: '#fff', icon: 'hourglass_empty' };
-  };
-
-  const timelineSteps = [];
-
-  // Step 1: ยื่นคำขอ
-  timelineSteps.push({
-    title: '1. ยื่นคำขอลาสำเร็จ',
-    badge: '<span style="background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px;">สำเร็จแล้ว</span>',
-    desc: 'คำขอลาถูกส่งเข้าระบบ PVT Workforce Hub เรียบร้อยแล้ว',
-    circle: { bg: '#10b981', color: '#fff', icon: 'check' }
-  });
-
-  let stepNum = 2;
-
-  // Step L1: ถ้าแผนกมีหัวหน้า
-  if (hasL1) {
-    timelineSteps.push({
-      title: `${stepNum}. หัวหน้างานชั้นต้น (L1: Leader / Supervisor)`,
-      badge: getStepBadge(l1Status),
-      desc: l1Status === 'approved' ? 'หัวหน้างานอนุมัติแล้ว และส่งต่อไปยังลำดับถัดไป' : l1Status === 'rejected' ? 'หัวหน้างานไม่อนุมัติคำขอนี้' : 'กำลังรอหัวหน้างานตรวจสอบและอนุมัติ (กรอบเวลา 48 ชม.)',
-      circle: getCircleIcon(l1Status)
-    });
-    stepNum++;
-  }
-
-  // Step L2: ถ้าแผนกมีผู้จัดการ
-  if (hasL2) {
-    const isL2PendingPredecessor = hasL1 && l1Status !== 'approved';
-    const l2Badge = isL2PendingPredecessor ? '<span style="color: #94a3b8; font-size: 11px;">รอดำเนินการ</span>' : getStepBadge(l2Status);
-    const l2Circle = isL2PendingPredecessor ? { bg: '#e2e8f0', color: '#94a3b8', icon: 'schedule' } : getCircleIcon(l2Status);
-
-    timelineSteps.push({
-      title: `${stepNum}. ผู้จัดการฝ่าย (L2: Director / Manager)`,
-      badge: l2Badge,
-      desc: l2Status === 'approved' ? 'ผู้จัดการฝ่ายลงนามอนุมัติเรียบร้อยแล้ว' : l2Status === 'rejected' ? 'ผู้จัดการฝ่ายไม่อนุมัติ' : 'รอการพิจารณาจากผู้จัดการฝ่าย',
-      circle: l2Circle
-    });
-    stepNum++;
-  }
-
-  // Step Final: อนุมัติเสร็จสิ้น Final
-  const isHrPendingPredecessor = (hasL1 && l1Status !== 'approved') || (hasL2 && l2Status !== 'approved');
-  const hrBadge = finalStatus === 'approved' ? getStepBadge('approved') : finalStatus === 'rejected' ? getStepBadge('rejected') : (isHrPendingPredecessor ? '<span style="color: #94a3b8; font-size: 11px;">รอดำเนินการ</span>' : getStepBadge('pending'));
-  const hrCircle = finalStatus === 'approved' ? { bg: '#10b981', color: '#fff', icon: 'check_circle' } : finalStatus === 'rejected' ? { bg: '#ef4444', color: '#fff', icon: 'cancel' } : (isHrPendingPredecessor ? { bg: '#e2e8f0', color: '#94a3b8', icon: 'verified' } : { bg: '#f59e0b', color: '#fff', icon: 'hourglass_empty' });
-
-  timelineSteps.push({
-    title: `${stepNum}. อนุมัติเสร็จสมบูรณ์ (Final Decision)`,
-    badge: hrBadge,
-    desc: finalStatus === 'approved' ? 'อนุมัติสมบูรณ์ ตัดยอดวันลาในระบบ และบันทึกประวัติเรียบร้อย' : 'ตรวจสอบความถูกต้องและผ่านการอนุมัติระดับแผนกเรียบร้อย',
-    circle: hrCircle
-  });
-
-  body.innerHTML = `
-    <!-- Card Summary Header -->
-    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 24px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <strong style="font-size: 16px; color: #0f172a;">${leaveName} (${days} วัน)</strong>
-        <span style="font-size: 12px; color: #0d9488; font-weight: 600; background: #f0fdfa; padding: 3px 10px; border-radius: 12px; border: 1px solid #99f6e4;">
-          ${startDate} ถึง ${endDate}
-        </span>
-      </div>
-      <div style="font-size: 13px; color: #475569; display: flex; gap: 6px;">
-        <span style="color: #64748b;">เหตุผล:</span>
-        <span style="color: #1e293b; font-weight: 500;">${reason}</span>
-      </div>
-    </div>
-
-    <!-- Stepper Vertical Timeline -->
-    <div style="position: relative; padding-left: 36px; display: flex; flex-direction: column; gap: 24px;">
-      <!-- Vertical connecting line -->
-      <div style="position: absolute; left: 15px; top: 12px; bottom: 20px; width: 2px; background: #e2e8f0; z-index: 1;"></div>
-
-      ${timelineSteps.map(step => `
-        <div style="position: relative; z-index: 2;">
-          <div style="position: absolute; left: -36px; width: 30px; height: 30px; border-radius: 50%; background: ${step.circle.bg}; color: ${step.circle.color}; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px #ffffff;">
-            <span class="material-symbols-outlined" style="font-size: 18px;">${step.circle.icon}</span>
-          </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-            <strong style="font-size: 14px; color: #0f172a;">${step.title}</strong>
-            ${step.badge}
-          </div>
-          <div style="font-size: 12px; color: #64748b;">
-            ${step.desc}
+    if (!req) {
+      body.innerHTML = `
+        <div style="padding: 24px 16px; text-align: center; color: #ef4444;">
+          <span class="material-symbols-outlined" style="font-size: 36px; margin-bottom: 8px;">error</span>
+          <p style="font-weight: 600; font-size: 14px; margin-bottom: 14px;">ไม่พบข้อมูลใบลาที่ต้องการตรวจสอบ</p>
+          <div style="display: flex; justify-content: center;">
+            <button type="button" onclick="closeVisualTimelineModal()" class="btn-popup-close" style="min-width: 130px; height: 38px; padding: 0 20px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #ffffff; border: none; border-radius: 9999px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">ปิดหน้าต่าง</button>
           </div>
         </div>
-      `).join('')}
-    </div>
+      `;
+      return;
+    }
 
-    ${(req.cancel_reason || (req.approval_comment && req.approval_comment.includes('ยกเลิก')) || req.status === 'cancelled' || req.status === 'cancel_requested') ? `
-      <div style="margin-top: 20px; background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 12px 16px; color: #9f1239;">
-        <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 13.5px;">
-          <span class="material-symbols-outlined" style="font-size: 18px; color: #e11d48;">warning</span>
-          <span>เหตุผลการยกเลิกใบลา (Cancellation Reason):</span>
+    const rawName = req.leave_types?.leave_name || window.leaveTypesMap?.[req.leave_type_id] || "วันลา";
+    let leaveName = safeEscapeHtml(rawName);
+    const lang = window.getGlobalLanguage ? window.getGlobalLanguage() : "th";
+    if (typeof window.localizeCategory === "function") {
+      leaveName = window.localizeCategory(rawName, lang);
+    }
+
+    const startDate = formatThaiDate(req.start_date);
+    const endDate = formatThaiDate(req.end_date);
+    const isSameDay = req.start_date === req.end_date;
+    const dateDisplay = isSameDay ? startDate : `${startDate} ถึง ${endDate}`;
+    const reason = req.reason || "-";
+
+    const unitDays = window.getPVTTranslation ? window.getPVTTranslation("unitDays") : "วัน";
+    const durationDisplay = window.PVTSDK?.formatLeaveDurationFriendly
+      ? window.PVTSDK.formatLeaveDurationFriendly(req.total_days, req.leave_hours)
+      : `${req.total_days || 0} ${unitDays}`;
+
+    const status = String(req.status || 'pending').toLowerCase();
+
+    // 1. กรณีไม่อนุมัติ (Rejected)
+    if (status === 'rejected') {
+      const rawRejectReason = req.approval_comment || req.rejection_reason || req.reject_reason || req.cancel_reason;
+      const rejectReasonText = (rawRejectReason && rawRejectReason.trim()) 
+        ? rawRejectReason.trim() 
+        : 'ไม่ได้ระบุสาเหตุเพิ่มเติม';
+
+      body.innerHTML = `
+        <!-- สถานะไม่อนุมัติ -->
+        <div style="background: #fff8f8; border: 1px solid #fee2e2; border-radius: 16px; padding: 14px 16px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: #fee2e2; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #dc2626;">
+              <span class="material-symbols-outlined" style="font-size: 22px;">cancel</span>
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 800; color: #991b1b; line-height: 1.2;">คำขอไม่อนุมัติ</div>
+              <div style="font-size: 11.5px; color: #b91c1c; margin-top: 1px;">คำขอลาถูกปฏิเสธโดยผู้มีอำนาจอนุมัติ</div>
+            </div>
+          </div>
+
+          <!-- สาเหตุที่ไม่อนุมัติ -->
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fecdd3;">
+            <div style="font-size: 11.5px; font-weight: 700; color: #9f1239; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+              <span class="material-symbols-outlined" style="font-size: 15px; color: #e11d48;">error</span>
+              <span>สาเหตุที่ไม่อนุมัติ:</span>
+            </div>
+            <div style="font-size: 13.5px; color: #881337; font-weight: 600; line-height: 1.5; word-break: break-word;">
+              ${safeEscapeHtml(rejectReasonText)}
+            </div>
+          </div>
         </div>
-        <div style="font-size: 13px; line-height: 1.5; color: #881337; font-weight: 500;">
-          ${escapeHtml(req.cancel_reason || req.approval_comment || 'ไม่ได้ระบุเหตุผล')}
+
+        <!-- รายละเอียดใบลา -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 9px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">category</span>
+              ประเภทการลา
+            </span>
+            <span style="color: #0f172a; font-weight: 700;">
+              ${leaveName} <span style="background: #e0f2fe; color: #0284c7; padding: 2px 7px; border-radius: 6px; font-size: 11.5px; margin-left: 4px;">${durationDisplay}</span>
+            </span>
+          </div>
+
+          <div style="height: 1px; background: #edf2f7;"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">calendar_today</span>
+              วันที่ลา
+            </span>
+            <span style="color: #0f172a; font-weight: 700;">${dateDisplay}</span>
+          </div>
+
+          <div style="height: 1px; background: #edf2f7;"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">description</span>
+              เหตุผลการลา
+            </span>
+            <span style="color: #334155; font-weight: 500; text-align: right; word-break: break-word;">${safeEscapeHtml(reason)}</span>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 18px;">
+          <button type="button" onclick="closeVisualTimelineModal()" class="btn-popup-close" style="min-width: 136px; height: 38px; padding: 0 24px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #ffffff; border: none; border-radius: 9999px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+            <span>ปิดหน้าต่าง</span>
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    // 2. กรณีอนุมัติแล้ว (Approved)
+    if (status === 'approved') {
+      const hasComment = req.approval_comment && !req.approval_comment.includes('ยกเลิก') && !req.approval_comment.includes('ไม่อนุมัติ');
+
+      body.innerHTML = `
+        <!-- กล่องสถานะคำขอได้รับการอนุมัติ -->
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 16px; padding: 14px 16px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: #dcfce7; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #16a34a;">
+              <span class="material-symbols-outlined" style="font-size: 22px;">check_circle</span>
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 800; color: #15803d; line-height: 1.2;">คำขอได้รับการอนุมัติ</div>
+              <div style="font-size: 11.5px; color: #166534; margin-top: 1px;">อนุมัติเรียบร้อย ตัดยอดวันลาในระบบแล้ว</div>
+            </div>
+          </div>
+
+          ${hasComment ? `
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #bbf7d0;">
+              <div style="font-size: 11.5px; font-weight: 700; color: #15803d; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-outlined" style="font-size: 15px; color: #16a34a;">chat</span>
+                <span>หมายเหตุจากผู้อนุมัติ:</span>
+              </div>
+              <div style="font-size: 13.5px; color: #166534; font-weight: 500; line-height: 1.5; word-break: break-word;">
+                ${safeEscapeHtml(req.approval_comment)}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- รายละเอียดใบลา -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 9px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">category</span>
+              ประเภทการลา
+            </span>
+            <span style="color: #0f172a; font-weight: 700;">
+              ${leaveName} <span style="background: #e0f2fe; color: #0284c7; padding: 2px 7px; border-radius: 6px; font-size: 11.5px; margin-left: 4px;">${durationDisplay}</span>
+            </span>
+          </div>
+
+          <div style="height: 1px; background: #edf2f7;"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">calendar_today</span>
+              วันที่ลา
+            </span>
+            <span style="color: #0f172a; font-weight: 700;">${dateDisplay}</span>
+          </div>
+
+          <div style="height: 1px; background: #edf2f7;"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">description</span>
+              เหตุผลการลา
+            </span>
+            <span style="color: #334155; font-weight: 500; text-align: right; word-break: break-word;">${safeEscapeHtml(reason)}</span>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 18px;">
+          <button type="button" onclick="closeVisualTimelineModal()" class="btn-popup-close" style="min-width: 136px; height: 38px; padding: 0 24px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #ffffff; border: none; border-radius: 9999px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+            <span>ปิดหน้าต่าง</span>
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    // 3. กรณียกเลิก (Cancelled)
+    if (status === 'cancelled' || status === 'cancel_requested') {
+      const cancelReasonText = req.cancel_reason || req.approval_comment || 'ไม่ได้ระบุเหตุผลการยกเลิก';
+      body.innerHTML = `
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px 16px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #64748b;">
+              <span class="material-symbols-outlined" style="font-size: 22px;">block</span>
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 800; color: #334155; line-height: 1.2;">คำขอยกเลิกแล้ว</div>
+              <div style="font-size: 11.5px; color: #64748b; margin-top: 1px;">คำขอนี้ถูกยกเลิกแล้ว</div>
+            </div>
+          </div>
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e2e8f0; font-size: 13px;">
+            <strong style="color: #475569; font-size: 12px;">เหตุผลการยกเลิก:</strong> <span style="color: #1e293b; font-weight: 500;">${safeEscapeHtml(cancelReasonText)}</span>
+          </div>
+        </div>
+
+        <!-- รายละเอียดใบลา -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 9px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">category</span>
+              ประเภทการลา
+            </span>
+            <span style="color: #0f172a; font-weight: 700;">
+              ${leaveName} <span style="background: #e0f2fe; color: #0284c7; padding: 2px 7px; border-radius: 6px; font-size: 11.5px; margin-left: 4px;">${durationDisplay}</span>
+            </span>
+          </div>
+
+          <div style="height: 1px; background: #edf2f7;"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">calendar_today</span>
+              วันที่ลา
+            </span>
+            <span style="color: #0f172a; font-weight: 700;">${dateDisplay}</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px;">
+            <span style="color: #64748b; display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">description</span>
+              เหตุผลการลา
+            </span>
+            <span style="color: #334155; font-weight: 500; text-align: right; word-break: break-word;">${safeEscapeHtml(reason)}</span>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 18px;">
+          <button type="button" onclick="closeVisualTimelineModal()" class="btn-popup-close" style="min-width: 136px; height: 38px; padding: 0 24px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #ffffff; border: none; border-radius: 9999px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+            <span>ปิดหน้าต่าง</span>
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    // 4. กรณีรออนุมัติ (Pending)
+    body.innerHTML = `
+      <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 16px; padding: 14px 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: 10px; background: #fef3c7; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #d97706;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">hourglass_top</span>
+          </div>
+          <div>
+            <div style="font-size: 15px; font-weight: 800; color: #b45309; line-height: 1.2;">อยู่ระหว่างรออนุมัติ</div>
+            <div style="font-size: 11.5px; color: #92400e; margin-top: 1px;">คำขอถูกส่งเข้าสู่ระบบแล้ว กำลังรอผู้มีอำนาจพิจารณา</div>
+          </div>
         </div>
       </div>
-    ` : ''}
 
-    ${(req.status === 'rejected' && req.approval_comment && !req.approval_comment.includes('ยกเลิก')) ? `
-      <div style="margin-top: 20px; background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 12px 16px; color: #9f1239;">
-        <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 13.5px;">
-          <span class="material-symbols-outlined" style="font-size: 18px; color: #dc2626;">cancel</span>
-          <span>เหตุผลที่ไม่อนุมัติ (จากหัวหน้างาน/ผู้จัดการ):</span>
+      <!-- รายละเอียดใบลา -->
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 9px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+          <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">category</span>
+            ประเภทการลา
+          </span>
+          <span style="color: #0f172a; font-weight: 700;">
+            ${leaveName} <span style="background: #e0f2fe; color: #0284c7; padding: 2px 7px; border-radius: 6px; font-size: 11.5px; margin-left: 4px;">${durationDisplay}</span>
+          </span>
         </div>
-        <div style="font-size: 13px; line-height: 1.5; color: #881337; font-weight: 500;">
-          ${escapeHtml(req.approval_comment)}
+
+        <div style="height: 1px; background: #edf2f7;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+          <span style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">calendar_today</span>
+            วันที่ลา
+          </span>
+          <span style="color: #0f172a; font-weight: 700;">${dateDisplay}</span>
+        </div>
+
+        <div style="height: 1px; background: #edf2f7;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px;">
+          <span style="color: #64748b; display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: #94a3b8;">description</span>
+            เหตุผลการลา
+          </span>
+          <span style="color: #334155; font-weight: 500; text-align: right; word-break: break-word;">${safeEscapeHtml(reason)}</span>
         </div>
       </div>
-    ` : (req.approval_comment && !req.approval_comment.includes('ยกเลิก') && req.status !== 'cancelled') ? `
-      <div style="margin-top: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; color: #334155;">
-        <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 13px;">
-          <span class="material-symbols-outlined" style="font-size: 17px; color: #0d9488;">chat</span>
-          <span>ความคิดเห็นจากผู้อนุมัติ:</span>
-        </div>
-        <div style="font-size: 13px; line-height: 1.5; color: #475569;">
-          ${escapeHtml(req.approval_comment)}
+
+      <div style="display: flex; justify-content: center; margin-top: 18px;">
+        <button type="button" onclick="closeVisualTimelineModal()" class="btn-popup-close" style="min-width: 136px; height: 38px; padding: 0 24px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #ffffff; border: none; border-radius: 9999px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+          <span>ปิดหน้าต่าง</span>
+        </button>
+      </div>
+    `;
+
+  } catch (err) {
+    console.error("Error opening leave detail modal:", err);
+    body.innerHTML = `
+      <div style="padding: 24px 16px; text-align: center; color: #ef4444;">
+        <p style="font-weight: 600; font-size: 13.5px; margin-bottom: 12px;">เกิดข้อผิดพลาดในการแสดงรายละเอียดคำขอลา</p>
+        <div style="display: flex; justify-content: center;">
+          <button type="button" onclick="closeVisualTimelineModal()" class="btn-popup-close" style="min-width: 120px; height: 36px; padding: 0 18px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #ffffff; border: none; border-radius: 9999px; font-size: 13px; font-weight: 600; cursor: pointer;">ปิด</button>
         </div>
       </div>
-    ` : ''}
-
-    <!-- Helpful reassurance note -->
-    <div style="margin-top: 20px; padding: 12px 16px; background: #f0fdfa; border: 1px solid #ccfbf1; border-radius: 12px; font-size: 12px; color: #0f766e; display: flex; gap: 8px; align-items: flex-start;">
-      <span class="material-symbols-outlined" style="font-size: 18px; color: #0d9488; flex-shrink: 0; margin-top: 1px;">info</span>
-      <span>
-        <strong>คำแนะนำ:</strong> พนักงานสามารถเปิดดูสถานะและขั้นตอนแบบ Stepper จากหน้านี้ได้ตลอดเวลา โดยระบบจะอัปเดตแบบเรียลไทม์ทันทีที่ผู้มีอำนาจกดอนุมัติ จึงไม่ต้องทักข้อความติดตามเป็นการส่วนตัวครับ
-      </span>
-    </div>
-  `;
+    `;
+  }
 };
 
 window.closeVisualTimelineModal = function() {

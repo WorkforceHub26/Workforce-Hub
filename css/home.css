@@ -100,13 +100,17 @@ body {
 /* 🏷️ BRAND ZONE & LOGO */
 .sidebar-brand,
 .brand-zone {
-  padding: 24px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 16px 18px 12px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
   border-bottom: 1px solid #f1f5f9;
   background: #ffffff;
-  position: relative;
+  position: relative !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .brand-icon {
@@ -119,9 +123,9 @@ body {
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   padding: 0;
   flex-shrink: 0;
 }
@@ -135,15 +139,16 @@ body {
 }
 
 .brand-name {
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: -0.1px;
   color: #1e3a8a !important; /* Deep Royal Blue */
   text-transform: uppercase;
+  text-align: left !important;
   white-space: normal;
   line-height: 1.25;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  max-width: 195px;
   word-break: break-word;
 }
 
@@ -357,8 +362,7 @@ body {
 }
 
 /* 🏷️ TOPBAR */
-div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
-.topbar {
+.topbar:not(.page-header-row) {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -378,8 +382,7 @@ div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
   box-sizing: border-box;
 }
 
-div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1):hover,
-.topbar:hover {
+.topbar:not(.page-header-row):hover {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
@@ -396,9 +399,8 @@ div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1):hover,
   flex-direction: column;
 }
 
-div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) h1,
 .topbar-left h1,
-.page-title {
+.home-page .page-title {
   font-family: 'Kanit', 'Sarabun', -apple-system, sans-serif !important;
   font-size: 22px !important;
   font-weight: 700 !important;
@@ -1774,8 +1776,8 @@ input[type="file"]:hover {
     box-sizing: border-box !important;
   }
 
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
-  .topbar {
+  .home-page .topbar,
+  body#homePage .topbar {
     display: grid !important;
     grid-template-columns: 1fr auto !important;
     grid-template-rows: auto auto !important;
@@ -1808,10 +1810,9 @@ input[type="file"]:hover {
     justify-content: center !important;
   }
 
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) h1,
   .topbar-left h1,
   .topbar-left-text h1,
-  .page-title {
+  .home-page .page-title {
     font-size: 16px !important;
     font-weight: 700 !important;
     color: #0f172a !important;
@@ -1829,7 +1830,7 @@ input[type="file"]:hover {
   }
 
   .topbar-left p,
-  .page-subtitle {
+  .home-page .page-subtitle {
     display: none !important;
   }
 
@@ -1851,8 +1852,7 @@ input[type="file"]:hover {
   }
 
   /* User Profile -> Top Right (Row 1, Column 2) with Name, Department & Position */
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) .user-profile,
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3),
+  .home-page .user-profile,
   .topbar .user-profile {
     grid-column: 2 / 3 !important;
     grid-row: 1 / 2 !important;
@@ -1871,7 +1871,6 @@ input[type="file"]:hover {
     box-sizing: border-box !important;
   }
 
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div#headerUserProfile > div:nth-of-type(1),
   .user-profile .avatar,
   .user-profile .avatar-badge,
   .user-profile img.avatar {
@@ -1947,7 +1946,6 @@ input[type="file"]:hover {
   }
 
   /* Notification Bell -> Bottom Right (Row 2, Column 2) */
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) .notif-wrapper,
   .topbar .notif-wrapper {
     grid-column: 2 / 3 !important;
     grid-row: 2 / 3 !important;
@@ -1981,13 +1979,12 @@ input[type="file"]:hover {
     padding: 10px 8px 3rem 8px !important;
   }
 
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
-  .topbar {
+  .home-page .topbar,
+  body#homePage .topbar {
     padding: 10px 12px !important;
     row-gap: 10px !important;
   }
 
-  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) h1,
   .topbar-left h1 {
     font-size: 16.5px !important;
   }

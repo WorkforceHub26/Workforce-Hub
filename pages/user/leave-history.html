@@ -108,44 +108,51 @@
       </div>
     </aside>
 
-    <!--  2. MAIN WORKSPACE CONTENT -->
+    <!-- 💻 2. MAIN WORKSPACE CONTENT -->
     <main class="main-content">
       
-      <!--  TOP HEADER ROW -->
-      <header class="page-header-row">
-        <!-- Hamburg Menu Button (Mobile only) -->
-        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(event);}else if(typeof toggleMobileSidebar==='function'){toggleMobileSidebar();}" title="เปิดเมนู">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; width: 22px; height: 22px;"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <!-- 📱 1. NATIVE MOBILE APP BAR (HEADER) -->
+      <header class="page-header-row mobile-appbar">
+        <div class="appbar-left-zone">
+          <!-- Mobile Back Button (Clean iOS/Android circular icon) -->
+          <button type="button" id="btnHeaderBack" class="btn-header-back-app" onclick="handleGoBack()" title="ย้อนกลับ" aria-label="ย้อนกลับ">
+            <span class="material-symbols-outlined">arrow_back</span>
           </button>
-        
-        <div class="header-title-section">
-          <h1>ประวัติการลา</h1>
-          <p>ติดตามและตรวจสอบประวัติการลาทั้งหมดของคุณ</p>
+          
+          <div class="appbar-title-wrap">
+            <h1 class="appbar-main-title">ประวัติการลา</h1>
+            <div class="appbar-subtitle-row">
+              <span class="appbar-live-dot"></span>
+              <span class="appbar-subtext">อัปเดตแบบเรียลไทม์</span>
+            </div>
+          </div>
         </div>
         
-        <div class="header-user-section">
+        <div class="appbar-right-zone">
+          <!-- Injected Language Switcher Container (.history-actions) -->
+          <div class="history-actions" id="historyActionsZone"></div>
+
           <!-- Notification Bell -->
-          <!--  NOTIFICATION COMPONENT (REAL DATA DROPDOWN) -->
           <div class="notif-wrapper" style="position: relative; display: inline-block;">
-            <button id="notificationBtn" class="notif-btn" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: #ffffff; border: 1.5px solid #cbd5e1; cursor: pointer; transition: all 0.2s ease;" onclick="toggleUserNotifDropdown(event)" title="การแจ้งเตือนใบลา">
-              <img src="/assets/icons/bell-new.svg" alt="การแจ้งเตือน" style="width: 24px; height: 24px; object-fit: contain;" />
+            <button id="notificationBtn" class="app-icon-btn notif-btn" onclick="toggleUserNotifDropdown(event)" title="การแจ้งเตือนใบลา" aria-label="การแจ้งเตือน">
+              <img src="/assets/icons/bell-new.svg" alt="การแจ้งเตือน" style="width: 20px; height: 20px; object-fit: contain;" />
               <span id="notifBadge" class="notif-badge" style="display: none;">0</span>
             </button>
-            <div class="notif-dropdown" id="userNotifDropdown" style="position: absolute; top: calc(100% + 12px); right: 0; width: 420px; background: #ffffff; border: 1.5px solid #cbd5e1; max-width: calc(100vw - 20px); border-radius: 18px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); z-index: 999999; display: none; flex-direction: column; overflow: hidden;">
-              <div class="notif-header" style="padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px solid #e2e8f0; background: #f8fafc;">
+            <div class="notif-dropdown" id="userNotifDropdown" style="position: absolute; top: calc(100% + 10px); right: 0; width: 380px; background: #ffffff; border: 1px solid #e2e8f0; max-width: calc(100vw - 24px); border-radius: 18px; box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.15); z-index: 999999; display: none; flex-direction: column; overflow: hidden;">
+              <div class="notif-header" style="padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
                 <div class="notif-title" style="display: flex; align-items: center; gap: 8px;">
-                  <span class="material-symbols-outlined" style="font-size: 22px; color: #0284c7;">notifications</span>
-                  <strong style="font-size: 16px; color: #0f172a; font-weight: 800;">การแจ้งเตือน</strong>
-                  <span class="notif-count-pill" id="userNotifCount" style="font-size: 12px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 12px;">0 รายการใหม่</span>
+                  <span class="material-symbols-outlined" style="font-size: 20px; color: #0f766e;">notifications</span>
+                  <strong style="font-size: 15px; color: #0f172a; font-weight: 700;">การแจ้งเตือน</strong>
+                  <span class="notif-count-pill" id="userNotifCount" style="font-size: 11px; font-weight: 700; background: #ccfbf1; color: #0f766e; padding: 2px 7px; border-radius: 10px;">0 รายการ</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <button type="button" class="btn-mark-read" onclick="markAllUserNotificationsAsRead(event)" style="background: #f0fdfa; border: 1px solid #ccfbf1; font-size: 12px; color: #0f766e; font-weight: 700; cursor: pointer; padding: 5px 10px; border-radius: 6px;">อ่านทั้งหมด</button>
-                  <button type="button" class="btn-close-notif" onclick="toggleUserNotifDropdown(event)" style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; color: #64748b; cursor: pointer; transition: all 0.2s;" title="ปิดหน้าต่าง">
-                    <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button type="button" class="btn-mark-read" onclick="markAllUserNotificationsAsRead(event)" style="background: #f0fdfa; border: 1px solid #99f6e4; font-size: 11px; color: #0f766e; font-weight: 700; cursor: pointer; padding: 4px 8px; border-radius: 6px;">อ่านทั้งหมด</button>
+                  <button type="button" class="btn-close-notif" onclick="toggleUserNotifDropdown(event)" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; border: 1px solid #e2e8f0; background: #ffffff; color: #64748b; cursor: pointer;" title="ปิดหน้าต่าง">
+                    <span class="material-symbols-outlined" style="font-size: 15px;">close</span>
                   </button>
                 </div>
               </div>
-              <div class="notif-body" id="userNotifList" style="max-height: 320px; overflow-y: auto;">
+              <div class="notif-body" id="userNotifList" style="max-height: 300px; overflow-y: auto;">
                 <div style="padding: 24px; text-align: center; color: #64748b; font-size: 13px;">
                   ⌛ กำลังโหลดแจ้งเตือน...
                 </div>
@@ -153,112 +160,131 @@
             </div>
           </div>
           
-          <!-- User Profile Info -->
-          <div class="user-profile-pill">
+          <!-- User Profile Avatar -->
+          <div class="user-profile-pill" onclick="window.location.href='/pages/user/profile-user.html'" title="ข้อมูลส่วนตัว">
             <img src="/assets/img/default-avatar.jpg" alt="Avatar" id="user-avatar" class="user-profile-avatar" />
-            <div class="user-profile-meta">
+            <div class="user-profile-meta desktop-only">
               <span id="emp-name" class="user-profile-name">กำลังโหลด...</span>
               <span id="emp-detail" class="user-profile-desc">พนักงานประจำ</span>
             </div>
           </div>
+
+          <!-- Mobile Sidebar Drawer Trigger (3 Dots Menu - Borderless) -->
+          <button type="button" class="app-icon-btn mobile-menu-btn borderless-action-btn" id="mobileMenuBtn" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(event);}else if(typeof toggleMobileSidebar==='function'){toggleMobileSidebar();}" title="เปิดเมนูอื่น ๆ" aria-label="เมนู">
+            <span class="material-symbols-outlined" style="font-size: 24px;">more_vert</span>
+          </button>
         </div>
       </header>
 
-      <!--  3. SUMMARY STATS CARDS -->
-      <section class="summary-cards-grid">
-        <!-- Card 1: Total Leave Requests -->
-        <article class="sum-card" onclick="filterLeaveHistory('all', this)" style="cursor: pointer;">
-          <div class="sum-icon-container blue">
-            <span class="material-symbols-outlined">calendar_month</span>
-          </div>
-          <div class="sum-info-block">
-            <span class="sum-label">จำนวนครั้งที่ลา</span>
-            <span class="sum-value"><span id="sumAll">0</span> ครั้ง</span>
-            <span class="sum-sub" id="sumAllSubLabel">ในปี 2025</span>
-          </div>
-        </article>
-
-        <!-- Card 2: Total Leave Days -->
-        <article class="sum-card" onclick="filterLeaveHistory('approved', this)" style="cursor: pointer;">
-          <div class="sum-icon-container green">
-            <span class="material-symbols-outlined">schedule</span>
-          </div>
-          <div class="sum-info-block">
-            <span class="sum-label">จำนวนวันลารวม</span>
-            <span class="sum-value"><span id="sumDays">0</span> วัน</span>
-            <span class="sum-sub" id="sumDaysSubLabel">ในปี 2025</span>
-          </div>
-        </article>
-
-        <!-- Card 3: Approved Leaves -->
-        <article class="sum-card" onclick="filterLeaveHistory('approved', this)" style="cursor: pointer;">
-          <div class="sum-icon-container teal">
-            <span class="material-symbols-outlined">verified</span>
-          </div>
-          <div class="sum-info-block">
-            <span class="sum-label">อนุมัติแล้ว</span>
-            <span class="sum-value"><span id="sumApproved">0</span> ครั้ง</span>
-            <span class="sum-sub" id="sumApprovedSubLabel">ได้ไฟเขียวแล้ว</span>
-          </div>
-        </article>
-
-        <!-- Card 4: Pending Leaves -->
-        <article class="sum-card" onclick="filterLeaveHistory('pending', this)" style="cursor: pointer;">
-          <div class="sum-icon-container orange">
-            <span class="material-symbols-outlined">hourglass_empty</span>
-          </div>
-          <div class="sum-info-block">
-            <span class="sum-label">รออนุมัติ</span>
-            <span class="sum-value"><span id="sumPending">0</span> ครั้ง</span>
-            <span class="sum-sub" id="sumPendingSubLabel">อยู่ระหว่างพิจารณา</span>
-          </div>
-        </article>
-      </section>
-
-      
-
-      <!--  4. TABLE CONTENT CONTAINER -->
-      <section class="content-card-box">
-        <div class="table-header-toolbar">
-          <h2 class="table-title">ประวัติการลาทั้งหมด</h2>
-          
-          <div class="toolbar-controls">
-            <!-- Search Input -->
-            <div class="search-box-wrapper">
-              <span class="material-symbols-outlined">search</span>
-              <input type="text" id="historySearchInput" class="search-box-input" placeholder="ค้นหาประเภท, เหตุผล..." oninput="onHistorySearchChange()">
+      <!-- 📊 2. NATIVE MOBILE SUMMARY CARD (COMPACT OVERVIEW) -->
+      <section class="mobile-summary-card">
+        <div class="summary-top-row">
+          <div class="summary-title-badge">
+            <div class="summary-icon-box">
+              <span class="material-symbols-outlined">analytics</span>
             </div>
-            
-            <!-- Custom Year Dropdown Filter -->
-            <div class="year-dropdown-container">
-              <button type="button" class="year-dropdown-trigger" onclick="toggleYearDropdown(event)">
-                <span class="material-symbols-outlined" style="font-size: 18px;">calendar_today</span>
-                <span id="selectedYearLabel">2025</span>
-                <span class="material-symbols-outlined" style="font-size: 16px;">expand_more</span>
-              </button>
-              <div class="year-dropdown-menu" id="yearDropdownMenu">
-                <div class="year-dropdown-item" onclick="selectYearFilter('2024')">
-                  <span>2024</span>
-                  <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 16px; height: 16px; object-fit: contain;" />
-                </div>
-                <div class="year-dropdown-item active" onclick="selectYearFilter('2025')">
-                  <span>2025</span>
-                  <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 16px; height: 16px; object-fit: contain;" />
-                </div>
-                <div class="year-dropdown-item" onclick="selectYearFilter('2026')">
-                  <span>2026</span>
-                  <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 16px; height: 16px; object-fit: contain;" />
-                </div>
+            <div>
+              <span class="summary-card-title">สรุปวันลา</span>
+              <span class="summary-card-year" id="sumAllSubLabel">ปี 2026</span>
+            </div>
+          </div>
+
+          <!-- Quick Year Selector Dropdown -->
+          <div class="year-dropdown-container">
+            <button type="button" class="year-dropdown-trigger compact-pill" onclick="toggleYearDropdown(event)" title="เลือกปีปฏิทิน">
+              <span class="material-symbols-outlined trigger-cal-icon">calendar_month</span>
+              <span id="selectedYearLabel">2026</span>
+              <span class="material-symbols-outlined trigger-arrow-icon">arrow_drop_down</span>
+            </button>
+            <div class="year-dropdown-menu" id="yearDropdownMenu">
+              <div class="year-dropdown-item" onclick="selectYearFilter('2024')">
+                <span>ปี 2024</span>
+                <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 14px; height: 14px; object-fit: contain;" />
+              </div>
+              <div class="year-dropdown-item" onclick="selectYearFilter('2025')">
+                <span>ปี 2025</span>
+                <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 14px; height: 14px; object-fit: contain;" />
+              </div>
+              <div class="year-dropdown-item active" onclick="selectYearFilter('2026')">
+                <span>ปี 2026</span>
+                <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 14px; height: 14px; object-fit: contain;" />
+              </div>
+              <div class="year-dropdown-item" onclick="selectYearFilter('2027')">
+                <span>ปี 2027</span>
+                <img src="/assets/icons/check-circle.svg" alt="เลือก" class="check-icon" style="width: 14px; height: 14px; object-fit: contain;" />
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Leaves List Container -->
-        <div id="table-data-rows" style="margin-top: 16px;">
-          <div class="empty-history-cell">กำลังโหลดประวัติการลา...</div>
+        <!-- 4-Stat Interactive Metric Strip (Tap to Filter) -->
+        <div class="summary-metric-strip">
+          <!-- 1. All -->
+          <div class="metric-pill active" data-filter-status="all" onclick="filterLeaveHistory('all', this)" title="ทั้งหมด">
+            <span class="metric-tag">ทั้งหมด</span>
+            <div class="metric-big-num"><span id="sumAll">0</span><small>ครั้ง</small></div>
+            <span class="metric-sub-detail"><span id="sumDays">0</span> วัน</span>
+          </div>
+
+          <!-- 2. Approved -->
+          <div class="metric-pill pill-green" data-filter-status="approved" onclick="filterLeaveHistory('approved', this)" title="อนุมัติแล้ว">
+            <span class="metric-tag"><span class="metric-badge-dot dot-green"></span>อนุมัติ</span>
+            <div class="metric-big-num text-green"><span id="sumApproved">0</span><small>ครั้ง</small></div>
+            <span class="metric-sub-detail text-green">อนุมัติแล้ว</span>
+          </div>
+
+          <!-- 3. Pending -->
+          <div class="metric-pill pill-amber" data-filter-status="pending" onclick="filterLeaveHistory('pending', this)" title="รออนุมัติ">
+            <span class="metric-tag"><span class="metric-badge-dot dot-amber"></span>รออนุมัติ</span>
+            <div class="metric-big-num text-amber"><span id="sumPending">0</span><small>ครั้ง</small></div>
+            <span class="metric-sub-detail text-amber">กำลังพิจารณา</span>
+          </div>
+
+          <!-- 4. Cancelled / Rejected -->
+          <div class="metric-pill pill-rose" data-filter-status="rejected_cancelled" onclick="filterLeaveHistory('rejected_cancelled', this)" title="ยกเลิก/ไม่อนุมัติ">
+            <span class="metric-tag"><span class="metric-badge-dot dot-rose"></span>ไม่ผ่าน</span>
+            <div class="metric-big-num text-rose"><span id="sumRejectedCancelled">0</span><small>ครั้ง</small></div>
+            <span class="metric-sub-detail text-rose">ยกเลิก/ปฏิเสธ</span>
+          </div>
         </div>
       </section>
+
+      <!-- ⏳ OPTIONAL SLA TRACKER CONTAINER -->
+      <div id="userLeaveSlaTrackerContainer" style="display: none;"></div>
+
+      <!-- 📋 3. MAIN LEAVE LIST CONTAINER -->
+      <section class="mobile-feed-container">
+        <!-- 📱 NATIVE MOBILE LEAVE CARDS FEED -->
+        <div id="table-data-rows" class="leave-cards-feed">
+          <div class="empty-history-cell">
+            <div class="loading-spinner"></div>
+            <span>กำลังโหลดประวัติการลาของคุณ...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 📱 4. NATIVE MOBILE BOTTOM NAVIGATION BAR -->
+      <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="/pages/user/index-user.html" class="bottom-nav-item">
+          <span class="material-symbols-outlined">home</span>
+          <span class="nav-label">หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/leave-user.html" class="bottom-nav-item primary-action" title="ยื่นใบลาใหม่">
+          <div class="center-fab-icon">
+            <span class="material-symbols-outlined">add</span>
+          </div>
+          <span class="nav-label">ยื่นใบลา</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="bottom-nav-item active">
+          <span class="material-symbols-outlined">receipt_long</span>
+          <span class="nav-label">ประวัติลา</span>
+          <span class="nav-active-dot"></span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="bottom-nav-item">
+          <span class="material-symbols-outlined">person</span>
+          <span class="nav-label">ข้อมูลฉัน</span>
+        </a>
+      </nav>
       
     </main>
   </div>
@@ -270,6 +296,38 @@
   <script type="module" src="/js/leave-history.js"></script>
   
   <script>
+    // 🔙 Mobile Back Navigation Function
+    function handleGoBack() {
+      if (window.history.length > 1 && document.referrer && !document.referrer.includes(window.location.pathname)) {
+        window.history.back();
+      } else {
+        window.location.href = "/pages/user/index-user.html";
+      }
+    }
+    window.handleGoBack = handleGoBack;
+
+    // Search input helpers
+    function onHistorySearchInput(inputEl) {
+      const clearBtn = document.getElementById("clearSearchBtn");
+      if (clearBtn) {
+        clearBtn.style.display = inputEl.value.trim() ? "inline-flex" : "none";
+      }
+      if (typeof window.onHistorySearchChange === "function") {
+        window.onHistorySearchChange();
+      }
+    }
+    window.onHistorySearchInput = onHistorySearchInput;
+
+    function clearHistorySearch() {
+      const input = document.getElementById("historySearchInput");
+      if (input) {
+        input.value = "";
+        onHistorySearchInput(input);
+        input.focus();
+      }
+    }
+    window.clearHistorySearch = clearHistorySearch;
+
     // Handle feature dummies gracefully
     function showDummyFeatureToast(featureName) {
       Swal.fire({

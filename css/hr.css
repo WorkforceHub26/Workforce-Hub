@@ -113,13 +113,17 @@ body {
 
 .sidebar-brand,
 .brand-zone {
-  padding: 24px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 16px 18px 12px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
   border-bottom: 1px solid #f1f5f9;
   background: #ffffff;
-  position: relative;
+  position: relative !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .brand-icon {
@@ -132,9 +136,9 @@ body {
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   padding: 0;
   flex-shrink: 0;
 }
@@ -148,15 +152,16 @@ body {
 }
 
 .brand-name {
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: -0.1px;
   color: #1e3a8a !important; /* Deep Royal Blue */
   text-transform: uppercase;
+  text-align: left !important;
   white-space: normal;
   line-height: 1.25;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  max-width: 195px;
   word-break: break-word;
 }
 
