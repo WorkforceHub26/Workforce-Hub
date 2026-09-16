@@ -2299,6 +2299,12 @@ select.year-select option {
 
 /* 📱📱 LINE APP STYLE USER HEADER (CLEAN, TIDY, NO OVERFLOW) 📱📱 */
 @media (max-width: 768px) {
+  .app {
+    padding-top: 0px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
   /* กรอบนอก Header สไตล์แอป LINE หน้าแรก (Clean, Flat, Minimalist) */
   div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1),
   div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
@@ -2308,14 +2314,19 @@ select.year-select option {
     flex-direction: column !important;
     align-items: stretch !important;
     background: #ffffff !important;
-    padding: 14px 14px 16px 14px !important;
-    border-radius: 20px !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03) !important;
+    padding: 14px 16px 16px 16px !important;
+    border-radius: 0 0 20px 20px !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
+    margin-top: 0px !important;
     margin-bottom: 16px !important;
-    gap: 12px !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+    width: calc(100% + 24px) !important;
+    max-width: calc(100% + 24px) !important;
     box-sizing: border-box !important;
     overflow: visible !important;
     backdrop-filter: none !important;
@@ -2324,11 +2335,11 @@ select.year-select option {
 
   header#indexUserHeader::before,
   .user-header::before {
-    left: 2px !important;
-    right: 2px !important;
+    left: 0 !important;
+    right: 0 !important;
     height: 3px !important;
-    border-top-left-radius: 18px !important;
-    border-top-right-radius: 18px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
     background: linear-gradient(90deg, #0d9488 0%, #10b981 100%) !important;
     opacity: 0.8 !important;
   }
@@ -2370,11 +2381,11 @@ select.year-select option {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    max-width: 34px !important;
-    border-radius: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    border-radius: 12px !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -2393,7 +2404,7 @@ select.year-select option {
 
   .user-header-actions .mobile-menu-btn .material-symbols-outlined,
   .user-header-top .mobile-menu-btn .material-symbols-outlined {
-    font-size: 19px !important;
+    font-size: 22px !important;
     color: #0f766e !important;
     display: inline-block !important;
     line-height: 1 !important;
@@ -2487,11 +2498,11 @@ select.year-select option {
   /* ปุ่ม Refresh สไตล์ LINE Minimal Icon */
   div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) #refreshBtn,
   .user-header-actions #refreshBtn {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    max-width: 34px !important;
-    border-radius: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    border-radius: 12px !important;
     padding: 0 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -2511,18 +2522,18 @@ select.year-select option {
   }
 
   .user-header-actions #refreshBtn .material-symbols-outlined {
-    font-size: 19px !important;
+    font-size: 22px !important;
     color: #0284c7 !important;
   }
 
   /* ปุ่ม Notification กระดิ่ง */
   div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) #notificationBtn,
   .user-header-actions #notificationBtn {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    max-width: 34px !important;
-    border-radius: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    border-radius: 12px !important;
     padding: 0 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -2542,7 +2553,7 @@ select.year-select option {
   }
 
   .user-header-actions #notificationBtn .material-symbols-outlined {
-    font-size: 19px !important;
+    font-size: 22px !important;
     color: #0284c7 !important;
     display: inline-block !important;
     line-height: 1 !important;
@@ -2565,12 +2576,12 @@ select.year-select option {
 
   /* ปุ่มออกจากระบบ (Logout Icon แบบ LINE - ซ่อนตัวหนังสือยาวเพื่อไม่ให้ล้น) */
   .user-header-actions .logout-btn {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    max-width: 34px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
     padding: 0 !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
     background: transparent !important;
     border: none !important;
     color: #dc2626 !important;
@@ -2588,9 +2599,10 @@ select.year-select option {
   }
 
   .user-header-actions .logout-btn .material-symbols-outlined {
-    font-size: 20px !important;
+    font-size: 22px !important;
     color: #dc2626 !important;
     display: inline-block !important;
+    line-height: 1 !important;
   }
 
   .user-header-actions .logout-btn:active {
