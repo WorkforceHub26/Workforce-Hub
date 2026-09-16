@@ -2407,17 +2407,6 @@ window.refreshUserData = async function() {
     }
   });
 
-  if (typeof Swal !== 'undefined') {
-    Swal.fire({
-      toast: true,
-      position: 'top-end',
-      icon: 'info',
-      title: '⏳ กำลังอัปเดตข้อมูลล่าสุด...',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
   try {
     await initUserHome();
     if (typeof loadQuotaData === "function") {
@@ -2427,27 +2416,16 @@ window.refreshUserData = async function() {
     if (refreshBtn) refreshBtn.classList.remove('is-refreshing');
 
     if (typeof Swal !== 'undefined') {
-      const timeStr = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       Swal.fire({
-        title: `<div style="display:flex; align-items:center; justify-content:center; gap:8px; font-size:17px; font-weight:700; color:#0f766e;">
-          <span class="material-symbols-outlined" style="font-size:24px; color:#0d9488;">cloud_done</span>
-          อัปเดตข้อมูลล่าสุดเรียบร้อยแล้ว
-        </div>`,
-        html: `
-          <div style="font-size:13px; color:#475569; margin-top:8px;">
-            ซิงค์ยอดวันลาคงเหลือและสถิติข้อมูลส่วนบุคคลล่าสุดเรียบร้อย (${timeStr} น.)
-          </div>
-        `,
-        showConfirmButton: true,
-        confirmButtonText: '<span style="display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;font-size:13.5px;font-weight:700;"><span class="material-symbols-outlined" style="font-size:18px;">check_circle</span> ตกลง</span>',
+        icon: 'success',
+        title: 'อัปเดตข้อมูลสำเร็จ',
+        confirmButtonText: 'ตกลง',
         confirmButtonColor: '#0d9488',
-        showDenyButton: false,
-        showCancelButton: false,
-        timer: 15000,
-        timerProgressBar: true,
-        showCloseButton: true,
-        allowOutsideClick: true,
-        allowEscapeKey: true,
+        heightAuto: false,
+        scrollbarPadding: false,
+        customClass: {
+          popup: 'rounded-2xl-popup'
+        },
         didOpen: (popup) => {
           const container = popup.closest('.swal2-container') || document.querySelector('.swal2-container');
           if (container) {

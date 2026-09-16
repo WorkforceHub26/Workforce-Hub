@@ -76,9 +76,7 @@ body {
 }
 
 /* ================= HEADER & PROFILE (PREMIUM FROSTED GLASS & MODERN AESTHETICS) ================= */
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1),
-header#indexUserHeader,
+#indexUserHeader,
 .user-header {
   display: flex !important;
   justify-content: space-between !important;
@@ -213,9 +211,8 @@ header#indexUserHeader::before,
   transform: scale(1.04) !important;
 }
 
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1),
-.hello,
-#userHelloText {
+#userHelloText,
+.hello {
   margin: 0 !important;
   color: #0f766e !important;
   font-size: 13.5px !important;
@@ -226,9 +223,8 @@ div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div
   gap: 4px !important;
 }
 
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1),
-.user-header h1,
-#userName {
+#userName,
+.user-header h1 {
   font-size: 20px !important;
   font-weight: 800 !important;
   color: #0f172a !important;
@@ -276,7 +272,6 @@ div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div
 }
 
 /* Actions toolbar */
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2),
 .user-header-actions {
   display: flex !important;
   align-items: center !important;
@@ -285,10 +280,7 @@ div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div
   flex-wrap: nowrap !important;
 }
 
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) > div:nth-of-type(2) > button#refreshBtn:nth-of-type(1),
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) button#refreshBtn,
-#refreshBtn.notif-btn,
-button#refreshBtn {
+#refreshBtn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -305,10 +297,7 @@ button#refreshBtn {
   padding: 0 !important;
 }
 
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) > div:nth-of-type(2) > button#refreshBtn:nth-of-type(1):hover,
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) button#refreshBtn:hover,
-#refreshBtn.notif-btn:hover,
-button#refreshBtn:hover {
+#refreshBtn:hover {
   background: #1d4ed8 !important;
   border-color: #1e40af !important;
   color: #ffffff !important;
@@ -316,7 +305,6 @@ button#refreshBtn:hover {
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45) !important;
 }
 
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) > div:nth-of-type(2) > button#refreshBtn:nth-of-type(1):active,
 #refreshBtn:active {
   transform: translateY(0) scale(0.96) !important;
 }
@@ -411,8 +399,6 @@ div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header
 }
 
 /* Global Language Switcher Container in Header */
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div#globalLangSwitcherContainer:nth-of-type(3),
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) #globalLangSwitcherContainer,
 #globalLangSwitcherContainer {
   display: inline-flex !important;
   align-items: center !important;
@@ -724,7 +710,6 @@ div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) #glob
 }
 
 /* ================= ⚡ QUICK MENU SECTION (MATCHING CARD FRAME) ================= */
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1),
 section.quick-menu-section,
 .menu-section { 
   background: #ffffff !important; 
@@ -756,7 +741,7 @@ section.quick-menu-section,
 
 .menu-card {
   background: #f8fafc !important;
-  border: 1px solid #e2e8f0 !important;
+  border: none !important;
   border-radius: 12px !important;
   padding: 12px 14px !important;
   text-align: left;
@@ -766,13 +751,14 @@ section.quick-menu-section,
   gap: 12px !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
   box-sizing: border-box !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
 }
 
 .menu-card:hover {
   background: #ffffff !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 6px 16px -4px rgba(15, 23, 42, 0.08) !important;
-  border-color: #cbd5e1 !important;
+  border: none !important;
 }
 
 .menu-icon-box {
@@ -1383,8 +1369,8 @@ section.quick-menu-section,
     justify-content: flex-end; /* ดันปุ่มไปชิดขวา */
     align-items: center;
     width: 100%;
-    border-top: 1px dashed rgba(6, 182, 212, 0.2); /* เพิ่มเส้นประคั่นส่วนปุ่ม */
-    padding-top: 12px;
+    border-top: none !important; /* ลบเส้นประคั่นส่วนปุ่ม */
+    padding-top: 0px !important;
     gap: 10px; /* Increased gap slightly */
   }
 
@@ -2316,8 +2302,6 @@ select.year-select option {
   }
 
   /* กรอบนอก Header สไตล์แอป LINE หน้าแรก (Clean, Flat, Minimalist) */
-  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1),
-  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
   header#indexUserHeader,
   .user-header {
     display: flex !important;
@@ -2426,7 +2410,8 @@ select.year-select option {
     align-items: center !important;
     justify-content: flex-end !important;
     gap: 6px !important;
-    width: auto !important;
+    width: 100% !important; /* เปลี่ยนเป็น 100% เพื่อให้กางเต็มแถบและดันภาษาไปชิดซ้ายสุดปุ่มไปขวาสุด */
+    max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
     flex-shrink: 0 !important;
@@ -2434,18 +2419,30 @@ select.year-select option {
   }
 
   /* ปุ่มเปลี่ยนภาษาแบบ Compact Pill กะทัดรัด สไตล์ LINE */
-  div#globalLangSwitcherContainer,
+  #globalLangSwitcherContainer,
   .user-header-actions #globalLangSwitcherContainer {
     display: inline-flex !important;
     align-items: center !important;
     margin: 0 !important;
+    margin-right: auto !important; /* ดันปุ่มเปลี่ยนภาษาให้อยู่ฝั่งซ้ายของแถบปุ่มกดเสมอ */
+    margin-left: 0 !important;
     padding: 0 !important;
     flex-shrink: 0 !important;
+    position: relative !important; /* บังคับยกเลิก position: fixed จาก global.css ป้องกันปุ่มดิ้นและล้นจอ */
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 70px !important; /* ขนาดคงที่พอดีตัวปุ่มทั้งหมด 32px + 32px + gaps */
+    height: 32px !important;
+    z-index: 10 !important;
   }
 
   #globalLangSwitcherContainer .lang-switcher {
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important; /* ยืดให้เต็มขนาดความกว้างคงที่ 70px ของ container */
     background: #f1f5f9 !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
@@ -2506,7 +2503,6 @@ select.year-select option {
   }
 
   /* ปุ่ม Refresh สไตล์ LINE Minimal Icon */
-  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) #refreshBtn,
   .user-header-actions #refreshBtn {
     width: 40px !important;
     height: 40px !important;
@@ -2537,7 +2533,6 @@ select.year-select option {
   }
 
   /* ปุ่ม Notification กระดิ่ง */
-  div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) #notificationBtn,
   .user-header-actions #notificationBtn {
     width: 40px !important;
     height: 40px !important;
@@ -2880,7 +2875,92 @@ select.year-select option {
    ========================================================================== */
 @media screen and (max-width: 640px) {
   .app {
-    padding: 16px 12px 90px 12px;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 12px 10px 90px 10px !important;
+    gap: 14px !important;
+  }
+
+  /* 🧭 Mobile Section Ordering for Optimal User Flow */
+  #indexUserHeader {
+    order: 1 !important;
+  }
+  
+  #approverActionContainer {
+    order: 2 !important;
+    margin-bottom: 0 !important; /* Managed by .app gap */
+  }
+
+  .hero-leave-container {
+    order: 3 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .leave-section {
+    order: 4 !important;
+    margin-bottom: 0 !important;
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .quick-menu-section {
+    order: 5 !important;
+    margin-bottom: 0 !important;
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .recent-card {
+    order: 6 !important;
+    margin-bottom: 0 !important;
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  #departmentTeamSection {
+    order: 7 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-radius: 16px !important;
+  }
+
+  .news-section {
+    order: 8 !important;
+    margin-top: 0 !important;
+    padding: 14px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  /* 📰 Company News Section Mobile Layout Fixes */
+  .news-section-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* Horizontal Scrollable Category Chips for News on Mobile */
+  .news-filter-chips {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 6px !important;
+    padding-bottom: 6px !important;
+    width: calc(100% + 8px) !important;
+    margin-left: -4px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .news-filter-chips::-webkit-scrollbar {
+    display: none !important; /* Hide scrollbar for clean app-like UI */
+  }
+
+  .news-chip {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 4px 10px !important;
+    font-size: 11.5px !important;
   }
 
   .menu-grid {
@@ -2899,7 +2979,7 @@ select.year-select option {
   .btn-hero-leave {
     padding: 12px 14px;
     border-radius: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 0 !important;
   }
 
   .btn-hero-icon {
@@ -3003,16 +3083,36 @@ select.year-select option {
 }
 
 /* 🎯 Focus-mode styling updates for Header language switcher and actions container */
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div#globalLangSwitcherContainer:nth-of-type(1) {
+#globalLangSwitcherContainer {
   width: 90px !important;
   margin-right: auto !important;
   margin-left: 0 !important;
 }
 
-div#appLayout:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > header#indexUserHeader:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) {
+.user-header-actions {
   width: 100% !important;
   max-width: 100% !important;
   justify-content: flex-end !important;
   gap: 6px !important;
+}
+
+/* 🎯 Unified Hover & Active Styles for User Action Buttons on Mobile & Desktop */
+#refreshBtn:hover,
+#notificationBtn:hover,
+.logout-btn:hover,
+#mobileMenuBtn:hover {
+  background: rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-2px) scale(1.08) !important;
+  border-radius: 12px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 🎯 Unified Active Styles */
+#refreshBtn:active,
+#notificationBtn:active,
+.logout-btn:active,
+#mobileMenuBtn:active {
+  transform: scale(0.94) !important;
+  background: rgba(15, 23, 42, 0.15) !important;
 }
 

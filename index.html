@@ -35,20 +35,13 @@
         
         <section class="brand-area animate-fade delay-200">
           <div class="logo-wrapper hover-glow">
-            <img src="/assets/icons/Logo_PVT_2026_B.png" alt="PVT Logo" class="brand-logo"/>
+            <img src="/assets/icons/PVTT_FLOW.png" alt="PVT Logo" class="brand-logo"/>
           </div>
           <h1 id="pvtLoginHeader" class="animate-slide-down delay-300">PVT&T HR Leave</h1>
           <div class="brand-badge">
-            <span class="pulse-dot"></span>
             <span id="i18nBadge">ระบบขออนุญาตลาออนไลน์</span>
           </div>
 
-          <!-- 🌐 Connection Status Indicator -->
-          <div id="pvtConnectionStatus" class="pvt-connection-status" title="สถานะการเชื่อมต่อระบบ">
-            <span class="material-symbols-outlined status-icon">cloud_queue</span>
-            <span id="pvtStatusText" class="status-text">Online</span>
-            <span class="status-dot"></span>
-          </div>
         </section>
 
         <!-- Color-Coded Validation Alert Banner -->
@@ -133,7 +126,7 @@
           <div class="form-group remember-group">
             <label for="rememberMe" class="remember-label">
               <input type="checkbox" id="rememberMe" class="remember-checkbox">
-              <span id="i18nRemember">จดจำรหัสพนักงาน (Remember Me)</span>
+              <span id="i18nRemember">จำรหัสพนักงาน</span>
             </label>
           </div>
 
@@ -306,10 +299,10 @@
     <!-- ส่วนโหลดสคริปต์ต่างๆ -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
-    <script src="/js/supabase-config.js"></script>
-    <script src="/js/system-settings.js"></script>
-    <script src="/js/system-diagnostics.js"></script>
-    <script src="/auth/index.js"></script>
+    <script type="module" src="/js/supabase-config.js"></script>
+    <script type="module" src="/js/system-settings.js"></script>
+    <script type="module" src="/js/system-diagnostics.js"></script>
+    <script type="module" src="/auth/index.js"></script>
 
     <!-- 🌐 Supabase Connectivity Monitor -->
     <script>

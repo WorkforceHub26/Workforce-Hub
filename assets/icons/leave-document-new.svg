@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background sheet orange-to-magenta gradient -->
+    <linearGradient id="bgSheetGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#881337" />
+    </linearGradient>
+    
+    <!-- Front sheet white-to-blue gradient -->
+    <linearGradient id="frontSheetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+
+    <!-- Curl gradient -->
+    <linearGradient id="curlGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <!-- Pen orange gradient -->
+    <linearGradient id="penBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+    
+    <!-- Shadow for pen -->
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="12" dy="12" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- 1. Background Sheet (Rounded Rect) -->
+  <rect x="50" y="30" width="270" height="350" rx="24" fill="url(#bgSheetGrad)" />
+
+  <!-- 2. Front Sheet with curling bottom -->
+  <g filter="url(#shadow)">
+    <!-- Base front sheet path -->
+    <path d="M 124 76 
+             L 366 76 
+             C 380 76, 386 82, 386 96
+             L 386 350
+             C 386 364, 380 370, 366 370
+             L 124 370
+             C 110 370, 104 364, 104 350
+             L 104 96
+             C 104 82, 110 76, 124 76 Z" 
+          fill="url(#frontSheetGrad)" />
+          
+    <!-- Curly page roll at the bottom -->
+    <path d="M 104 350 
+             L 386 350 
+             C 386 350, 426 350, 426 390
+             C 426 430, 386 430, 350 430
+             L 140 430
+             C 104 430, 104 390, 104 390 Z" 
+          fill="url(#curlGrad)" />
+  </g>
+
+  <!-- 3. Elements inside the Front Sheet -->
+  <!-- Blue image block (top-left) -->
+  <rect x="146" y="112" width="108" height="108" rx="16" fill="#3b82f6" opacity="0.85" />
+  
+  <!-- Text lines (gray bars) -->
+  <rect x="146" y="246" width="200" height="16" rx="8" fill="#475569" />
+  <rect x="146" y="286" width="200" height="16" rx="8" fill="#475569" />
+  <rect x="146" y="326" width="150" height="16" rx="8" fill="#475569" />
+
+  <!-- 4. Pen / Pencil (laying diagonally pointing to bottom-left) -->
+  <g transform="translate(340, 210) rotate(42)" filter="url(#shadow)">
+    <!-- Pen Barrel (Orange) -->
+    <rect x="-18" y="-120" width="36" height="150" rx="10" fill="url(#penBodyGrad)" />
+    
+    <!-- White Clip / Highlight on the barrel -->
+    <rect x="-6" y="-100" width="12" height="60" rx="6" fill="#ffffff" opacity="0.7" />
+    
+    <!-- Dark Grip (slate) -->
+    <rect x="-18" y="10" width="36" height="40" fill="#475569" />
+    
+    <!-- Pen Cone / Tip (soft light blue gradient) -->
+    <path d="M-18,50 L0,90 L18,50 Z" fill="#cbd5e1" />
+    
+    <!-- Fine graphite tip -->
+    <path d="M-6,76 L0,90 L6,76 Z" fill="#475569" />
+
+    <!-- Pen top cap/eraser end -->
+    <path d="M-18,-120 C-18,-135 18,-135 18,-120 Z" fill="#fbbf24" />
+  </g>
+</svg>

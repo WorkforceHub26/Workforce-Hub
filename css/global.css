@@ -170,6 +170,15 @@ font {
   pointer-events: auto !important;
 }
 
+/* 🚫 ป้องกัน SweetAlert2 ปรับเปลี่ยนความสูงและตัดจัดวางหน้าจอสั่นไหว/ขนาดการ์ดเปลี่ยน */
+html.swal2-height-auto {
+  height: 100% !important;
+}
+body.swal2-shown:not(.swal2-no-backdrop) {
+  overflow-y: auto !important;
+  padding-right: 0px !important;
+}
+
 /* กล่องป๊อปอัป SweetAlert2 (Large, Accessible, High-Contrast UI Alerts) */
 .pvt-guard-popup, .swal2-popup, .pvt-sync-popup {
   border-radius: 24px !important;

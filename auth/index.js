@@ -608,19 +608,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   const hideLoginSkeleton = () => {
     const skeleton = document.getElementById("loginSkeleton");
     const loginForm = document.getElementById("loginForm");
-    if (skeleton && skeleton.style.display !== "none") {
-      skeleton.style.opacity = "0";
-      skeleton.style.transition = "opacity 0.18s ease";
+    
+    if (!loginForm) return;
+
+    if (skeleton && skeleton.style.display !== "none" && !skeleton.classList.contains("hidden")) {
+      // 1. Unhide loginForm invisibly in DOM first so layout geometry is established seamlessly
+      loginForm.style.display = "flex";
+      loginForm.style.opacity = "0";
+      loginForm.style.transition = "opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1)";
+
+      // 2. Prepare skeleton transition
+      skeleton.style.transition = "opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1)";
+
+      // 3. Trigger simultaneous crossfade in next frame (no height collapse delay)
+      requestAnimationFrame(() => {
+        skeleton.style.opacity = "0";
+        loginForm.style.opacity = "1";
+      });
+
+      // 4. Clean up skeleton display once crossfade completes
       setTimeout(() => {
         skeleton.style.display = "none";
         skeleton.classList.add("hidden");
-        if (loginForm) {
-          loginForm.style.display = "flex";
-          loginForm.classList.add("fade-in");
-        }
-      }, 160);
-    } else if (loginForm) {
+        loginForm.style.opacity = "";
+        loginForm.style.transition = "";
+      }, 230);
+    } else {
       loginForm.style.display = "flex";
+      loginForm.style.opacity = "1";
     }
   };
 

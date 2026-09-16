@@ -2438,9 +2438,25 @@ window.setGlobalLanguage = function(lang, reload = false, options = {}) {
     if (lang === 'th') {
       window.purgeGoogleTranslate();
       const combo = document.querySelector('select.goog-te-combo, .goog-te-combo');
-      if (combo && combo.value && combo.value !== 'th' && combo.value !== '') {
-        combo.value = '';
+      if (combo) {
+        // หาตัวเลือกที่เป็นภาษาไทยหรือค่าเริ่มต้น
+        let targetValue = '';
+        for (let i = 0; i < combo.options.length; i++) {
+          const val = combo.options[i].value;
+          if (val === 'th' || val === '') {
+            targetValue = val;
+            break;
+          }
+        }
+        combo.value = targetValue;
         combo.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      
+      // บังคับรีโหลดเมื่อผู้ใช้เปลี่ยนภาษากลับมาเป็น TH แบบแมนวล เพื่อเคลียร์ความจำแคชของ Google Translate 100%
+      if (langChanged) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 120);
       }
     } else {
       let googleLang = lang;

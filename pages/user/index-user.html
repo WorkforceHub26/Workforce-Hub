@@ -7,14 +7,119 @@
   <meta name="theme-color" content="#0d9488" />
   <meta name="google" content="notranslate" />
   <title>หน้าหลัก | PVT WORKFORCE HUB</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Lao:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <!-- 1. โหลด Stylesheet หลักภายในระบบก่อนทันที เพื่อให้แสดงผล Layout มินิมอลบนมือถือได้เสถียรที่สุดตั้งแต่เริ่มโหลด (Zero-FOUC) -->
   <link rel="stylesheet" href="/css/global.css" />
   <link rel="stylesheet" href="/css/sidebar.css" />
   <link rel="stylesheet" href="/css/index-user.css" />
   <link rel="stylesheet" href="/css/leave-history.css" />
   <link rel="stylesheet" href="/css/system-settings.css" />
   <link rel="stylesheet" href="/css/company-news.css" />
+
+  <!-- 2. โหลดฟอนต์ภายนอกแบบ Non-blocking ไม่ให้รบกวนการคำนวณขนาดกรอบหน้าจอและดีไซน์หลัก -->
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Lao:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- 3. Critical Style Lock: บังคับล็อกสัดส่วนจอพกพาบนอุปกรณ์มือถือ ป้องกันหน้าจอสั่นไหว/ดึงสเกลสลับไปมาระหว่างกำลังดาวน์โหลดหน้าเว็บ -->
+  <style>
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%) !important;
+        display: none !important;
+      }
+      .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 1.25rem 1rem 4rem 1rem !important;
+      }
+      .app {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-top: 0px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+    }
+    @media (max-width: 768px) {
+      #indexUserHeader,
+      .user-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        background: #ffffff !important;
+        padding: 14px 16px 16px 16px !important;
+        border-radius: 0 0 20px 20px !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
+        margin-top: 0px !important;
+        margin-bottom: 16px !important;
+        margin-left: -12px !important;
+        margin-right: -12px !important;
+        width: calc(100% + 24px) !important;
+        max-width: calc(100% + 24px) !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+      }
+      .user-header-top {
+        order: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        width: 100% !important;
+        gap: 6px !important;
+        box-sizing: border-box !important;
+        flex-wrap: nowrap !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .user-header-profile,
+      .user-header-left {
+        order: 2 !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 4px 0 0 0 !important;
+        box-sizing: border-box !important;
+        box-shadow: none !important;
+      }
+      .user-header-actions .logout-btn {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        padding: 0 !important;
+        border-radius: 12px !important;
+        background: transparent !important;
+        border: none !important;
+        color: #dc2626 !important;
+        box-shadow: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        outline: none !important;
+      }
+      .user-header-actions .logout-btn span:not(.material-symbols-outlined) {
+        display: none !important;
+      }
+    }
+    /* ป้องกันรูปโปรไฟล์ขยายขนาดใหญ่ยักษ์ดึงจอระหว่างโหลดเว็บ */
+    #userAvatar {
+      width: 70px !important;
+      height: 70px !important;
+      min-width: 70px !important;
+      min-height: 70px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 2px solid #ffffff !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -216,7 +321,7 @@
           <!-- 👤 ข้อมูลโปรไฟล์พนักงาน (User Profile Banner) -->
           <div class="user-header-profile user-header-left">
             <div class="brand-row">
-              <img id="userAvatar" src="/assets/img/default-avatar.jpg" alt="PVT" />
+              <img id="userAvatar" src="/assets/img/default-avatar.jpg" alt="PVT" style="width: 70px !important; height: 70px !important; min-width: 70px !important; min-height: 70px !important; border-radius: 50% !important; object-fit: cover !important; border: 2.5px solid #ffffff !important;" />
               <div class="user-profile-info">
                 <p class="hello" id="userHelloText">สวัสดีค่ะ</p>
                 <h1 id="userName">กำลังโหลด...</h1>
@@ -230,11 +335,11 @@
         <div class="hero-leave-container animate-slide-up delay-200" style="margin-bottom: 20px;">
           <button type="button" class="btn-hero-leave hover-lift" onclick="goToLeaveForm()" title="คลิกเพื่อยื่นใบลาออนไลน์" aria-label="ยื่นใบลาออนไลน์">
             <div class="btn-hero-icon">
-              <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" />
+              <img src="/assets/icons/pages.png" alt="ยื่นใบลา" style="width: 64px; height: 64px; object-fit: contain;" referrerPolicy="no-referrer" />
             </div>
             <div class="btn-hero-text">
               <strong>ยื่นใบลาออนไลน์</strong>
-              <span class="btn-hero-sub">แตะเพื่อส่งคำขอลา (24 ชม.)</span>
+              <span class="btn-hero-sub">แตะเพื่อส่งคำขอลา</span>
             </div>
             <div class="btn-hero-arrow-box">
               <span class="material-symbols-outlined btn-hero-arrow">arrow_forward</span>
