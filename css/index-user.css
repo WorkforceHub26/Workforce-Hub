@@ -82,17 +82,17 @@ body {
   justify-content: space-between !important;
   align-items: center !important;
   gap: 18px !important;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 250, 0.94) 40%, rgba(224, 242, 254, 0.92) 100%) !important;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.96) 0%, rgba(224, 242, 254, 0.94) 40%, rgba(219, 234, 254, 0.92) 100%) !important;
   backdrop-filter: blur(24px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
   padding: 18px 24px !important; 
   border-radius: 24px !important;
-  border: 1.5px solid rgba(13, 148, 136, 0.22) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.22) !important;
   box-shadow: 
-    0 16px 40px -10px rgba(13, 148, 136, 0.16),
+    0 16px 40px -10px rgba(37, 99, 235, 0.16),
     0 4px 18px -2px rgba(15, 23, 42, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(13, 148, 136, 0.08) !important;
+    inset 0 -1px 0 rgba(37, 99, 235, 0.08) !important;
   margin-bottom: 24px !important;
   position: relative !important;
   z-index: 1000 !important;
@@ -110,7 +110,7 @@ header#indexUserHeader::before,
   left: 2px;
   right: 2px;
   height: 4px;
-  background: linear-gradient(90deg, #0d9488 0%, #06b6d4 35%, #0284c7 70%, #3b82f6 100%);
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
   border-top-left-radius: 22px;
   border-top-right-radius: 22px;
   opacity: 0.9;
@@ -136,7 +136,7 @@ header#indexUserHeader::before,
 }
 
 .user-header-title {
-  display: none !important;
+  display: inline-flex !important;
 }
 
 @media (min-width: 1025px) {
@@ -447,7 +447,7 @@ header#indexUserHeader::before,
 }
 
 .lang-text-short {
-  display: none !important;
+  display: inline-flex !important;
 }
 
 .lang-text-full {
@@ -2609,14 +2609,14 @@ select.year-select option {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
-    background: #ffffff !important;
+    background: linear-gradient(135deg, #f8fbff 0%, #eff6ff 100%) !important;
     padding: 14px 16px 16px 16px !important;
     border-radius: 0 0 20px 20px !important;
     border-left: none !important;
     border-right: none !important;
     border-top: none !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
+    border-bottom: 1.5px solid #dbeafe !important;
+    box-shadow: 0 4px 20px -2px rgba(29, 78, 216, 0.08) !important;
     margin-top: 0px !important;
     margin-bottom: 16px !important;
     margin-left: -12px !important;
@@ -2633,11 +2633,11 @@ select.year-select option {
   .user-header::before {
     left: 0 !important;
     right: 0 !important;
-    height: 3px !important;
+    height: 3.5px !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
-    background: linear-gradient(90deg, #0d9488 0%, #10b981 100%) !important;
-    opacity: 0.8 !important;
+    background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%) !important;
+    opacity: 0.95 !important;
   }
 
   /* 🔹 แถวที่ 1: แถบเครื่องมือด้านบน (LINE Clean Top Utility Bar) */
