@@ -25,48 +25,58 @@
 /* 🏷️ BRAND ZONE */
 .sidebar-brand,
 .brand-zone {
-  padding: 16px 16px 14px 16px;
+  padding: 16px 18px 14px 18px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
   border-bottom: 1px solid #f1f5f9;
   background: #ffffff;
   flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .brand-icon {
-  width: 52px;
-  height: 36px;
-  min-width: 52px;
-  min-height: 36px;
-  background-color: #ffffff;
-  background-image: url('/assets/icons/Logo_PVT_2026_B.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  background-color: transparent !important;
+  background-image: none !important; /* Prevent double rendering / overlapping */
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
-  transition: all 0.25s ease;
-  padding: 2px 4px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.brand-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .brand-icon:hover {
-  transform: scale(1.04);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  transform: scale(1.05);
 }
 
-.brand-name {
+.brand-name,
+.logo-text {
   font-size: 13.5px;
   font-weight: 800;
-  letter-spacing: 0.3px;
-  color: #0f766e;
+  letter-spacing: -0.1px;
+  color: #1e3a8a !important; /* Deep Royal Blue */
   text-transform: uppercase;
-  white-space: nowrap !important;
-  line-height: 1.2;
+  white-space: normal;
+  line-height: 1.25;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 
 /* 🚀 SIDEBAR PRIMARY ACTION (CTA) */
@@ -81,26 +91,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  background: linear-gradient(135deg, #0d9488, #0891b2);
+  gap: 8px;
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 55%, #0284c7 100%) !important;
   color: #ffffff !important;
   border: none;
-  padding: 8px 14px;
-  border-radius: 10px;
+  padding: 9px 16px;
+  border-radius: 11px;
   font-family: inherit;
   font-weight: 700;
-  font-size: 12.5px;
+  font-size: 13px;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(13, 148, 136, 0.22);
+  box-shadow: 0 4px 14px rgba(30, 64, 175, 0.28);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   box-sizing: border-box;
 }
 
 .sidebar-cta-btn:hover {
-  background: linear-gradient(135deg, #0f766e, #0e7490);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #0369a1 100%) !important;
   transform: translateY(-1px);
-  box-shadow: 0 5px 14px rgba(13, 148, 136, 0.32);
+  box-shadow: 0 6px 18px rgba(30, 64, 175, 0.38);
   color: #ffffff !important;
 }
 
@@ -186,9 +196,9 @@
 .sidebar .nav-item.active,
 .nav-menu .nav-item.active,
 .sidebar-light .nav-item.active {
-  background: #ecfeff !important;
-  color: #0891b2 !important;
-  font-weight: 600 !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  font-weight: 700 !important;
 }
 
 .sidebar .menu-item.active .material-symbols-outlined,
@@ -196,7 +206,7 @@
 .sidebar .nav-item.active .material-symbols-outlined,
 .nav-menu .nav-item.active .material-symbols-outlined,
 .sidebar-light .nav-item.active .material-symbols-outlined {
-  color: #0891b2 !important;
+  color: #2563eb !important;
 }
 
 /* 🏷️ Custom Vector SVG Icons in Nav Items */

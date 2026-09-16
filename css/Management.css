@@ -140,28 +140,24 @@ body {
 }
 
 .brand-icon {
-  width: 52px;
-  height: 36px;
-  min-width: 52px;
-  min-height: 36px;
-  background-color: #ffffff;
-  background-image: url('/assets/icons/Logo_PVT_2026_B.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
-  transition: all 0.25s ease;
-  padding: 2px 4px;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .brand-icon:hover {
-  transform: scale(1.04);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  transform: scale(1.05);
 }
 
 .brand-icon .material-symbols-outlined {
@@ -171,11 +167,14 @@ body {
 .brand-name {
   font-size: 14.5px;
   font-weight: 800;
-  letter-spacing: 0.5px;
-  color: #0f766e;
+  letter-spacing: -0.1px;
+  color: #1e3a8a !important; /* Deep Royal Blue */
   text-transform: uppercase;
-  white-space: nowrap !important;
-  line-height: 1.2;
+  white-space: normal;
+  line-height: 1.25;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .logo-mini {
@@ -183,7 +182,7 @@ body {
   height: auto;
   max-height: 48px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(15, 164, 114, 0.15));
+  filter: drop-shadow(0 4px 8px rgba(30, 64, 175, 0.15));
   transition: var(--spring-bounce);
 }
 
@@ -199,7 +198,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, #0d9488, #0891b2);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 55%, #0284c7 100%) !important;
   color: #ffffff !important;
   border: none;
   padding: 11px 16px;
@@ -208,16 +207,16 @@ body {
   font-weight: 700;
   font-size: 13.5px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.28);
+  box-shadow: 0 4px 14px rgba(30, 64, 175, 0.28);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   box-sizing: border-box;
 }
 
 .sidebar-cta-btn:hover {
-  background: linear-gradient(135deg, #0f766e, #0e7490);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #0369a1 100%) !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.38);
+  box-shadow: 0 6px 18px rgba(30, 64, 175, 0.38);
   color: #ffffff !important;
 }
 

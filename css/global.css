@@ -421,15 +421,17 @@ body.sidebar-open {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
   background: #f8fafc;
   color: #64748b;
   cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -439,7 +441,7 @@ body.sidebar-open {
   background: #fee2e2;
   color: #ef4444;
   border-color: #fca5a5;
-  transform: scale(0.96);
+  transform: scale(1.06);
 }
 
 .btn-close-sidebar .material-symbols-outlined {

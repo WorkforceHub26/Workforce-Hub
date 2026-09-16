@@ -2616,6 +2616,7 @@ window.openMobileSidebar = function() {
   if (!sidebar) return;
 
   sidebar.classList.add("mobile-open");
+  sidebar.style.display = "flex";
   document.body.classList.add("sidebar-open");
 
   let backdrop = document.getElementById("mobileSidebarBackdrop");
@@ -2651,6 +2652,7 @@ window.openMobileSidebar = function() {
     if (sidebar) {
       sidebar.classList.remove("mobile-open");
       sidebar.classList.remove("active"); // Fix for inconsistent sidebar classes
+      sidebar.style.display = "";
     }
     document.body.classList.remove("sidebar-open");
 
