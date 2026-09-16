@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 290" width="500" height="290">
+  <rect width="500" height="290" fill="#ffffff" />
+
+  <g>
+    <!-- 1. Outer Rectangle Frame -->
+    <rect x="50" y="20" width="400" height="185" fill="none" stroke="#000078" stroke-width="6" />
+
+    <!-- 2. Solid Horizontal Bar (extends left past frame border x=50 to x=18) -->
+    <rect x="18" y="115" width="432" height="65" fill="#000078" />
+
+    <!-- 3. White Mask Gap for Hexagon -->
+    <polygon points="325,35 395,35 430,95 395,155 325,155 290,95" fill="#ffffff" stroke="#ffffff" stroke-dasharray="0" stroke-width="14" stroke-linejoin="miter" />
+
+    <!-- 4. Solid Navy Blue Hexagon -->
+    <polygon points="325,35 395,35 430,95 395,155 325,155 290,95" fill="#000078" />
+  </g>
+
+  <!-- 5. Company Name Text Below -->
+  <text x="250" y="260" font-family="'Arial Black', 'Impact', 'Trebuchet MS', sans-serif" font-weight="900" font-size="33" fill="#000078" text-anchor="middle" letter-spacing="1">P.V.T.&amp;T. PLAS CO.,LTD.</text>
+</svg>

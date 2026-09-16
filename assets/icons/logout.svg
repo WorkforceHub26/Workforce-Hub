@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Blue Rounded Squircle Base -->
+  <rect x="16" y="16" width="480" height="480" rx="140" fill="#0b66d3" />
+
+  <!-- White Exit Doorway Frame & Arrow -->
+  <!-- Doorway Frame (Rounded U-shape facing right) -->
+  <path d="M236 128 h-70 c-36 0-66 30-66 66 v124 c0 36 30 66 66 66 h70 c14 0 25-11 25-25s-11-25-25-25 h-70 c-9 0-16-7-16-16 V194 c0-9 7-16 16-16 h70 c14 0 25-11 25-25s-11-25-25-25 Z" fill="#ffffff" />
+
+  <!-- Arrow Shaft & Arrow Head (Pointing Right) -->
+  <!-- Horizontal Shaft -->
+  <path d="M196 256 c0-14 11-25 25-25 h160 c14 0 25 11 25 25s-11 25-25 25 H221 c-14 0-25-11-25-25 Z" fill="#ffffff" />
+  <!-- Arrow Head -->
+  <path d="M294 175 c-10-10-10-26 0-36 10-10 26-10 36 0 l105 105 c10 10 10 26 0 36 L330 385 c-10 10-26 10-36 0 -10-10-10-26 0-36 l87-87 L294 175 Z" fill="#ffffff" />
+</svg>

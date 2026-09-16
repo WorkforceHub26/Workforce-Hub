@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>ข่าวสารและประกาศองค์กร | PVT Workforce Hub</title>
+  
+  <!-- Typography & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/leave-history.css" />
+  <link rel="stylesheet" href="/css/company-news.css" />
+  <link rel="stylesheet" href="/css/news-user.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div class="app-container" id="appLayout">
+    
+    <!--  LEFT SIDEBAR MENU -->
+    <aside class="sidebar" id="sidebarMenu">
+      <div class="sidebar-brand brand-zone">
+        <div class="brand-icon"></div>
+        <div class="brand-name logo-text">PVT WORKFORCE HUB</div>
+        <button type="button" class="btn-close-sidebar" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(false);}else if(typeof window.closeMobileSidebar==='function'){window.closeMobileSidebar();}" title="ปิดเมนู">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+      </div>
+
+      <!--  ปุ่มกดยื่นใบลา -->
+      <div class="sidebar-cta-wrap">
+        <a href="/pages/user/leave-user.html" class="sidebar-cta-btn" title="ยื่นใบลาออนไลน์">
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
+          <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <a href="/pages/user/index-user.html" class="menu-item">
+          <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+          <span>หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="menu-item">
+          <img src="/assets/icons/user-profile.svg" alt="ข้อมูลส่วนตัว" class="nav-icon-custom" />
+          <span>ข้อมูลส่วนตัว</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="menu-item">
+          <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" class="nav-icon-custom" />
+          <span>ประวัติการลา</span>
+        </a>
+        <a href="/pages/user/holidays.html" class="menu-item">
+          <img src="/assets/icons/calendar-event.svg" alt="ปฏิทิน" class="nav-icon-custom" />
+          <span>ปฏิทิน</span>
+        </a>
+        <a href="/pages/user/news.html" class="menu-item active">
+          <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+          <span>ข่าวสาร</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-title">บริการด่วน</div>
+
+        <!-- 🪪 ปุ่มบัตรพนักงานดิจิทัล -->
+        <button type="button" class="menu-item" onclick="viewMyDigitalCard()" title="บัตรพนักงานดิจิทัล">
+          <img src="/assets/icons/employee-card-badge.svg" alt="บัตรพนักงาน" class="nav-icon-custom" />
+          <span>บัตรพนักงาน</span>
+        </button>
+
+        <!--  ปุ่มเชื่อมต่อ LINE -->
+        <button type="button" class="menu-item" onclick="generateLineLinkToken()" title="เชื่อมต่อ LINE แจ้งเตือน">
+          <img src="/assets/icons/line.svg" alt="LINE" class="nav-icon-custom" />
+          <span>LINE</span>
+        </button>
+
+        <!--  ปุ่มดูกฎระเบียบบริษัท -->
+        <a href="/pages/user/leave-rules.html" class="menu-item" title="กฎระเบียบและเงื่อนไขการลา">
+          <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" class="nav-icon-custom" />
+          <span>กฎระเบียบ</span>
+        </a>
+
+        <!--  ปุ่มคู่มือการใช้งาน -->
+        <a href="/pages/user/full-guide.html" class="menu-item" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span>แนะนำระบบ</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <button type="button" class="menu-item" onclick="openSystemSettingsModal()" title="การตั้งค่าระบบ">
+          <img src="/assets/icons/settings.svg" alt="ตั้งค่า" class="nav-icon-custom" style="border-radius: 6px;" />
+          <span>ตั้งค่า</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button type="button" class="btn-logout" onclick="handleLogout()" title="ออกจากระบบ">
+          <img src="/assets/icons/logout.svg" alt="ออกจากระบบ" class="nav-icon-custom" />
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!--  MAIN CONTENT -->
+    <main class="main-content">
+      
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(event);}else if(typeof toggleMobileSidebar==='function'){toggleMobileSidebar();}" title="เปิด/ปิด เมนู">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; width: 22px; height: 22px;"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div>
+            <h1 class="page-title" style="margin: 0; font-size: 20px; font-weight: 800; color: #0f172a;"> ศูนย์ข่าวสารและประกาศองค์กร</h1>
+            <p style="margin: 2px 0 0 0; font-size: 13px; color: #64748b;">ติดตามข่าวสาร ประชาสัมพันธ์ และกิจกรรมภายในองค์กร พี.วี.ที. แอนด์ ที.พลาส</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div class="news-hub-container">
+
+          <!-- Highlight Pinned News Banner -->
+          <div id="pinnedHeroBanner" style="display: none;"></div>
+
+          <!-- Category Pills Filter -->
+          <div class="category-pills-bar">
+            <button class="cat-pill active" onclick="selectUserNewsCategory('all', this)">
+              <span> ทั้งหมด</span>
+            </button>
+            <button class="cat-pill" onclick="selectUserNewsCategory('urgent', this)">
+              <span> ประกาศด่วน</span>
+            </button>
+            <button class="cat-pill" onclick="selectUserNewsCategory('announcement', this)">
+              <span> ประชาสัมพันธ์</span>
+            </button>
+            <button class="cat-pill" onclick="selectUserNewsCategory('holiday', this)">
+              <span> วันหยุด/ปฏิทิน</span>
+            </button>
+            <button class="cat-pill" onclick="selectUserNewsCategory('welfare', this)">
+              <span> สวัสดิการ</span>
+            </button>
+            <button class="cat-pill" onclick="selectUserNewsCategory('activity', this)">
+              <span> กิจกรรมองค์กร</span>
+            </button>
+          </div>
+
+          <!-- Search Toolbar -->
+          <div class="user-news-toolbar">
+            <div class="user-search-wrap">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" id="userNewsSearchInput" class="user-search-input" placeholder="ค้นหาข่าวสาร, สวัสดิการ, ประกาศ..." oninput="renderUserNewsGrid()" />
+            </div>
+            <div style="font-size: 13px; color: #64748b;">
+              พบ <strong id="userNewsCount" style="color: #0f766e;">0</strong> รายการ
+            </div>
+          </div>
+
+          <!-- News Cards Grid -->
+          <div id="userNewsGridContainer" class="user-news-grid"></div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/supabase-config.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/system-settings.js"></script>
+  <script src="/js/company-news.js"></script>
+  <script src="/js/news-user.js"></script>
+  <script src="/js/employee-card-modal.js"></script>
+</body>
+</html>

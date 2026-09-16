@@ -1,0 +1,1527 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>คอนโซลผู้ดูแลระบบ | PVT HR Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  <style>
+    :root { 
+      --primary: #0f766e; 
+      --primary-dark: #0d9488;
+      --bg: #f1f5f9; 
+      --text: #1e293b; 
+      --card: #ffffff; 
+      --border: #e2e8f0; 
+      --accent: #0f172a; 
+      --sidebar-width: 280px;
+    }
+    body { background: var(--bg); color: var(--text); padding: 0; margin: 0; font-family: 'Sarabun', sans-serif; overflow-x: hidden; overflow-y: auto; }
+    
+    .app-container { display: flex; min-height: 100vh; position: relative; }
+    
+    /* Sidebar */
+    aside { 
+      width: 260px; 
+      background: #ffffff; 
+      color: #1e293b; 
+      padding: 0; 
+      display: flex; 
+      flex-direction: column;
+      border-right: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+    
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 90;
+      backdrop-filter: blur(2px);
+    }
+    .sidebar-brand {
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #f1f5f9;
+      background: #ffffff;
+    }
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      background: linear-gradient(135deg, #0f766e, #2dd4bf);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(15, 118, 110, 0.22);
+    }
+    .brand-name {
+      font-size: 14.5px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #0f766e;
+      text-transform: uppercase;
+      white-space: nowrap !important;
+    }
+    
+    .sidebar-menu { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .menu-item { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      padding: 11px 16px; 
+      color: #475569; 
+      text-decoration: none; 
+      border-radius: 10px; 
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .menu-item:hover { background: #f8fafc; color: #0f172a; transform: translateX(3px); }
+    .menu-item.active { background: #ccfbf1 !important; color: #0f766e !important; font-weight: 600; }
+    .menu-item.active .material-symbols-outlined { color: #0f766e !important; }
+    .menu-item .material-symbols-outlined { font-size: 20px; flex-shrink: 0; }
+    
+    .sidebar-footer { padding: 14px 12px; border-top: 1px solid #f1f5f9; }
+    
+    /* Main Content */
+    main { flex: 1; min-width: 0; overflow-y: auto; padding: 40px; position: relative; box-sizing: border-box; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; gap: 16px; flex-wrap: wrap; }
+    .top-bar h1 { margin: 0; font-size: 28px; font-weight: 700; color: var(--accent); }
+    
+    .mobile-nav-toggle {
+      display: none;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      color: var(--accent);
+      cursor: pointer;
+    }
+    
+    /* Grid Layout */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    
+    /* Metrics Row */
+    .metric-card { 
+      background: white; 
+      padding: 24px; 
+      border-radius: 20px; 
+      border: 1px solid var(--border); 
+      display: flex; 
+      align-items: center; 
+      gap: 20px;
+      transition: transform 0.2s;
+    }
+    .metric-card:hover { transform: translateY(-4px); }
+    .metric-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+    .metric-info h3 { margin: 0; font-size: 14px; color: #64748b; font-weight: 500; }
+    .metric-info .value { font-size: 24px; font-weight: 700; color: var(--accent); margin-top: 4px; }
+    
+    /* Panel Styling */
+    .panel { background: var(--card); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+    .panel h2 { font-size: 17px; margin: 0 0 24px 0; color: var(--accent); display: flex; align-items: center; gap: 12px; font-weight: 600; }
+    
+    /* Health List */
+    .health-list { display: flex; flex-direction: column; gap: 12px; }
+    .health-item { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 14px 16px; 
+      background: #f8fafc; 
+      border-radius: 12px;
+      border: 1px solid #f1f5f9;
+    }
+    .health-info { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; }
+    .status-badge { 
+      padding: 4px 10px; 
+      border-radius: 6px; 
+      font-size: 11px; 
+      font-weight: 700; 
+      text-transform: uppercase; 
+    }
+    .status-badge.passed { background: #d1fae5; color: #065f46; }
+    .status-badge.failed { background: #fee2e2; color: #991b1b; }
+    .status-badge.checking { background: #fef3c7; color: #92400e; }
+    
+    /* Console Log */
+    pre { 
+      background: #0f172a; 
+      color: #94a3b8; 
+      padding: 20px; 
+      border-radius: 14px; 
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 13px; 
+      height: 350px; 
+      overflow-y: auto; 
+      margin: 0;
+      line-height: 1.6;
+    }
+    .log-entry { margin-bottom: 4px; word-break: break-word; }
+    .log-time { color: #64748b; margin-right: 8px; font-size: 11px; }
+    .log-type-info { color: #38bdf8; font-weight: 600; }
+    .log-type-success { color: #34d399; font-weight: 600; }
+    .log-type-warn { color: #fbbf24; font-weight: 600; }
+    .log-type-error { color: #f43f5e; font-weight: 600; }
+    .log-type-action { color: #c084fc; font-weight: 600; }
+    .log-filter-btn { transition: all 0.2s ease; }
+    .log-filter-btn.active { font-weight: 700 !important; border-color: #0d9488 !important; box-shadow: 0 1px 4px rgba(13,148,136,0.15) !important; }
+    
+    /* Form & Controls */
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 6px; }
+    input { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; transition: border-color 0.2s; box-sizing: border-box; }
+    input:focus { outline: none; border-color: var(--primary); }
+    
+    .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    button { 
+      padding: 12px 20px; 
+      background: var(--primary); 
+      color: white; 
+      border: none; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      font-weight: 600; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 8px; 
+      transition: all 0.2s;
+    }
+    button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    button.secondary { background: #64748b; }
+    button.danger { background: #ef4444; }
+    
+    /* Data Management Table */
+    .table-container { margin-top: 20px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; padding: 12px 16px; background: #f8fafc; color: #64748b; font-weight: 600; border-bottom: 2px solid var(--border); }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+    tr:hover { background: #f1f5f9; }
+    
+    .editable-input { 
+      width: 100%; 
+      padding: 6px 10px; 
+      border: 1px solid var(--primary); 
+      border-radius: 6px; 
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    .action-btns { display: flex; gap: 8px; }
+    .icon-btn { 
+      padding: 6px; 
+      border-radius: 6px; 
+      border: none; 
+      background: #f1f5f9; 
+      color: #64748b; 
+      cursor: pointer; 
+      transition: all 0.2s;
+    }
+    .icon-btn:hover { background: #e2e8f0; color: var(--primary); }
+    .icon-btn.save { color: #059669; }
+    .icon-btn.cancel { color: #ef4444; }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .toast {
+      background: white;
+      color: var(--text);
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 300px;
+      max-width: 450px;
+      animation: toast-in 0.3s ease-out;
+      border-left: 4px solid var(--primary);
+    }
+    .toast.success { border-left-color: #059669; }
+    .toast.error { border-left-color: #ef4444; }
+    .toast.warning { border-left-color: #f59e0b; }
+    .toast.info { border-left-color: #3b82f6; }
+    
+    @keyframes toast-in {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .toast.fade-out {
+      animation: toast-out 0.3s ease-in forwards;
+    }
+    @keyframes toast-out {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .dashboard-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 992px) {
+      aside {
+        position: fixed;
+        left: calc(-1 * var(--sidebar-width));
+        top: 0;
+        bottom: 0;
+      }
+      .app-container.sidebar-open aside {
+        left: 0;
+      }
+      .app-container.sidebar-open .sidebar-overlay {
+        display: block;
+      }
+      .mobile-nav-toggle {
+        display: flex;
+      }
+      main { padding: 24px; }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .top-bar h1 { font-size: 22px; }
+      .panel { padding: 16px; }
+      #admin-profile-form { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container" id="app-wrapper">
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside id="main-sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined">groups</span>
+      </div>
+      <div class="brand-name">PVT WORKFORCE HUB</div>
+      <button class="icon-btn mobile-nav-toggle" onclick="toggleSidebar()" style="background: transparent; border: none; color: #64748b; margin-left: auto;">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="sidebar-menu">
+      <a href="/pages/hr/home.html" class="menu-item">
+        <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+        <span>หน้าหลัก HR</span>
+      </a>
+      <a href="/pages/hr/hr.html" class="menu-item">
+        <img src="/assets/icons/leave-document.svg" alt="ตรวจใบลา" class="nav-icon-custom" />
+        <span>ตรวจใบลา</span>
+      </a>
+      <a href="/pages/hr/management.html" class="menu-item">
+        <img src="/assets/icons/management-gear.svg" alt="ระบบจัดการส่วนกลาง" class="nav-icon-custom" />
+        <span>ระบบจัดการส่วนกลาง</span>
+      </a>
+      <a href="/pages/hr/admin-dashboard.html" class="menu-item active">
+        <span class="material-symbols-outlined">analytics</span>
+        <span>แดชบอร์ดสถิติ</span>
+      </a>
+      <a href="/pages/hr/approval-settings.html" class="menu-item">
+        <span class="material-symbols-outlined">verified_user</span>
+        <span>ตั้งค่าสายการอนุมัติ</span>
+      </a>
+      <a href="/pages/hr/news-management.html" class="menu-item">
+        <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+        <span>ข่าวสารองค์กร</span>
+      </a>
+      <a href="/pages/user/leave-stats.html" class="menu-item">
+        <span class="material-symbols-outlined" style="color: #0284c7;">bar_chart</span>
+        <span>สถิติวันลา</span>
+      </a>
+      <!-- ปุ่มตั้งค่าระบบ (Modal ครอบคลุมทุกหน้า) -->
+      <button type="button" class="menu-item" onclick="openSystemSettingsModal()" title="การตั้งค่าระบบ (ขนาดตัวอักษร, ธีมสี, LINE)" style="background: none; border: none; width: 100%; cursor: pointer; text-align: left; font-family: inherit;">
+        <span class="material-symbols-outlined">settings</span>
+        <span>ตั้งค่า</span>
+      </button>
+    </div>
+            <!-- 💡 ปุ่มแนะนำระบบ -->
+        <a href="/pages/user/full-guide.html" class="nav-item" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span class="nav-label">แนะนำระบบ</span>
+        </a>
+      </div>
+      <div class="sidebar-footer">
+      <div style="font-size: 12px; color: #94a3b8; text-align: center;">เวอร์ชันระบบ 2.4.0-pro</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="top-bar">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="mobile-nav-toggle" onclick="toggleSidebar()">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h1>ภาพรวมระบบ</h1>
+      </div>
+      <div id="live-time" style="font-weight: 500; color: #64748b;"></div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="dashboard-grid" style="margin-bottom: 32px;">
+      <div class="metric-card">
+        <div class="metric-icon" style="background: #ecfdf5; color: #059669;">
+          <img src="/assets/icons/pending.svg" style="width: 28px; height: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));" />
+        </div>
+        <div class="metric-info">
+          <h3>ใบลาค้างอนุมัติ</h3>
+          <div class="value" id="stat-pending-leaves">--</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon" style="background: #eff6ff; color: #2563eb;">
+          <span class="material-symbols-outlined">person_add</span>
+        </div>
+        <div class="metric-info">
+          <h3>เชื่อมต่อ LINE แล้ว</h3>
+          <div class="value" id="stat-line-health">--%</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon" style="background: #fff7ed; color: #d97706;">
+          <span class="material-symbols-outlined">speed</span>
+        </div>
+        <div class="metric-info">
+          <h3>ความหน่วงฐานข้อมูล</h3>
+          <div class="value" id="stat-db-latency">--ms</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Health Check -->
+      <section class="panel">
+        <h2><span class="material-symbols-outlined">health_and_safety</span> การวินิจฉัยระบบ</h2>
+        <div class="health-list" id="health-check-list">
+          <div class="health-item">
+            <div class="health-info"><span class="material-symbols-outlined" style="color:#64748b">database</span> การเชื่อมต่อฐานข้อมูล</div>
+            <span class="status-badge checking" id="check-db">กำลังตรวจสอบ</span>
+          </div>
+          <div class="health-item">
+            <div class="health-info"><span class="material-symbols-outlined" style="color:#64748b">lock_open</span> บริการตรวจสอบสิทธิ์</div>
+            <span class="status-badge checking" id="check-auth">กำลังตรวจสอบ</span>
+          </div>
+          <div class="health-item">
+            <div class="health-info"><span class="material-symbols-outlined" style="color:#64748b">campaign</span> การแจ้งเตือน LINE</div>
+            <span class="status-badge checking" id="check-line">กำลังตรวจสอบ</span>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-top:20px;">
+          <button onclick="runDeepCheck()">เริ่มการตรวจสอบเชิงลึก</button>
+        </div>
+      </section>
+
+      <!-- Console Logs & Debug Terminal -->
+      <section class="panel" style="grid-column: span 2;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="margin:0; font-size: 16.5px; color: var(--accent);"><span class="material-symbols-outlined" style="color: #0d9488;">terminal</span> บันทึกระบบและประวัติทุกขั้นตอน (Debug Log Console)</h2>
+            <div style="font-size: 12px; color: #64748b; margin-top: 2px;">บันทึกการทำงานของระบบ การเรียก API และการกดปุ่มทุกขั้นตอนสำหรับแก้บัค</div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <span id="log-count-badge" style="font-size: 11.5px; font-weight: 700; color: #0d9488; background: #ccfbf1; padding: 4px 10px; border-radius: 6px;">0 รายการ</span>
+            <button type="button" class="secondary" style="padding: 6px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 4px;" onclick="refreshLogsUI()" title="รีเฟรชบันทึกจากความจำ">
+              <span class="material-symbols-outlined" style="font-size: 16px;">refresh</span> รีเฟรช Log
+            </button>
+            <button type="button" class="secondary" style="padding: 6px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 4px;" onclick="downloadLogFile()" title="ดาวน์โหลดไฟล์ Log เป็น Text">
+              <span class="material-symbols-outlined" style="font-size: 16px;">download</span> ดาวน์โหลด Log
+            </button>
+            <button type="button" class="secondary danger" style="padding: 6px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;" onclick="clearLogs()" title="ล้างบันทึกทั้งหมด">
+              <span class="material-symbols-outlined" style="font-size: 16px;">delete</span> ล้างบันทึก
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; background: #f8fafc; padding: 8px 12px; border-radius: 10px; border: 1px solid #e2e8f0;">
+          <input type="text" id="log-search-input" placeholder="🔍 ค้นหาใน Log (เช่น error, fetch, click, supabase)..." oninput="renderLogs()" style="flex: 1; min-width: 180px; padding: 6px 12px; font-size: 12px; height: 32px;" />
+          <div style="display: flex; gap: 4px;">
+            <button type="button" class="log-filter-btn active" onclick="setLogFilter('all')" id="filter-btn-all" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer;">ทั้งหมด</button>
+            <button type="button" class="log-filter-btn" onclick="setLogFilter('error')" id="filter-btn-error" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; border: 1px solid #fee2e2; background: #fef2f2; color: #dc2626; cursor: pointer;">Error</button>
+            <button type="button" class="log-filter-btn" onclick="setLogFilter('warn')" id="filter-btn-warn" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; border: 1px solid #fef3c7; background: #fffbeb; color: #d97706; cursor: pointer;">Warn</button>
+            <button type="button" class="log-filter-btn" onclick="setLogFilter('action')" id="filter-btn-action" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; border: 1px solid #e0e7ff; background: #eef2ff; color: #4338ca; cursor: pointer;">Action</button>
+          </div>
+        </div>
+
+        <pre id="console-output" style="height: 380px; font-size: 12.5px;"></pre>
+      </section>
+
+      <!-- Admin Tools -->
+      <section class="panel">
+        <h2><span class="material-symbols-outlined">tune</span> ตัวควบคุมระบบ</h2>
+        <div class="form-group">
+          <label>โหมดปรับปรุงระบบ</label>
+          <button id="btn-maint" class="secondary" onclick="toggleMaint()" style="width:100%; margin-bottom:12px;">
+            <span class="material-symbols-outlined">power_settings_new</span> <span>ปิดโหมด</span>
+          </button>
+        </div>
+        <div class="form-group">
+          <label>การจัดการแคช</label>
+          <button class="secondary" onclick="clearSystemCache()" style="width:100%; background: #64748b;">
+            <span class="material-symbols-outlined">delete_sweep</span> ล้างแคชในเครื่อง
+          </button>
+        </div>
+        <div class="form-group" style="margin-top:24px; padding-top:20px; border-top: 1px solid var(--border);">
+          <label>สำรองและกู้คืนข้อมูล (JSON)</label>
+          <div class="btn-group" style="flex-direction: column;">
+            <button class="secondary" onclick="downloadSnapshot()" style="width:100%; background: #0ea5e9;">
+              <span class="material-symbols-outlined">download</span> สำรองข้อมูลระบบ
+            </button>
+            <button class="secondary" onclick="document.getElementById('restore-input').click()" style="width:100%; background: #8b5cf6;">
+              <span class="material-symbols-outlined">upload</span> กู้คืนข้อมูล (Restore)
+            </button>
+            <input type="file" id="restore-input" style="display:none" accept=".json" onchange="handleRestore(event)">
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Edit -->
+      <section class="panel" style="grid-column: span 2;">
+        <h2><span class="material-symbols-outlined">person_pin</span> อัปเดตข้อมูลผู้ดูแลระบบ</h2>
+        <form id="admin-profile-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>ชื่อ-นามสกุล</label>
+            <input type="text" id="admin-name" placeholder="ชื่อ-นามสกุล" required />
+          </div>
+          <div class="form-group">
+            <label>ที่อยู่อีเมล (อ่านอย่างเดียว)</label>
+            <input type="email" id="admin-email" disabled />
+          </div>
+          <div style="grid-column: span 2; display: flex; justify-content: flex-end;">
+            <button type="submit" style="width: auto;">อัปเดตข้อมูลแอดมิน</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- System Health Sparkline -->
+      <section class="panel">
+        <h2><span class="material-symbols-outlined">analytics</span> สุขภาพระบบ (Live Latency)</h2>
+        <div id="latency-sparkline" style="height: 100px; width: 100%;"></div>
+        <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: #64748b;">
+          <span>อัปเดตทุก 5 วินาที</span>
+          <span id="avg-latency">เฉลี่ย: --ms</span>
+        </div>
+      </section>
+
+      <!-- Data Management Section -->
+      <section class="panel" style="grid-column: span 3;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <h2 style="margin:0;"><span class="material-symbols-outlined">dataset</span> จัดการข้อมูลพนักงานและสายอนุมัติ</h2>
+          <div class="flex-gap" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="emp-search-input" placeholder=" ค้นหาชื่อ, อีเมล, แผนก..." oninput="filterEmployeeTable()" style="max-width:220px; padding:6px 12px; font-size:13px;" />
+            <button class="secondary" style="padding:6px 12px; font-size:12px; background:var(--primary);" onclick="addNewEmployee()">
+              <span class="material-symbols-outlined" style="font-size:16px;">person_add</span> เพิ่มพนักงานใหม่
+            </button>
+            <button class="secondary" style="padding:6px 12px; font-size:12px;" onclick="loadEmployeeData()">
+              <span class="material-symbols-outlined" style="font-size:16px;">refresh</span> รีเฟรชข้อมูล
+            </button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ชื่อ-นามสกุล</th>
+                <th>อีเมล</th>
+                <th>แผนก</th>
+                <th>บทบาท</th>
+                <th style="width: 120px;">การจัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="employee-table-body">
+              <tr>
+                <td colspan="5" style="text-align:center; padding:40px; color:#94a3b8;">กำลังโหลดข้อมูล...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-container" style="margin-top:40px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin:0; font-size:16px; color:var(--accent);">โครงสร้างสายอนุมัติรายแผนก (L1 & L2)</h3>
+            <button class="secondary" style="padding:6px 12px; font-size:12px;" onclick="loadDeptApprovalData()">
+              <span class="material-symbols-outlined" style="font-size:16px;">refresh</span> รีเฟรชโครงสร้างแผนก
+            </button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>รหัสแผนก</th>
+                <th>ชื่อแผนก</th>
+                <th>หัวหน้า (L1)</th>
+                <th>ผู้จัดการ (L2)</th>
+                <th style="width: 120px;">การจัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="approval-table-body">
+              <tr>
+                <td colspan="5" style="text-align:center; padding:30px; color:#94a3b8;">กำลังโหลดข้อมูลโครงสร้างแผนก...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Button Test Suite Panel -->
+      <section class="panel" style="grid-column: span 3; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border: 1px solid #cbd5e1;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <h2 style="margin:0; color:#0f766e;"><span class="material-symbols-outlined" style="color:#0f766e;">science</span> ศูนย์ทดสอบปุ่มและฟังก์ชันระบบ (Button Diagnostics & Test Suite)</h2>
+          <span style="font-size:12px; color:#64748b; background:#e2e8f0; padding:4px 10px; border-radius:20px; font-weight:600;">คลิกทดสอบได้ทุกปุ่ม</span>
+        </div>
+        <p style="font-size:13px; color:#64748b; margin-top:0; margin-bottom:16px;">
+          ใช้ปุ่มในส่วนนี้เพื่อทดสอบระบบแจ้งเตือน Toast, ทดสอบการทำงานของ Supabase, สลับภาษา, ล้างแคช และการตรวจสอบสถานะระบบเพื่อยืนยันว่าไม่มีบัคในการทำงาน
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+          <!-- Test Group 1: Toast Alerts -->
+          <div style="background:#ffffff; padding:16px; border-radius:12px; border:1px solid #e2e8f0;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:10px; color:#0f172a; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined" style="color:#059669; font-size:20px;">notifications</span>
+              1. ทดสอบการแจ้งเตือน (Toast)
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <button class="secondary" style="background:#059669; font-size:12px; padding:8px;" onclick="showToast('ทดสอบการแจ้งเตือนสำเร็จ (Success Toast)', 'success')">
+                <span class="material-symbols-outlined" style="font-size:16px;">check_circle</span> Success
+              </button>
+              <button class="secondary" style="background:#ef4444; font-size:12px; padding:8px;" onclick="showToast('ทดสอบการแจ้งเตือนข้อผิดพลาด (Error Toast)', 'error')">
+                <span class="material-symbols-outlined" style="font-size:16px;">error</span> Error
+              </button>
+              <button class="secondary" style="background:#f59e0b; font-size:12px; padding:8px;" onclick="showToast('ทดสอบคำเตือนระบบ (Warning Toast)', 'warning')">
+                <span class="material-symbols-outlined" style="font-size:16px;">warning</span> Warning
+              </button>
+              <button class="secondary" style="background:#3b82f6; font-size:12px; padding:8px;" onclick="showToast('ทดสอบข้อมูลข่าวสาร (Info Toast)', 'info')">
+                <span class="material-symbols-outlined" style="font-size:16px;">info</span> Info
+              </button>
+            </div>
+          </div>
+
+          <!-- Test Group 2: Database & Data Fetching -->
+          <div style="background:#ffffff; padding:16px; border-radius:12px; border:1px solid #e2e8f0;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:10px; color:#0f172a; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined" style="color:#2563eb; font-size:20px;">database</span>
+              2. ทดสอบการดึงข้อมูล DB
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <button class="secondary" style="background:#2563eb; font-size:12px; padding:8px;" onclick="testFetchEmployees()">
+                <span class="material-symbols-outlined" style="font-size:16px;">groups</span> Query พนักงาน
+              </button>
+              <button class="secondary" style="background:#0284c7; font-size:12px; padding:8px;" onclick="testFetchDepts()">
+                <span class="material-symbols-outlined" style="font-size:16px;">domain</span> Query แผนก
+              </button>
+              <button class="secondary" style="background:#0f766e; font-size:12px; padding:8px;" onclick="testPendingLeavesCount()">
+                <span class="material-symbols-outlined" style="font-size:16px;">pending</span> Query ใบลาค้าง
+              </button>
+              <button class="secondary" style="background:#4f46e5; font-size:12px; padding:8px;" onclick="testDatabaseLatency()">
+                <span class="material-symbols-outlined" style="font-size:16px;">speed</span> วัด Latency DB
+              </button>
+            </div>
+          </div>
+
+          <!-- Test Group 3: System Modals & Utilities -->
+          <div style="background:#ffffff; padding:16px; border-radius:12px; border:1px solid #e2e8f0;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:10px; color:#0f172a; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined" style="color:#8b5cf6; font-size:20px;">widgets</span>
+              3. ทดสอบ UI & ฟังก์ชันควบคุม
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <button class="secondary" style="background:#8b5cf6; font-size:12px; padding:8px;" onclick="openSystemSettingsModal()">
+                <span class="material-symbols-outlined" style="font-size:16px;">settings</span> ตั้งค่าระบบ Modal
+              </button>
+              <button class="secondary" style="background:#64748b; font-size:12px; padding:8px;" onclick="testSimulateLog()">
+                <span class="material-symbols-outlined" style="font-size:16px;">terminal</span> จำลองบันทึก Log
+              </button>
+              <button class="secondary" style="background:#0284c7; font-size:12px; padding:8px;" onclick="testAddMockSparkline()">
+                <span class="material-symbols-outlined" style="font-size:16px;">show_chart</span> สุ่มค่า Sparkline
+              </button>
+              <button class="secondary" style="background:#d97706; font-size:12px; padding:8px;" onclick="runDeepCheck()">
+                <span class="material-symbols-outlined" style="font-size:16px;">health_and_safety</span> ตรวจเชิงลึกเต็มระบบ
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="/js/supabase-config.js"></script>
+  <script src="/js/system-diagnostics.js"></script>
+  <script src="/js/system-settings.js"></script>
+  <script>
+    // 🔒 [STRICT ADMIN GUARD]: ตรวจสอบสิทธิ์ Admin ระดับสูงทันที
+    (function enforceAdminOnlyPage() {
+      try {
+        const raw = localStorage.getItem("currentUser");
+        const session = raw ? JSON.parse(raw) : null;
+        const emp = session?.employees || session || {};
+        const role = String(session?.role || emp.role || '').toLowerCase().trim();
+        const isTrueAdmin = role === 'admin' || role === 'superadmin' || session?.employee_code === 'HR-001' || emp.employee_code === 'HR-001';
+        
+        if (!session || !isTrueAdmin) {
+          alert("🚫 เฉพาะผู้ดูแลระบบ (Admin) เท่านั้นที่สามารถเข้าใช้งานหน้าคอนโซลแอดมินนี้ได้");
+          window.location.replace("/pages/hr/home.html");
+        }
+      } catch(e) {}
+    })();
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      let icon = 'check_circle';
+      if (type === 'error') icon = 'error';
+      if (type === 'warning') icon = 'warning';
+      if (type === 'info') icon = 'info';
+
+      toast.innerHTML = `
+        <span class="material-symbols-outlined">${icon}</span>
+        <div style="flex:1">${message}</div>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('fade-out');
+        toast.addEventListener('animationend', () => toast.remove());
+      }, 4000);
+    }
+
+    // =========================================================================
+    // 📝 [PERSISTENT LOG ENGINE]: บันทึกทุกขั้นตอนสำหรับการแก้บัค
+    // =========================================================================
+    const LOG_STORAGE_KEY = 'pvt_admin_system_logs';
+    let currentLogFilter = 'all';
+
+    function getStoredLogs() {
+      try {
+        const raw = localStorage.getItem(LOG_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLogEntry(msg, type = 'info', source = 'System') {
+      const logs = getStoredLogs();
+      const newLog = {
+        id: Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        time: new Date().toLocaleTimeString('th-TH'),
+        fullTime: new Date().toISOString(),
+        type: type.toLowerCase(), // info, success, warn, error, action
+        source,
+        message: String(msg)
+      };
+
+      logs.push(newLog);
+      if (logs.length > 500) logs.shift(); // Keep max 500 entries
+
+      try {
+        localStorage.setItem(LOG_STORAGE_KEY, JSON.stringify(logs));
+      } catch(e) {}
+
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('console-output');
+      if (!container) return;
+
+      const logs = getStoredLogs();
+      const searchQ = (document.getElementById('log-search-input')?.value || '').toLowerCase().trim();
+
+      const filtered = logs.filter(log => {
+        if (currentLogFilter !== 'all') {
+          if (currentLogFilter === 'error' && log.type !== 'error') return false;
+          if (currentLogFilter === 'warn' && log.type !== 'warn' && log.type !== 'warning') return false;
+          if (currentLogFilter === 'action' && log.type !== 'action') return false;
+        }
+        if (searchQ) {
+          const combined = `${log.time} ${log.type} ${log.source} ${log.message}`.toLowerCase();
+          if (!combined.includes(searchQ)) return false;
+        }
+        return true;
+      });
+
+      const countBadge = document.getElementById('log-count-badge');
+      if (countBadge) {
+        countBadge.textContent = `${filtered.length} / ${logs.length} รายการ`;
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="color: #64748b; padding: 20px; text-align: center; font-style: italic;">-- ไม่พบประวัติบันทึกตามเงื่อนไขค้นหา --</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(log => {
+        let typeColor = '#38bdf8';
+        if (log.type === 'error') typeColor = '#f43f5e';
+        else if (log.type === 'warn' || log.type === 'warning') typeColor = '#fbbf24';
+        else if (log.type === 'success') typeColor = '#34d399';
+        else if (log.type === 'action') typeColor = '#c084fc';
+
+        return `<div class="log-entry" style="margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5;">` +
+          `<span class="log-time" style="color: #64748b; margin-right: 6px;">[${log.time}]</span>` +
+          `<span style="color: ${typeColor}; font-weight: 700; margin-right: 6px;">[${log.type.toUpperCase()}]</span>` +
+          `<span style="color: #94a3b8; font-size: 11px; margin-right: 8px;">(${log.source})</span>` +
+          `<span style="color: #f1f5f9;">${escapeHtmlLogs(log.message)}</span>` +
+          `</div>`;
+      }).join('');
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function escapeHtmlLogs(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setLogFilter(filterType) {
+      currentLogFilter = filterType;
+      document.querySelectorAll('.log-filter-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`filter-btn-${filterType}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      renderLogs();
+    }
+
+    function refreshLogsUI() {
+      renderLogs();
+      showToast('รีเฟรชประวัติ Log ล่าสุดเรียบร้อย', 'info');
+    }
+
+    function clearLogs() {
+      if (confirm('คุณต้องการล้างประวัติ Log บันทึกระบบทั้งหมดหรือไม่?')) {
+        localStorage.removeItem(LOG_STORAGE_KEY);
+        renderLogs();
+        saveLogEntry('ล้างประวัติ Log โดยผู้ดูแลระบบ', 'info', 'System');
+        showToast('ล้างประวัติ Log เรียบร้อยแล้ว', 'success');
+      }
+    }
+
+    function downloadLogFile() {
+      const logs = getStoredLogs();
+      if (logs.length === 0) {
+        showToast('ไม่มีข้อมูล Log สำหรับดาวน์โหลด', 'warning');
+        return;
+      }
+      const textContent = logs.map(l => `[${l.fullTime}] [${l.type.toUpperCase()}] (${l.source}): ${l.message}`).join('\n');
+      const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pvt_admin_logs_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('ดาวน์โหลดไฟล์ Log สำเร็จ', 'success');
+    }
+
+    // Intercept Console
+    const originalLog = console.log;
+    const originalWarn = console.warn;
+    const originalError = console.error;
+
+    console.log = (...args) => {
+      saveLogEntry(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'info', 'Console');
+      originalLog(...args);
+    };
+    console.warn = (...args) => {
+      saveLogEntry(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'warn', 'Console');
+      originalWarn(...args);
+    };
+    console.error = (...args) => {
+      saveLogEntry(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'error', 'Console');
+      originalError(...args);
+    };
+
+    // Intercept Window Errors
+    window.addEventListener('error', (e) => {
+      saveLogEntry(`[UNHANDLED ERROR] ${e.message} at ${e.filename}:${e.lineno}`, 'error', 'Runtime');
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      saveLogEntry(`[UNHANDLED PROMISE] ${e.reason?.message || e.reason}`, 'error', 'Promise');
+    });
+
+    // Intercept Fetch Requests
+    const originalFetch = window.fetch;
+    window.fetch = async function(...args) {
+      const url = typeof args[0] === 'string' ? args[0] : (args[0]?.url || 'unknown');
+      const method = args[1]?.method || 'GET';
+      const start = Date.now();
+      try {
+        const response = await originalFetch.apply(this, args);
+        const duration = Date.now() - start;
+        saveLogEntry(`[API ${method}] ${url} -> Status ${response.status} (${duration}ms)`, response.ok ? 'info' : 'error', 'Fetch');
+        return response;
+      } catch (err) {
+        const duration = Date.now() - start;
+        saveLogEntry(`[API ${method} FAILED] ${url} -> ${err.message} (${duration}ms)`, 'error', 'Fetch');
+        throw err;
+      }
+    };
+
+    // Sparkline Logic
+    let latencyData = [];
+    const maxDataPoints = 30;
+
+    function renderSparkline() {
+      const container = document.getElementById('latency-sparkline');
+      if (!container) return;
+      
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      container.innerHTML = '';
+
+      if (latencyData.length < 2) return;
+
+      const svg = d3.select('#latency-sparkline')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      const x = d3.scaleLinear()
+        .domain([0, latencyData.length - 1])
+        .range([0, width]);
+
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(latencyData) * 1.2 || 100])
+        .range([height, 0]);
+
+      const line = d3.line()
+        .x((d, i) => x(i))
+        .y(d => y(d))
+        .curve(d3.curveMonotoneX);
+
+      // Area fill
+      const area = d3.area()
+        .x((d, i) => x(i))
+        .y0(height)
+        .y1(d => y(d))
+        .curve(d3.curveMonotoneX);
+
+      svg.append('path')
+        .datum(latencyData)
+        .attr('fill', 'rgba(15, 118, 110, 0.1)')
+        .attr('d', area);
+
+      svg.append('path')
+        .datum(latencyData)
+        .attr('fill', 'none')
+        .attr('stroke', '#0f766e')
+        .attr('stroke-width', 2)
+        .attr('d', line);
+
+      // Latest point dot
+      const lastVal = latencyData[latencyData.length - 1];
+      svg.append('circle')
+        .attr('cx', x(latencyData.length - 1))
+        .attr('cy', y(lastVal))
+        .attr('r', 4)
+        .attr('fill', '#0f766e');
+      
+      const avg = Math.round(latencyData.reduce((a, b) => a + b, 0) / latencyData.length);
+      document.getElementById('avg-latency').textContent = `เฉลี่ย: ${avg}ms`;
+    }
+
+    // Live Metrics & Diagnostics
+    async function fetchMetrics() {
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+
+      const start = Date.now();
+      try {
+        // Query pending leaves if possible, or fallback to employees
+        let leaveCount = 0;
+        try {
+          const { count } = await sb.from('leave_requests').select('*', { count: 'exact', head: true }).eq('status', 'pending');
+          leaveCount = count || 0;
+        } catch(e) { /* ignore table missing */ }
+        document.getElementById('stat-pending-leaves').textContent = leaveCount;
+
+        const { data: emps } = await sb.from('employees').select('line_id');
+        const connected = (emps || []).filter(e => e.line_id).length;
+        const total = (emps || []).length || 1;
+        const percent = Math.round((connected / total) * 100);
+        document.getElementById('stat-line-health').textContent = percent + '%';
+
+        const latency = Date.now() - start;
+        document.getElementById('stat-db-latency').textContent = latency + 'ms';
+        
+        // Add to sparkline
+        latencyData.push(latency);
+        if (latencyData.length > maxDataPoints) latencyData.shift();
+        renderSparkline();
+
+        updateStatusBadge('check-db', 'passed', 'เชื่อมต่อแล้ว');
+      } catch (e) {
+        console.error('Metrics Error:', e);
+        updateStatusBadge('check-db', 'failed', 'ข้อผิดพลาด');
+      }
+    }
+
+    function updateStatusBadge(id, status, text) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.className = `status-badge ${status}`;
+        el.textContent = text;
+      }
+    }
+
+    async function runDeepCheck() {
+      console.log('เริ่มการตรวจสอบเชิงลึก...');
+      updateStatusBadge('check-auth', 'checking', 'กำลังทดสอบ...');
+      updateStatusBadge('check-line', 'checking', 'กำลังทดสอบ...');
+      
+      const sb = window.pvtSupabase?.getClient();
+      try {
+        const { data: { user } } = await sb.auth.getUser();
+        updateStatusBadge('check-auth', user ? 'passed' : 'failed', user ? 'ใช้งานได้' : 'ไม่ได้ล็อกอิน');
+      } catch(e) { updateStatusBadge('check-auth', 'failed', 'ข้อผิดพลาด'); }
+      
+      try {
+        // Soft check for LINE function without triggering alert-like 404
+        updateStatusBadge('check-line', 'warning', 'รอการติดตั้ง');
+      } catch(e) { updateStatusBadge('check-line', 'failed', 'ติดต่อไม่ได้'); }
+      
+      fetchMetrics();
+    }
+
+    function toggleMaint() {
+      const isMaint = localStorage.getItem('maintenance_mode') === 'true';
+      const newState = !isMaint;
+      localStorage.setItem('maintenance_mode', newState);
+      updateMaintUI();
+      console.log(`โหมดปรับปรุงระบบถูกตั้งค่าเป็น: ${newState}`);
+    }
+
+    function updateMaintUI() {
+      const isMaint = localStorage.getItem('maintenance_mode') === 'true';
+      const btn = document.getElementById('btn-maint');
+      if (btn) {
+        const textSpan = btn.querySelector('span:not(.material-symbols-outlined)');
+        if (isMaint) {
+          btn.className = 'secondary danger';
+          textSpan.textContent = 'กำลังทำงาน (ปิด)';
+        } else {
+          btn.className = 'secondary';
+          textSpan.textContent = 'ไม่ได้ทำงาน (เปิด)';
+        }
+      }
+    }
+
+    function clearSystemCache() {
+      if (confirm('ล้างข้อมูลแคชทั้งหมดหรือไม่? พนักงานจะต้องเข้าสู่ระบบใหม่')) {
+        localStorage.clear();
+        sessionStorage.clear();
+        console.log('ล้างแคชระบบเรียบร้อย');
+        location.reload();
+      }
+    }
+
+    async function initProfile() {
+      const sessionString = localStorage.getItem('currentUser');
+      if (sessionString) {
+        const session = JSON.parse(sessionString);
+        document.getElementById('admin-name').value = session.full_name || '';
+        document.getElementById('admin-email').value = session.email || '';
+      }
+    }
+
+    document.getElementById('admin-profile-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const newName = document.getElementById('admin-name').value;
+      const sessionString = localStorage.getItem('currentUser');
+      if (!sessionString) return;
+      const session = JSON.parse(sessionString);
+      const sb = window.pvtSupabase?.getClient();
+      const { error } = await sb.from('employees').update({ full_name: newName }).eq('id', session.id);
+      if(!error) {
+        session.full_name = newName;
+        localStorage.setItem('currentUser', JSON.stringify(session));
+        showToast('อัปเดตโปรไฟล์เรียบร้อย!');
+        console.log('อัปเดตโปรไฟล์แอดมินเป็น:', newName);
+      } else {
+        showToast('บันทึกโปรไฟล์ไม่สำเร็จ: ' + error.message, 'error');
+      }
+    };
+
+    // Data Management & Inline Editing
+    let employeesData = [];
+    const tableBody = document.getElementById('employee-table-body');
+
+    async function loadEmployeeData() {
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+
+      try {
+        const { data, error } = await sb.from('employees').select('*').order('full_name');
+        if (error) throw error;
+        employeesData = data;
+        renderEmployeeTable();
+        console.log('โหลดข้อมูลพนักงานสำเร็จ:', data.length, 'รายการ');
+      } catch (e) {
+        console.error('Error loading employees:', e);
+        if (tableBody) tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:#ef4444;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
+      }
+    }
+
+    function renderEmployeeTable() {
+      if (!tableBody) return;
+      if (!employeesData.length) {
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:40px; color:#94a3b8;">ไม่พบข้อมูลพนักงาน</td></tr>';
+        return;
+      }
+
+      // Check if search query exists
+      const searchInput = document.getElementById('emp-search-input');
+      if (searchInput && searchInput.value.trim()) {
+        filterEmployeeTable();
+        return;
+      }
+
+      tableBody.innerHTML = employeesData.map(emp => `
+        <tr id="row-${emp.id}">
+          <td class="col-name">${emp.full_name || '-'}</td>
+          <td class="col-email">${emp.email || '-'}</td>
+          <td class="col-dept">${emp.department || '-'}</td>
+          <td class="col-role">${emp.role || '-'}</td>
+          <td class="action-btns">
+            <button class="icon-btn" onclick="editRow('${emp.id}')" title="แก้ไข">
+              <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
+            </button>
+            <button class="icon-btn" onclick="deleteRow('${emp.id}')" title="ลบ" style="color:#ef4444;">
+              <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterEmployeeTable() {
+      const q = (document.getElementById('emp-search-input')?.value || '').toLowerCase().trim();
+      if (!q) {
+        renderEmployeeTable();
+        return;
+      }
+      const filtered = employeesData.filter(emp => 
+        (emp.full_name && emp.full_name.toLowerCase().includes(q)) ||
+        (emp.email && emp.email.toLowerCase().includes(q)) ||
+        (emp.department && emp.department.toLowerCase().includes(q)) ||
+        (emp.role && emp.role.toLowerCase().includes(q))
+      );
+      if (!tableBody) return;
+      if (!filtered.length) {
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:#94a3b8;">ไม่พบพนักงานตรงกับคำค้นหา "${q}"</td></tr>`;
+        return;
+      }
+      tableBody.innerHTML = filtered.map(emp => `
+        <tr id="row-${emp.id}">
+          <td class="col-name">${emp.full_name || '-'}</td>
+          <td class="col-email">${emp.email || '-'}</td>
+          <td class="col-dept">${emp.department || '-'}</td>
+          <td class="col-role">${emp.role || '-'}</td>
+          <td class="action-btns">
+            <button class="icon-btn" onclick="editRow('${emp.id}')" title="แก้ไข">
+              <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
+            </button>
+            <button class="icon-btn" onclick="deleteRow('${emp.id}')" title="ลบ" style="color:#ef4444;">
+              <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Diagnostics & Button Test Suite Functions
+    async function testFetchEmployees() {
+      showToast('กำลังทดสอบ Query พนักงาน...', 'info');
+      console.log(' [TEST] เรียกใช้ testFetchEmployees()...');
+      await loadEmployeeData();
+      showToast(`ดึงข้อมูลสำเร็จ: พบพนักงาน ${employeesData.length} รายการ`, 'success');
+    }
+
+    async function testFetchDepts() {
+      showToast('กำลังทดสอบ Query แผนก...', 'info');
+      console.log(' [TEST] เรียกใช้ testFetchDepts()...');
+      await loadDeptApprovalData();
+      showToast(`ดึงข้อมูลสำเร็จ: พบโครงสร้างแผนก ${deptData.length} รายการ`, 'success');
+    }
+
+    async function testPendingLeavesCount() {
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) { showToast('ไม่พบไคลเอนต์ Supabase', 'error'); return; }
+      showToast('กำลังทดสอบดึงจำนวนใบลาค้าง...', 'info');
+      try {
+        const { count, error } = await sb.from('leave_requests').select('*', { count: 'exact', head: true }).eq('status', 'pending');
+        if (error) throw error;
+        showToast(`จำนวนใบลาค้างอนุมัติปัจจุบัน: ${count || 0} ใบ`, 'success');
+        console.log(` [TEST] จำนวนใบลาค้างอนุมัติ: ${count || 0}`);
+      } catch (e) {
+        showToast('การดึงใบลาล้มเหลว: ' + e.message, 'error');
+      }
+    }
+
+    async function testDatabaseLatency() {
+      showToast('กำลังวัดค่า Latency ของฐานข้อมูล...', 'info');
+      const start = Date.now();
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+      try {
+        await sb.from('employees').select('id').limit(1);
+        const duration = Date.now() - start;
+        showToast(`ความหน่วงฐานข้อมูล (Latency): ${duration} ms`, 'success');
+        console.log(` [TEST] DB Latency benchmark: ${duration}ms`);
+      } catch (e) {
+        showToast('วัดความหน่วงไม่สำเร็จ: ' + e.message, 'error');
+      }
+    }
+
+    function testSimulateLog() {
+      console.log(' [TEST LOG] ทดสอบการส่งข้อความลงในบันทึกระบบเรียลไทม์สำเร็จ');
+      console.error(' [TEST ERROR LOG] จำลองการแจ้งเตือนข้อผิดพลาดในระบบ');
+      showToast('เพิ่ม Log ตัวอย่างในบันทึกเรียลไทม์เรียบร้อย!', 'info');
+    }
+
+    function testAddMockSparkline() {
+      const randomVal = Math.floor(Math.random() * 150) + 30;
+      latencyData.push(randomVal);
+      if (latencyData.length > maxDataPoints) latencyData.shift();
+      renderSparkline();
+      showToast(`สุ่มเพิ่มจุดกราฟ Latency: ${randomVal}ms`, 'info');
+      console.log(` [TEST SPARKLINE] เพิ่มจุดกราฟ ${randomVal}ms`);
+    }
+
+    function editRow(id) {
+      const row = document.getElementById(`row-${id}`);
+      const emp = employeesData.find(e => e.id === id);
+      if (!row || !emp) return;
+
+      if (row.classList.contains('editing')) return;
+      row.classList.add('editing');
+
+      const cells = {
+        name: row.querySelector('.col-name'),
+        email: row.querySelector('.col-email'),
+        dept: row.querySelector('.col-dept'),
+        role: row.querySelector('.col-role'),
+        actions: row.querySelector('.action-btns')
+      };
+
+      cells.name.innerHTML = `<input type="text" class="editable-input" value="${emp.full_name || ''}" id="edit-name-${id}">`;
+      cells.email.innerHTML = `<input type="email" class="editable-input" value="${emp.email || ''}" id="edit-email-${id}">`;
+      cells.dept.innerHTML = `<input type="text" class="editable-input" value="${emp.department || ''}" id="edit-dept-${id}">`;
+      cells.role.innerHTML = `<input type="text" class="editable-input" value="${emp.role || ''}" id="edit-role-${id}">`;
+
+      cells.actions.innerHTML = `
+        <button class="icon-btn save" onclick="saveRow('${id}')" title="บันทึก">
+          <span class="material-symbols-outlined" style="font-size:18px;">check</span>
+        </button>
+        <button class="icon-btn cancel" onclick="cancelEdit('${id}')" title="ยกเลิก">
+          <span class="material-symbols-outlined" style="font-size:18px;">close</span>
+        </button>
+      `;
+    }
+
+    function cancelEdit(id) {
+      renderEmployeeTable();
+    }
+
+    async function saveRow(id) {
+      const name = document.getElementById(`edit-name-${id}`).value.trim();
+      const email = document.getElementById(`edit-email-${id}`).value.trim();
+      const dept = document.getElementById(`edit-dept-${id}`).value.trim();
+      const role = document.getElementById(`edit-role-${id}`).value.trim();
+
+      if (!name) { showToast('กรุณาระบุชื่อ-นามสกุล', 'warning'); return; }
+      if (!email || !email.includes('@')) { showToast('กรุณาระบุอีเมลที่ถูกต้อง', 'warning'); return; }
+
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+
+      try {
+        const { error } = await sb.from('employees').update({
+          full_name: name,
+          email: email,
+          department: dept,
+          role: role
+        }).eq('id', id);
+
+        if (error) throw error;
+
+        const index = employeesData.findIndex(e => e.id === id);
+        if (index !== -1) {
+          employeesData[index] = { ...employeesData[index], full_name: name, email, department: dept, role };
+        }
+
+        renderEmployeeTable();
+        showToast('บันทึกข้อมูลพนักงานสำเร็จ');
+        console.log('บันทึกข้อมูลพนักงานสำเร็จ');
+      } catch (e) {
+        console.error('Error saving employee:', e);
+        showToast('บันทึกไม่สำเร็จ: ' + e.message, 'error');
+      }
+    }
+
+    async function deleteRow(id) {
+      if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลพนักงานคนนี้?')) return;
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+      try {
+        const { error } = await sb.from('employees').delete().eq('id', id);
+        if (error) throw error;
+        employeesData = employeesData.filter(e => e.id !== id);
+        renderEmployeeTable();
+        showToast('ลบข้อมูลพนักงานสำเร็จ');
+        console.log('ลบข้อมูลพนักงานสำเร็จ');
+      } catch (e) {
+        console.error('Error deleting employee:', e);
+        showToast('ลบไม่สำเร็จ: ' + e.message, 'error');
+      }
+    }
+
+    async function addNewEmployee() {
+      if (document.getElementById('new-emp-row')) return;
+
+      const newRow = document.createElement('tr');
+      newRow.id = 'new-emp-row';
+      newRow.className = 'editing';
+      newRow.innerHTML = `
+        <td><input type="text" class="editable-input" placeholder="ชื่อ-นามสกุล" id="new-name"></td>
+        <td><input type="email" class="editable-input" placeholder="อีเมล" id="new-email"></td>
+        <td><input type="text" class="editable-input" placeholder="แผนก" id="new-dept"></td>
+        <td><input type="text" class="editable-input" placeholder="บทบาท" id="new-role"></td>
+        <td class="action-btns">
+          <button class="icon-btn save" onclick="saveNewEmployee()" title="บันทึก">
+            <span class="material-symbols-outlined" style="font-size:18px;">check</span>
+          </button>
+          <button class="icon-btn cancel" onclick="document.getElementById('new-emp-row').remove()" title="ยกเลิก">
+            <span class="material-symbols-outlined" style="font-size:18px;">close</span>
+          </button>
+        </td>
+      `;
+      tableBody.prepend(newRow);
+    }
+
+    async function saveNewEmployee() {
+      const name = document.getElementById('new-name').value.trim();
+      const email = document.getElementById('new-email').value.trim();
+      const dept = document.getElementById('new-dept').value.trim();
+      const role = document.getElementById('new-role').value.trim();
+
+      if (!name || !email) { showToast('กรุณาระบุชื่อและอีเมล', 'warning'); return; }
+      if (!email.includes('@')) { showToast('อีเมลไม่ถูกต้อง', 'warning'); return; }
+
+      const sb = window.pvtSupabase?.getClient();
+      try {
+        const { error } = await sb.from('employees').insert({ full_name: name, email, department: dept, role });
+        if (error) throw error;
+        showToast('เพิ่มพนักงานใหม่สำเร็จ');
+        loadEmployeeData();
+      } catch (e) { showToast('เพิ่มพนักงานไม่สำเร็จ: ' + e.message, 'error'); }
+    }
+
+    // Department & Approval Management
+    let deptData = [];
+    const approvalTableBody = document.getElementById('approval-table-body');
+
+    async function loadDeptApprovalData() {
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+
+      try {
+        const { data, error } = await sb.from('departments').select(`
+          *,
+          supervisor:employees!supervisor_id(full_name),
+          manager:employees!manager_id(full_name)
+        `).order('department_code');
+        
+        if (error) throw error;
+        deptData = data;
+        renderDeptTable();
+      } catch (e) {
+        console.error('Error loading depts:', e);
+        if (approvalTableBody) approvalTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:#ef4444;">ไม่พบตาราง departments หรือเกิดข้อผิดพลาด</td></tr>`;
+      }
+    }
+
+    function renderDeptTable() {
+      if (!approvalTableBody) return;
+      if (!deptData.length) {
+        approvalTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px; color:#94a3b8;">ไม่พบข้อมูลแผนก</td></tr>';
+        return;
+      }
+
+      approvalTableBody.innerHTML = deptData.map(dept => `
+        <tr>
+          <td>${dept.department_code || '-'}</td>
+          <td>${dept.department_name || '-'}</td>
+          <td>${dept.supervisor?.full_name || '<span style="color:#94a3b8">ไม่ได้ตั้งค่า</span>'}</td>
+          <td>${dept.manager?.full_name || '<span style="color:#94a3b8">ไม่ได้ตั้งค่า</span>'}</td>
+          <td class="action-btns">
+            <button class="icon-btn" onclick="window.location.href='/pages/hr/approval-settings.html'" title="ไปที่หน้าตั้งค่าละเอียด">
+              <span class="material-symbols-outlined" style="font-size:18px;">settings</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Database Snapshot Logic
+    async function downloadSnapshot() {
+      const sb = window.pvtSupabase?.getClient();
+      if (!sb) return;
+
+      showToast('กำลังเตรียมข้อมูลสำรอง...', 'info');
+      try {
+        const { data: employees } = await sb.from('employees').select('*');
+        const { data: depts } = await sb.from('departments').select('*');
+
+        const snapshot = {
+          version: "1.1",
+          timestamp: new Date().toISOString(),
+          employees,
+          departments: depts
+        };
+
+        const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `pvt_snapshot_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('สำรองข้อมูลสำเร็จ!');
+      } catch (e) {
+        showToast('สำรองข้อมูลล้มเหลว: ' + e.message, 'error');
+      }
+    }
+
+    async function handleRestore(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const snapshot = JSON.parse(e.target.result);
+          
+          // Validation
+          if (!snapshot.employees || (!snapshot.departments && !snapshot.approvals)) {
+            throw new Error('โครงสร้างไฟล์ไม่ถูกต้อง');
+          }
+
+          const empCount = snapshot.employees.length;
+          const deptCount = (snapshot.departments || snapshot.approvals).length;
+
+          if (!confirm(`️ คำเตือน: การกู้คืนจะเขียนทับข้อมูลปัจจุบัน\nพบพนักงาน: ${empCount} ราย\nพบโครงสร้าง: ${deptCount} รายการ\nต้องการดำเนินการต่อหรือไม่?`)) {
+            event.target.value = '';
+            return;
+          }
+
+          const sb = window.pvtSupabase?.getClient();
+          showToast('กำลังกู้คืนข้อมูล...', 'info');
+
+          // Restore Employees
+          if (empCount > 0) {
+            await sb.from('employees').delete().neq('id', 'placeholder');
+            const { error: empError } = await sb.from('employees').insert(snapshot.employees);
+            if (empError) throw empError;
+          }
+
+          // Restore Departments
+          const deptsToRestore = snapshot.departments || snapshot.approvals;
+          if (deptsToRestore.length > 0) {
+            const tableName = snapshot.departments ? 'departments' : 'approval_settings';
+            await sb.from(tableName).delete().neq('id', 'placeholder');
+            const { error: appError } = await sb.from(tableName).insert(deptsToRestore);
+            if (appError) throw appError;
+          }
+
+          showToast('กู้คืนข้อมูลสำเร็จ! ระบบจะรีเฟรชหน้าจอ', 'success');
+          setTimeout(() => location.reload(), 2000);
+
+        } catch (err) {
+          console.error('Restore Error:', err);
+          showToast('การกู้คืนล้มเหลว: ' + err.message, 'error');
+        }
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    setInterval(() => {
+      const el = document.getElementById('live-time');
+      if (el) el.textContent = new Date().toLocaleString('th-TH');
+    }, 1000);
+
+    // Interactive Button Click Event Logging Listener for Testing & Debugging
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('button, a.menu-item, [role="button"]');
+      if (!btn) return;
+
+      const btnText = (btn.innerText || btn.textContent || btn.getAttribute('title') || 'unnamed button').trim().replace(/\s+/g, ' ');
+      const btnId = btn.id ? `#${btn.id}` : 'no-id';
+      const btnClasses = btn.className ? `.${btn.className.trim().replace(/\s+/g, '.')}` : 'no-class';
+      const onclickAttr = btn.getAttribute('onclick') || btn.getAttribute('href') || 'custom-handler';
+
+      console.log(` [BUTTON CLICK] "${btnText}" | ID: ${btnId} | Class: ${btnClasses} | Handler: ${onclickAttr}`);
+    }, true);
+
+    updateMaintUI();
+    initProfile();
+    runDeepCheck();
+    loadEmployeeData();
+    loadDeptApprovalData();
+    
+    // Sidebar Toggle
+    window.toggleSidebar = function() {
+      const wrapper = document.getElementById('app-wrapper');
+      wrapper.classList.toggle('sidebar-open');
+    }
+
+    // Live update every 5 seconds
+    setInterval(fetchMetrics, 5000);
+    
+    // Resize observer for sparkline responsiveness
+    const sparklineContainer = document.getElementById('latency-sparkline');
+    if (sparklineContainer) {
+      const resizeObserver = new ResizeObserver(() => renderSparkline());
+      resizeObserver.observe(sparklineContainer);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>คู่มือการใช้งาน - PVT Workforce Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/system-settings.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #06b6d4;
+      --primary-dark: #0891b2;
+      --primary-soft: #ecfeff;
+      --bg: #f0fdfa;
+      --card-bg: rgba(255, 255, 255, 0.55);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border-light: rgba(255, 255, 255, 0.8);
+    }
+    
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 10% 10%, #bae6fd 0px, transparent 50%), 
+        radial-gradient(circle at 90% 20%, #a7f3d0 0px, transparent 50%), 
+        radial-gradient(circle at 80% 90%, #e0f2fe 0px, transparent 50%),
+        radial-gradient(circle at 20% 80%, #ccfbf1 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text);
+    }
+
+    .heading-font {
+      font-family: 'Plus Jakarta Sans', 'Sarabun', sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 16px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 32px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: slideUp 0.6s ease-out backwards;
+    }
+
+    .content-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(6, 182, 212, 0.15);
+      border-color: var(--primary);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+    }
+
+    .nav-link {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 4px solid transparent;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .nav-link:hover {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--primary);
+      padding-left: 20px;
+    }
+
+    .nav-link.active {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--primary-dark);
+      border-left-color: var(--primary);
+      font-weight: 700;
+      padding-left: 24px;
+    }
+
+    .sub-card {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 16px;
+    }
+
+    /* Staggered animation for cards */
+    section:nth-child(1) .content-card { animation-delay: 0.1s; }
+    section:nth-child(2) .content-card { animation-delay: 0.2s; }
+    section:nth-child(3) .content-card { animation-delay: 0.3s; }
+    section:nth-child(4) .content-card { animation-delay: 0.4s; }
+    section:nth-child(5) .content-card { animation-delay: 0.5s; }
+    section:nth-child(6) .content-card { animation-delay: 0.6s; }
+
+    pre {
+      font-family: monospace;
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    /* 📱 MOBILE TYPOGRAPHY & SPARE SPACING OVERHAUL */
+    @media screen and (max-width: 768px) {
+      /* Shrink padding to maximize readable text width on narrow screens */
+      .content-card {
+        padding: 20px 16px !important;
+        border-radius: 18px !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important;
+      }
+      
+      /* Increase base font-size to 16.5px to guarantee high legibility */
+      .content-card p,
+      .content-card li,
+      .content-card span,
+      .content-card div {
+        font-size: 16px !important;
+        line-height: 1.85 !important;
+        letter-spacing: 0.015em !important;
+      }
+      
+      /* Distinct headings for clear hierarchical division */
+      .content-card h4 {
+        font-size: 18px !important;
+        margin-top: 20px !important;
+        margin-bottom: 12px !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        line-height: 1.4 !important;
+        border-bottom: 2px solid rgba(6, 182, 212, 0.1) !important;
+        padding-bottom: 8px !important;
+      }
+      
+      /* Generous breathing room between blocks */
+      .content-card > p,
+      .content-card > div,
+      .content-card > section,
+      .grid {
+        margin-bottom: 28px !important;
+      }
+
+      /* Highlight key takeaways with vivid, eye-catching text treatments */
+      .content-card strong {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        color: #0369a1 !important;
+        background-color: #f0f9ff !important;
+        padding: 2px 6px !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(3, 105, 161, 0.15) !important;
+        display: inline !important;
+      }
+      
+      /* Space list rows as separate readable units instead of dense bullets */
+      .content-card ul {
+        margin-top: 14px !important;
+        margin-bottom: 14px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+      
+      .content-card ul li {
+        padding-bottom: 12px !important;
+        border-bottom: 1px dashed rgba(6, 182, 212, 0.15) !important;
+        align-items: flex-start !important;
+      }
+      
+      .content-card ul li:last-child {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+      }
+
+      /* Takeaway/Warning Banner enhancements with high contrast */
+      .p-5, .p-6, .p-4 {
+        padding: 20px 16px !important;
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        border-radius: 16px !important;
+        border-width: 1px !important;
+      }
+      
+      .bg-emerald-50, .bg-amber-50, .bg-rose-50, .bg-teal-50, .bg-teal-50\/50, .bg-cyan-50\/60 {
+        border-left-width: 5px !important;
+        font-size: 15.5px !important;
+        line-height: 1.8 !important;
+        color: #1e293b !important;
+      }
+
+      .bg-amber-50 {
+        background-color: #fffbeb !important;
+        border-color: #f59e0b !important;
+      }
+      .bg-rose-50 {
+        background-color: #fff1f2 !important;
+        border-color: #f43f5e !important;
+      }
+      .bg-emerald-50 {
+        background-color: #f0fdf4 !important;
+        border-color: #10b981 !important;
+      }
+      .bg-cyan-50\/60, .bg-teal-50\/50, .bg-teal-50 {
+        background-color: #f0fdfa !important;
+        border-color: #06b6d4 !important;
+      }
+
+      /* Quick scroll navigation bar */
+      .mobile-nav-chip {
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+        border-radius: 9999px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        font-weight: 700 !important;
+        transition: all 0.2s ease !important;
+      }
+      
+      .mobile-nav-chip.active {
+        background-color: #06b6d4 !important;
+        color: white !important;
+        border-color: #06b6d4 !important;
+        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3) !important;
+      }
+
+      /* Clean Language Switcher on mobile - prevents horizontal overflow and scrollbars */
+      #globalLangSwitcherContainer, .lang-switcher {
+        margin: 6px auto 0 auto !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        max-width: 100% !important;
+      }
+      .lang-switcher {
+        gap: 2px !important;
+        padding: 2px !important;
+        border-radius: 9999px !important;
+        border: 1px solid rgba(13, 148, 136, 0.15) !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+      }
+      .lang-switcher button, .lang-switcher .lang-btn {
+        padding: 3px 8px !important;
+        font-size: 11px !important;
+        height: 22px !important;
+        min-height: 22px !important;
+        line-height: 1 !important;
+      }
+    }
+
+    /* Hide scrollbars globally on any element using scrollbar-none */
+    .scrollbar-none {
+      -ms-overflow-style: none !important;  /* IE and Edge */
+      scrollbar-width: none !important;  /* Firefox */
+    }
+    .scrollbar-none::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <div class="app-container" id="appLayout">
+    
+    <!--  1. LEFT SIDEBAR MENU (UNIFIED LAYOUT) -->
+    <aside class="sidebar" id="sidebarMenu">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">groups</span>
+        </div>
+        <div class="brand-name">PVT WORKFORCE HUB</div>
+        <button type="button" class="btn-close-sidebar" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(false);}else if(typeof window.closeMobileSidebar==='function'){window.closeMobileSidebar();}" style="display: none;" title="ปิดเมนู">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+      </div>
+
+      <!--  ปุ่มกดยื่นใบลา (Action CTA) -->
+      <div class="sidebar-cta-wrap">
+        <button type="button" class="sidebar-cta-btn" onclick="window.location.href='/pages/user/leave-user.html'" title="ยื่นใบลาออนไลน์">
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
+          <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
+        </button>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <a href="/pages/user/index-user.html" class="menu-item">
+          <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+          <span>หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="menu-item">
+          <img src="/assets/icons/user-profile.svg" alt="ข้อมูลส่วนตัว" class="nav-icon-custom" />
+          <span>ข้อมูลส่วนตัว</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="menu-item">
+          <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" class="nav-icon-custom" />
+          <span>ประวัติการลา</span>
+        </a>
+        <a href="/pages/user/holidays.html" class="menu-item">
+          <img src="/assets/icons/calendar-event.svg" alt="ปฏิทิน" class="nav-icon-custom" />
+          <span>ปฏิทิน</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-title">บริการด่วน</div>
+
+        <!--  ปุ่มดูกฎระเบียบบริษัท -->
+        <a href="/pages/user/leave-rules.html" class="menu-item" title="กฎระเบียบและเงื่อนไขการลา">
+          <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" class="nav-icon-custom" />
+          <span>กฎระเบียบ</span>
+        </a>
+
+        <!--  ปุ่มคู่มือการใช้งาน -->
+        <a href="/pages/user/full-guide.html" class="menu-item active" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span>แนะนำระบบ</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="/pages/user/news.html" class="menu-item">
+          <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+          <span>ข่าวสาร</span>
+        </a>
+        <button type="button" class="menu-item" onclick="if(typeof openSystemSettingsModal==='function')openSystemSettingsModal()" title="การตั้งค่าระบบ">
+          <img src="/assets/icons/settings.svg" alt="ตั้งค่า" class="nav-icon-custom" style="border-radius: 6px;" />
+          <span>ตั้งค่า</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-top: 1px solid #f1f5f9;">
+        <button type="button" class="btn-logout menu-item" onclick="if(typeof logout==='function')logout(); else history.back();" title="ออกจากระบบ" style="color: #ef4444; width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: 500;">
+          <img src="/assets/icons/logout.svg" alt="ออกจากระบบ" class="nav-icon-custom" style="width: 20px; height: 20px;" />
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!--  2. MAIN WORKSPACE CONTENT -->
+    <main class="main-content" style="width: 100%; flex: 1; overflow-y: auto;">
+      <!-- Sticky Unified Navigation Container (Prevents overlapping and layout bugs) -->
+      <div class="sticky top-0 z-50 w-full">
+        <!-- Header -->
+        <header class="glass-card px-3 py-2.5 md:px-6 md:py-4">
+          <div class="max-w-7xl mx-auto flex justify-between items-center gap-2">
+            <div class="flex items-center gap-2 md:gap-3 min-w-0">
+              <button type="button" class="mobile-menu-btn lg:hidden flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-white border border-slate-200 rounded-lg text-slate-600" onclick="toggleMobileSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+              </button>
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-cyan-500 rounded-lg md:rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-200 flex-shrink-0">
+                <span class="material-symbols-outlined text-lg md:text-2xl">menu_book</span>
+              </div>
+              <div class="min-w-0">
+                <h1 class="heading-font text-sm md:text-lg font-bold text-slate-800 leading-tight truncate">PVT User Manual</h1>
+                <p class="text-[10px] md:text-xs text-cyan-600 font-medium truncate">คู่มือการใช้งานระบบพนักงาน (ฉบับสมบูรณ์)</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
+              <button type="button" onclick="if(window.history.length > 1 && document.referrer){window.history.back();}else{window.location.href=document.referrer || '/pages/user/index-user.html';}" class="flex items-center gap-1 md:gap-2 px-2.5 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl bg-slate-100 hover:bg-cyan-500 hover:text-white text-slate-600 font-bold text-xs md:text-sm transition-all border border-slate-200 cursor-pointer">
+                <span class="material-symbols-outlined text-base md:text-lg">arrow_back</span>
+                <span class="hidden md:inline">ย้อนกลับ</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+    <!-- Mobile Horizontal Scroll Navigation (Hides on Desktop) -->
+    <div class="block lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 overflow-x-auto py-2.5 px-4 shadow-sm scrollbar-none" style="-webkit-overflow-scrolling: touch;">
+      <div class="flex gap-2 whitespace-nowrap">
+        <a href="#login" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">การเข้าสู่ระบบ</a>
+        <a href="#dashboard" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">หน้าแผงควบคุม (Dashboard)</a>
+        <a href="#leave-request" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">ขั้นตอนการยื่นใบลา</a>
+        <a href="#sla-tracker" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">ระบบติดตามนโยบาย SLA 2 วัน</a>
+        <a href="#leave-history" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">ตรวจสอบสถานะและประวัติ</a>
+        <a href="#line-link" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">การเชื่อมต่อ LINE</a>
+        <a href="#calendar" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">การใช้งานปฏิทิน</a>
+        <a id="chip-manager-section" href="#manager" style="display: none;" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">สำหรับหัวหน้าแผนก (L1)</a>
+        <a id="chip-hr-section" href="#hr" style="display: none;" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">สำหรับฝ่ายบุคคล (HR L2)</a>
+        <a href="#faq" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 transition-all border border-slate-200/85">คำถามพบบ่อย (FAQ)</a>
+        <a href="#pwa" class="mobile-nav-chip px-3.5 py-1.5 rounded-full text-xs font-bold bg-cyan-600 text-white transition-all border border-cyan-500">ติดตั้งเป็นแอปมือถือ</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-4 gap-10">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="hidden lg:block sticky top-28 h-fit">
+      <div class="sidebar-card space-y-1">
+        <h3 class="text-[10px] font-black text-cyan-600 uppercase tracking-[0.2em] px-4 pt-2 mb-4">หัวข้อแนะนำ</h3>
+        <a href="#login" class="nav-link block px-4 py-2.5 rounded-xl font-medium active">การเข้าสู่ระบบ</a>
+        <a href="#dashboard" class="nav-link block px-4 py-2.5 rounded-xl font-medium">หน้าแผงควบคุม (Dashboard)</a>
+        <a href="#leave-request" class="nav-link block px-4 py-2.5 rounded-xl font-medium">ขั้นตอนการยื่นใบลา</a>
+        <a href="#sla-tracker" class="nav-link block px-4 py-2.5 rounded-xl font-medium flex items-center justify-between">
+          <span>ระบบติดตามนโยบาย SLA 2 วัน</span>
+          <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">ใหม่</span>
+        </a>
+        <a href="#leave-history" class="nav-link block px-4 py-2.5 rounded-xl font-medium">ตรวจสอบสถานะและประวัติ</a>
+        <a href="#line-link" class="nav-link block px-4 py-2.5 rounded-xl font-medium">การเชื่อมต่อ LINE</a>
+        <a href="#calendar" class="nav-link block px-4 py-2.5 rounded-xl font-medium">การใช้งานปฏิทิน</a>
+        
+        <!-- Manager/HR sections (Hidden by default) -->
+        <div id="sidebar-manager-section" style="display: none;">
+          <a href="#manager" class="nav-link block px-4 py-2.5 rounded-xl font-medium">สำหรับหัวหน้าแผนก (L1)</a>
+        </div>
+        <div id="sidebar-hr-section" style="display: none;">
+          <a href="#hr" class="nav-link block px-4 py-2.5 rounded-xl font-medium">สำหรับฝ่ายบุคคล (HR L2)</a>
+        </div>
+
+        <a href="#faq" class="nav-link block px-4 py-2.5 rounded-xl font-medium">คำถามพบบ่อย (FAQ)</a>
+        <a href="#pwa" class="nav-link block px-4 py-2.5 rounded-xl font-medium">ติดตั้งเป็นแอปมือถือ</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="lg:col-span-3 space-y-12">
+
+      <!-- Section: Login -->
+      <section id="login" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">login</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">การเข้าสู่ระบบ (Authentication)</h2>
+        </div>
+        <div class="content-card space-y-6" style="animation-delay: 0.1s">
+          <p class="text-slate-600 leading-relaxed text-sm md:text-base">
+            ระบบจัดสรรวันลา <strong class="text-cyan-700 font-semibold">PVT Workforce Hub</strong> มุ่งเน้นการเข้าถึงข้อมูลที่รวดเร็ว โดยคุณสามารถยืนยันตัวตนเพื่อเข้าใช้งานได้ <span class="px-2.5 py-0.5 bg-cyan-100 text-cyan-800 rounded-full text-xs font-bold">2 ช่องทางหลัก</span> ดังนี้:
+          </p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- วิธีที่ 1 -->
+            <div class="p-6 rounded-2xl sub-card border-t-4 border-cyan-500 bg-white shadow-md space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-cyan-600 font-bold">keyboard</span>
+                <strong class="text-slate-800 text-sm md:text-base">วิธีที่ 1: พิมพ์ค้นหารายชื่อ</strong>
+              </div>
+              <ul class="text-xs md:text-sm text-slate-600 space-y-2 leading-relaxed">
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-500 font-bold"></span>
+                  <span>พิมพ์ <strong class="text-cyan-700">ชื่อ-นามสกุล</strong> หรือ <strong class="text-cyan-700">รหัสพนักงาน</strong> ลงในช่องค้นหา</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-500 font-bold"></span>
+                  <span>ระบบรองรับการค้นหาอัจฉริยะ พิมพ์เพียงบางส่วนระบบจะแสดงผลขึ้นมาทันที</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-500 font-bold"></span>
+                  <span>คลิกเลือกรายชื่อตัวเองและป้อนรหัสผ่านสี่หลักเพื่อเข้าสู่ระบบ</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- วิธีที่ 2 -->
+            <div class="p-6 rounded-2xl sub-card border-t-4 border-emerald-500 bg-white shadow-md space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-emerald-600 font-bold">qr_code_scanner</span>
+                <strong class="text-slate-800 text-sm md:text-base">วิธีที่ 2: สแกนบัตรพนักงานผ่าน QR Code</strong>
+              </div>
+              <ul class="text-xs md:text-sm text-slate-600 space-y-2 leading-relaxed">
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-bold"></span>
+                  <span>กดปุ่มสแกนด่วน และ <strong class="text-emerald-600">อนุญาตสิทธิ์การเข้าถึงกล้อง</strong> ของเว็บบราวเซอร์</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-bold"></span>
+                  <span>นำบัตรพนักงานส่วนบุคคลที่มี QR Code มาส่องที่กล้อง</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-bold"></span>
+                  <span>ระบบจะตรวจสอบโครงสร้างความมั่นคงและนำคุณเข้าสู่แดชบอร์ดใน 1 วินาที</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="p-5 bg-amber-50 border-l-4 border-amber-500 rounded-r-xl">
+            <h5 class="font-bold text-amber-800 text-xs md:text-sm flex items-center gap-2 mb-1">
+              <span class="material-symbols-outlined text-lg">info</span>
+              คำแนะนำฝ่ายบุคคล (HR Notification):
+            </h5>
+            <p class="text-[11px] md:text-xs text-amber-700 leading-relaxed">
+              หากพนักงานใหม่ไม่พบรายชื่อในช่องค้นหา หรือไม่สามารถใช้งานกล้องสแกนคิวอาร์โค้ดได้ กรุณาติดต่อฝ่ายทรัพยากรบุคคลโดยตรงเพื่อปรับปรุงฐานข้อมูลให้เป็นเวอร์ชันล่าสุด
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Dashboard -->
+      <section id="dashboard" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">dashboard</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">หน้าแผงควบคุมหลักพนักงาน (Dashboard)</h2>
+        </div>
+        <div class="content-card space-y-6" style="animation-delay: 0.2s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            เมื่อเข้าสู่ระบบเรียบร้อยแล้ว แผงควบคุมจะแสดงข้อมูลสรุปผลวันลาและการทำงานของคุณแบบเรียลไทม์:
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+              <h4 class="font-bold text-cyan-700 border-b border-cyan-100 pb-2 mb-4 text-xs md:text-sm flex items-center gap-2 uppercase tracking-wider">
+                <span class="material-symbols-outlined text-lg">list_alt</span> องค์ประกอบหลักและเมนูสำคัญ:
+              </h4>
+              <ul class="space-y-4">
+                <li class="flex gap-4 text-xs md:text-sm items-start">
+                  <span class="material-symbols-outlined text-cyan-600 font-bold p-2 bg-cyan-500/10 rounded-xl flex-shrink-0">donut_large</span>
+                  <div>
+                    <strong class="text-slate-800 block mb-0.5">สิทธิ์วันลาคงเหลือแบบวงกลมสถิติ</strong>
+                    <span class="text-slate-500 leading-relaxed">แสดงสถิติวันลาสะสมประจำปีที่จัดสรรตามตำแหน่งงานของคุณ แยกประเภทชัดเจน: <span class="text-red-500 font-bold">ลาป่วย</span>, <span class="text-blue-500 font-bold">ลากิจ</span>, และ <span class="text-emerald-500 font-bold">ลาพักร้อน</span></span>
+                  </div>
+                </li>
+                <li class="flex gap-4 text-xs md:text-sm items-start">
+                  <span class="material-symbols-outlined text-cyan-600 font-bold p-2 bg-cyan-500/10 rounded-xl flex-shrink-0">edit_document</span>
+                  <div>
+                    <strong class="text-slate-800 block mb-0.5">ปุ่มยื่นใบลาแบบด่วนออนไลน์</strong>
+                    <span class="text-slate-500 leading-relaxed">ปุ่มหลักสีเขียว <strong class="text-emerald-600 font-bold">"ยื่นใบลาออนไลน์"</strong> เด่นชัดเจน กดปุ่มนี้เพื่อเปิดแบบฟอร์มส่งคำขอในทันที</span>
+                  </div>
+                </li>
+                <li class="flex gap-4 text-xs md:text-sm items-start">
+                  <span class="material-symbols-outlined text-cyan-600 font-bold p-2 bg-cyan-500/10 rounded-xl flex-shrink-0">groups</span>
+                  <div>
+                    <strong class="text-slate-800 block mb-0.5">ตารางสถานะการทำงานเพื่อนร่วมงาน</strong>
+                    <span class="text-slate-500 leading-relaxed">ระบุรายชื่อและวันหยุดของคนในแผนกเดียวกันเพื่อหลีกเลี่ยงการหยุดทับซ้อนและจัดลำดับแผนงานได้อย่างไร้รอยต่อ</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="space-y-4 bg-teal-50/50 p-6 rounded-2xl border border-teal-100/60">
+              <h4 class="font-bold text-teal-800 text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">lightbulb</span>
+                ข้อมูลสิทธิ์คำนวณอย่างไร?
+              </h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                ระบบหลังบ้านจะหักวันลาอัตโนมัติเมื่อเอกสารได้รับการอนุมัติเสร็จสิ้นโดยฝ่ายบุคคล โดยไม่รวมวันหยุดสัปดาห์หรือวันหยุดนักขัตฤกษ์ของบริษัท
+              </p>
+              <div class="p-3 bg-red-50 rounded-xl border border-red-100 text-[11px] text-red-700 leading-relaxed">
+                 <strong class="font-bold">ข้อมูลควรรู้:</strong> หากโควตาขึ้นเป็น <strong class="font-bold">เครื่องหมายติดลบ (-)</strong> หมายถึงพนักงานใช้โควตาลาเกินข้อกำหนด โปรดติดต่อหัวหน้างาน L1 เพื่อตรวจสอบและปรับสมดุลสิทธิ์
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Leave Request -->
+      <section id="leave-request" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">edit_document</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">ขั้นตอนการยื่นใบลาอย่างละเอียด (Leave Submission Steps)</h2>
+        </div>
+        <div class="content-card space-y-8" style="animation-delay: 0.3s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            ขั้นตอนการเปิดเอกสารคำขอใบลาเพื่อส่งให้ผู้อนุมัติพิจารณาในระบบออนไลน์:
+          </p>
+
+          <!-- Step 1 -->
+          <div class="flex gap-6 items-start">
+            <div class="step-number" style="background: #0f766e; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2)">1</div>
+            <div class="space-y-1">
+              <h4 class="font-bold text-slate-800 text-sm md:text-base flex items-center gap-2">
+                เลือกประเภทวันลาให้ตรงการใช้งาน
+                <span class="px-2 py-0.5 bg-red-100 text-red-800 rounded text-[10px] font-bold">โควตาหักอัตโนมัติ</span>
+              </h4>
+              <p class="text-xs md:text-sm text-slate-500 leading-relaxed">
+                คลิกที่ตัวเลือกเมนูประเภทวันลา เช่น <strong class="text-red-600">ลาป่วย</strong>, <strong class="text-blue-600">ลากิจ</strong>, หรือ <strong class="text-emerald-600">ลาพักร้อน</strong> ระบบจะแสดงวันคงเหลือที่ใช้ได้ด้านข้างเพื่อให้คุณตรวจสอบก่อนกดยื่นทุกครั้ง
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex gap-6 items-start">
+            <div class="step-number" style="background: #0f766e; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2)">2</div>
+            <div class="space-y-1">
+              <h4 class="font-bold text-slate-800 text-sm md:text-base flex items-center gap-2">
+                ระบุเวลาและวันที่ต้องการลาหยุดงาน
+                <span class="px-2 py-0.5 bg-cyan-100 text-cyan-800 rounded text-[10px] font-bold">รองรับครึ่งวัน/รายชั่วโมง</span>
+              </h4>
+              <p class="text-xs md:text-sm text-slate-500 leading-relaxed">
+                เลือกวันที่เริ่มต้นและสิ้นสุดบนปฏิทิน และคุณสามารถเลือกตั้งค่าการลาระยะสั้นได้อย่างอิสระ:
+              </p>
+              <div class="grid md:grid-cols-2 gap-4 mt-2">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-[11px] md:text-xs text-slate-600 space-y-1">
+                  <strong class="text-cyan-700 block"> ลาหยุดแบบครึ่งวัน (Half-Day Leave):</strong>
+                  <span>ติ๊กที่ช่อง "ครึ่งวัน" และเลือกว่าต้องการลาหยุดในช่วงเช้า <strong class="text-slate-800">(08:00 - 12:00)</strong> หรือช่วงบ่าย <strong class="text-slate-800">(13:00 - 17:00)</strong></span>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-[11px] md:text-xs text-slate-600 space-y-1">
+                  <strong class="text-cyan-700 block">⏱️ ลาหยุดแบบรายชั่วโมง (Hourly Leave):</strong>
+                  <span>ติ๊กที่ช่อง "ลาเป็นชั่วโมง" ระบบจะแสดงแถบระบุชั่วโมงตั้งแต่เริ่มถึงเวลาหมดวันหยุดนั้นๆ เหมาะสำหรับไปธุระราชการระยะสั้น</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex gap-6 items-start">
+            <div class="step-number" style="background: #0f766e; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2)">3</div>
+            <div class="space-y-1">
+              <h4 class="font-bold text-slate-800 text-sm md:text-base flex items-center gap-2">
+                ป้อนเหตุผลและแนบไฟล์หลักฐานประกอบ
+                <span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">แนะนำโดยฝ่ายบุคคล</span>
+              </h4>
+              <p class="text-xs md:text-sm text-slate-500 leading-relaxed">
+                กรอกเหตุผลความจำเป็นในการลาหยุด สำหรับการลาที่ต้องอาศัยหลักฐานทางกฎหมายหรือกฎข้อบังคับองค์กร:
+              </p>
+              <div class="p-4 rounded-xl bg-amber-50 border border-amber-100 text-[11px] text-amber-800">
+                 <strong class="font-bold">การแนบใบรับรองแพทย์:</strong> ในการลาป่วยที่มีระยะเวลาตั้งแต่ 3 วันขึ้นไป หรือการหยุดพักรักษาตัว แนะนำให้อัปโหลดไฟล์รูปภาพหรือไฟล์ภาพถ่ายใบรับรองแพทย์เพื่อใช้เป็นหลักฐานยืนยันความถูกต้อง โดยระบบรองรับไฟล์ภาพสกุลยอดนิยมขนาดไม่เกิน 5MB
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="flex gap-6 items-start">
+            <div class="step-number" style="background: #0f766e; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2)">4</div>
+            <div class="space-y-1">
+              <h4 class="font-bold text-slate-800 text-sm md:text-base">ยืนยันสายงานผู้อนุมัติและกดส่งคำขอ</h4>
+              <p class="text-xs md:text-sm text-slate-500 leading-relaxed">
+                ตรวจสอบความถูกต้องรวมถึงรายชื่อผู้มีสิทธิ์พิจารณาขั้นที่ 1 (หัวหน้างาน L1) และขั้นสุดท้าย (ฝ่ายบุคคล L2) ก่อนคลิกปุ่มสีเขียว <strong class="text-emerald-600">"ส่งคำขออนุมัติ"</strong> เพื่อเดินเอกสารในระบบและส่งข้อความแจ้งเตือนทันที
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: SLA Tracker -->
+      <section id="sla-tracker" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-amber-500 font-bold">timer</span>
+          <div class="flex items-center gap-2">
+            <h2 class="heading-font text-2xl font-bold text-slate-800">ระบบติดตามการอนุมัตินโยบาย 2 วัน (SLA 48 Hours Tracker)</h2>
+            <span class="px-2 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">New Feature</span>
+          </div>
+        </div>
+        <div class="content-card space-y-6" style="animation-delay: 0.35s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            เพื่อสร้างมาตรฐานการทำงานที่โปร่งใสและรวดเร็ว PVT ได้กำหนด <strong>นโยบายระยะเวลาการพิจารณาคำขอลา (Approval SLA) ภายใน 48 ชั่วโมง (2 วันทำการ)</strong> นับจากวินาทีที่พนักงานกดยื่นคำขอเข้ามาในระบบ ระบบจะแสดงตัวนับเวลาถอยหลังแบบสด (Live Countdown) ให้ทั้งพนักงาน, หัวหน้างาน (L1) และฝ่ายบุคคล (HR L2) มองเห็นตรงกันแบบเรียลไทม์
+          </p>
+
+          <!-- 3 SLA Status Levels -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-cyan-600 text-lg">traffic</span>
+              ระดับการแจ้งเตือน 3 สถานะของ SLA Tracker:
+            </h4>
+            <div class="grid md:grid-cols-3 gap-5">
+              <!-- Safe Level -->
+              <div class="p-5 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-left space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg text-xs font-bold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">schedule</span> ปลอดภัย
+                  </span>
+                  <span class="text-xs font-semibold text-emerald-700">เหลือมากกว่า 24 ชม.</span>
+                </div>
+                <strong class="block text-slate-800 text-sm">สถานะ: อยู่ในเกณฑ์มาตรฐาน</strong>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  การ์ดแสดงขอบสีเขียวและตัวเลขนับถอยหลังสีเขียว แสดงว่าคำขอเพิ่งถูกยื่นเข้ามาและยังอยู่ในระยะเวลาปกติ
+                </p>
+              </div>
+
+              <!-- Urgent Level -->
+              <div class="p-5 rounded-2xl bg-amber-50/80 border border-amber-300 text-left space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="px-2.5 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">hourglass_top</span> เร่งด่วน
+                  </span>
+                  <span class="text-xs font-semibold text-amber-700">เหลือน้อยกว่า 24 ชม.</span>
+                </div>
+                <strong class="block text-slate-800 text-sm">สถานะ: ใกล้ครบกำหนด SLA</strong>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  การ์ดเปลี่ยนเป็นสีส้มเพื่อเตือนหัวหน้างาน (L1) และ HR ว่าต้องเร่งพิจารณาให้เสร็จสิ้นก่อนหมดเวลา
+                </p>
+              </div>
+
+              <!-- Overdue Level -->
+              <div class="p-5 rounded-2xl bg-rose-50/80 border border-rose-300 text-left space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="px-2.5 py-1 bg-rose-600 text-white rounded-lg text-xs font-bold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">alarm_off</span> เกินกำหนด
+                  </span>
+                  <span class="text-xs font-semibold text-rose-700">เกิน 48 ชม. แล้ว</span>
+                </div>
+                <strong class="block text-slate-800 text-sm">สถานะ: Overdue (ล่าช้า)</strong>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  การ์ดเปลี่ยนเป็นสีแดงพร้อมข้อความระบุว่าเกินกำหนดไปแล้วกี่วันกี่ชั่วโมง เพื่อให้ผู้บริหารตรวจสอบสาเหตุ
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Breakdown: Employee Details & Modal -->
+          <div class="grid md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+            <div class="p-5 bg-white rounded-2xl border border-slate-200/80 space-y-2.5 shadow-sm">
+              <h5 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2 text-cyan-700">
+                <span class="material-symbols-outlined text-lg">badge</span>
+                การแสดงข้อมูลผู้ยื่นบนการ์ดครบถ้วน:
+              </h5>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                การ์ด SLA แต่ละใบจะแสดงรูปโปรไฟล์, <strong>ชื่อ-นามสกุล</strong>, ชื่อเล่น, <strong>รหัสพนักงาน (เช่น PVT001)</strong>, แผนก และตำแหน่งงาน พร้อมประเภทการลาอย่างชัดเจน ทำให้ผู้อนุมัติตรวจสอบบุคคลได้ทันทีโดยไม่ต้องค้นหาเพิ่มเติม
+              </p>
+            </div>
+
+            <div class="p-5 bg-white rounded-2xl border border-slate-200/80 space-y-2.5 shadow-sm">
+              <h5 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2 text-teal-700">
+                <span class="material-symbols-outlined text-lg">visibility</span>
+                ปุ่ม "ดูแบบละเอียด" (Unified Preview Modal):
+              </h5>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                สามารถคลิกปุ่ม <strong class="text-teal-700">"ดูแบบละเอียด"</strong> หรือ <strong class="text-cyan-700">"ตรวจใบลา"</strong> เพื่อเปิดหน้าต่างป๊อปอัป SweetAlert2 แสดงเหตุผลการลาเต็มรูปแบบ วันที่และเวลาลา ไฟล์แนบเอกสารใบรับรองแพทย์ และลำดับสถานะการอนุมัติ L1/L2 ได้ทันทีจากทุกหน้าจอ
+              </p>
+            </div>
+          </div>
+
+          <!-- Where is it visible? -->
+          <div class="p-5 bg-cyan-50/60 rounded-2xl border border-cyan-100 space-y-2">
+            <h5 class="font-bold text-cyan-900 text-xs md:text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-cyan-700">location_on</span>
+              ตำแหน่งของ SLA Tracker ในระบบ:
+            </h5>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside leading-relaxed">
+              <li><strong>หน้าแผงควบคุม HR (Dashboard - home.html):</strong> แสดงคำขอลาของพนักงานทุกคนในองค์กรที่รอพิจารณา เพื่อให้ฝ่ายบุคคลติดตามภาพรวม SLA ได้ครบถ้วน</li>
+              <li><strong>หน้าตรวจใบลา (HR Approval - hr.html):</strong> แสดงการ์ดนับเวลาถอยหลัง พร้อมปุ่มลัดสำหรับเปิดตรวจและกดอนุมัติ L2 ได้ทันที</li>
+              <li><strong>หน้าประวัติการลาพนักงาน (leave-history.html):</strong> แสดงเฉพาะคำขอของตัวพนักงานเองที่อยู่ระหว่างรอผล เพื่อให้ทราบว่าเอกสารอยู่ในคิวพิจารณาอีกกี่ชั่วโมง</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Leave History -->
+      <section id="leave-history" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">history</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">การติดตามผลสถานะใบลา สั่งพิมพ์ และการขอยกเลิก</h2>
+        </div>
+        <div class="content-card space-y-6" style="animation-delay: 0.4s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            คุณสามารถตรวจสอบความเคลื่อนไหวของใบลาที่ยื่นขอไปแล้วได้ผ่านตารางในหน้าเมนูหลัก ซึ่งแยกแยะตามสีสัญญลักษณ์ที่เข้าใจง่าย:
+          </p>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <!-- รออนุมัติ -->
+            <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 text-center shadow-sm">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 mb-2">
+                <span class="material-symbols-outlined text-lg">pending</span>
+              </span>
+              <strong class="block font-bold text-amber-700 text-sm md:text-base">รออนุมัติ (Pending)</strong>
+              <span class="text-[11px] text-amber-600 mt-1 block">เอกสารอยู่ระหว่างตรวจสอบขั้นที่ 1 หรือขั้นที่ 2</span>
+            </div>
+
+            <!-- อนุมัติแล้ว -->
+            <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center shadow-sm">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 mb-2">
+                <span class="material-symbols-outlined text-lg">check_circle</span>
+              </span>
+              <strong class="block font-bold text-emerald-700 text-sm md:text-base">อนุมัติแล้ว (Approved)</strong>
+              <span class="text-[11px] text-emerald-600 mt-1 block">ได้รับการเซ็นอนุมัติผ่านระบบทั้งสายงานอย่างสมบูรณ์</span>
+            </div>
+
+            <!-- ปฏิเสธ -->
+            <div class="p-5 rounded-2xl bg-rose-50 border border-rose-200 text-center shadow-sm">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-rose-100 text-rose-700 mb-2">
+                <span class="material-symbols-outlined text-lg">cancel</span>
+              </span>
+              <strong class="block font-bold text-rose-700 text-sm md:text-base">ปฏิเสธ (Rejected)</strong>
+              <span class="text-[11px] text-rose-600 mt-1 block">ใบลาไม่ผ่านการพิจารณา สามารถกดส่อง "รูปดวงตา" เพื่อดูบันทึกเหตุผล</span>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+            <!-- การปริ้น A4 -->
+            <div class="space-y-1">
+              <h5 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-cyan-600">print</span>
+                การปริ้นเอกสารทางการสไตล์ A4 PDF:
+              </h5>
+              <p class="text-[11px] md:text-xs text-slate-500 leading-relaxed">
+                กดไอคอนเครื่องพิมพ์ที่อยู่ท้ายแถวตาราง ระบบจะประมวลใบขอลาลายน้ำสแตมป์ดิจิทัลสวยงามอย่างเป็นทางการ เหมาะสำหรับจัดพิมพ์หรือบันทึกเก็บเป็นหลักฐานส่วนตัว
+              </p>
+            </div>
+            
+            <!-- การยกเลิกใบลา -->
+            <div class="space-y-1">
+              <h5 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-rose-600">delete_sweep</span>
+                การขอยกเลิกคำขอลาที่ผ่านการอนุมัติแล้ว:
+              </h5>
+              <p class="text-[11px] md:text-xs text-slate-500 leading-relaxed">
+                หากมีความจำเป็นต้องยกเลิก ให้กดปุ่มไอคอน <strong class="text-rose-600">"ขอยกเลิก"</strong> ในหน้าตารางประวัติ เมื่อหัวหน้าแผนกตรวจสอบและอนุมัติการยกเลิกเรียบร้อย ระบบจะทำโอนยอดโควตากลับสู่โปรไฟล์ของคุณอัตโนมัติ
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: LINE Linking -->
+      <section id="line-link" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8" alt="LINE" />
+          <h2 class="heading-font text-2xl font-bold text-slate-800">การเปิดเชื่อมแจ้งเตือนด่วนทางแอป LINE (LINE Notify)</h2>
+        </div>
+        <div class="content-card space-y-4" style="animation-delay: 0.5s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            คุณสามารถเปิดเชื่อมต่อบัญชีกับบอทแจ้งเตือนเพื่อรับสติกเกอร์และข้อความระบุทันทีเมื่อใบลาได้รับการอนุมัติหรือปฏิเสธ โดยทำตามขั้นตอนง่ายๆ:
+          </p>
+          
+          <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100 flex flex-col md:flex-row items-center gap-6 justify-between">
+            <div class="space-y-2">
+              <strong class="text-emerald-800 text-sm block"> 4 ขั้นตอนผูกระบบด่วน:</strong>
+              <ol class="list-decimal list-inside text-[11px] md:text-xs text-slate-600 space-y-1.5 leading-relaxed">
+                <li>ไปที่หน้ารายละเอียดข้อมูลพนักงาน <strong class="text-emerald-700">"ข้อมูลส่วนตัว" (Profile)</strong></li>
+                <li>คลิกปุ่มสีเขียว <strong class="text-emerald-700">"ขอรหัสเชื่อมต่อ LINE"</strong> ระบบจะให้รหัส 6 หลักมา</li>
+                <li>เพิ่มเพื่อนไลน์ทางการของ PVT และพิมพ์ส่งตัวเลขสัญญลักษณ์ 6 หลักนั้นเข้ามาในแชท</li>
+                <li>ระบบส่วนกลางยืนยันคู่รหัสสำเร็จ บอทจะเริ่มทำงานและแจ้งเตือนผลเมื่อใบลาได้รับการพิจารณา</li>
+              </ol>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-emerald-100 text-center flex-shrink-0 flex flex-col items-center">
+              <span class="material-symbols-outlined text-emerald-500 text-3xl mb-1">notifications_active</span>
+              <span class="text-xs font-bold text-emerald-800">แจ้งเตือนฟรี 100%</span>
+              <span class="text-[10px] text-slate-400 mt-0.5">ทำงานบนระบบสุ่มปลอดภัยสูงสุด</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Calendar -->
+      <section id="calendar" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">calendar_month</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">การใช้งานแผงควบคุมปฏิทินวันหยุดบริษัทและวันลาทีม</h2>
+        </div>
+        <div class="content-card space-y-8" style="animation-delay: 0.6s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            ปฏิทินเป็นเครื่องมือสำคัญสำหรับการเช็คข้อมูลทีมเพื่อร่วมวางแผนสิทธิ์ประโยชน์ล่วงหน้า:
+          </p>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            <!-- วันหยุดบริษัท -->
+            <div class="p-6 rounded-2xl border border-slate-100 bg-cyan-50/20 relative overflow-hidden flex flex-col justify-between space-y-3">
+              <div class="space-y-2">
+                <h4 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2">
+                  <span class="material-symbols-outlined text-cyan-600 p-1 bg-cyan-100 rounded-lg">event</span> ปฏิทินหยุดประจำปี (Company Holidays)
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  รวบรวมวันสำคัญนักขัตฤกษ์ประจำปีขององค์กร และวันหยุดกรณีพิเศษ แสดงเป็นเครื่องหมายแถบกรอบเด่นในกล่องวันที่ คุณสามารถคลิกดูรายละเอียดของแต่ละวันเพื่อวางแผนพักผ่อนระยะยาว
+                </p>
+              </div>
+              <span class="material-symbols-outlined absolute -right-6 -bottom-6 text-[100px] text-cyan-500 opacity-5">calendar_view_day</span>
+            </div>
+
+            <!-- วันลาของทีม -->
+            <div class="p-6 rounded-2xl border border-slate-100 bg-teal-50/20 relative overflow-hidden flex flex-col justify-between space-y-3">
+              <div class="space-y-2">
+                <h4 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2">
+                  <span class="material-symbols-outlined text-teal-600 p-1 bg-teal-100 rounded-lg">groups</span> กระดานเช็ควันลาทีม (Team Attendance)
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  หากเพื่อนร่วมแผนกเดียวกันยื่นคำขอลาและได้รับพิจารณาผ่าน ระบบจะปรากฏจุดสีใต้กล่องเลขบนปฏิทิน และเมื่อคลิกที่วันดังกล่าว รายชื่อของพนักงานที่ลาจะแสดงสรุปที่แถบรายชื่อด้านล่าง
+                </p>
+              </div>
+              <span class="material-symbols-outlined absolute -right-6 -bottom-6 text-[100px] text-teal-500 opacity-5">diversity_3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Manager Guide -->
+      <section id="manager" class="scroll-mt-32" style="display: none;">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">admin_panel_settings</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">คู่มือปฏิบัติงานสำหรับผู้อนุมัติขั้น L1 (Manager Portal)</h2>
+        </div>
+        <div class="content-card space-y-6" style="animation-delay: 0.7s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            เมื่อได้รับการแต่งตั้งเป็นหัวหน้าแผนก (L1 Approval) บัญชีผู้ใช้ของคุณจะมีระบบการตรวจสอบใบลาของลูกทีมเพิ่มขึ้นมาอัตโนมัติ โดยมีหน้าที่สำคัญตามนโยบาย SLA 48 ชั่วโมง:
+          </p>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="p-5 rounded-2xl bg-cyan-50/50 border border-cyan-100 space-y-2 text-xs text-slate-600">
+              <strong class="text-cyan-800 block text-sm font-bold flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-lg">fact_check</span> 1. ตรวจสอบความถูกต้อง
+              </strong>
+              <span>ตรวจสอบรายชื่อผู้ยื่น, ประเภทวันลา, จำนวนวันที่ขอลา และคลิกดูหลักฐานภาพถ่ายใบรับรองแพทย์ (ถ้ามี) ผ่านปุ่ม "ดูแบบละเอียด"</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2 text-xs text-slate-600">
+              <strong class="text-emerald-800 block text-sm font-bold flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-lg">check_circle</span> 2. อนุมัติ / ปฏิเสธ (L1)
+              </strong>
+              <span>คลิกอนุมัติเพื่อส่งต่อเอกสารไปยังฝ่ายบุคคล (L2) หรือระบุเหตุผลในการปฏิเสธเพื่อให้พนักงานรับทราบและปรับปรุงแก้ไข</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-amber-50/50 border border-amber-100 space-y-2 text-xs text-slate-600">
+              <strong class="text-amber-800 block text-sm font-bold flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-lg">timer</span> 3. กำกับดูแล SLA 2 วัน
+              </strong>
+              <span>สังเกตสีตัวนับเวลาถอยหลังของการ์ด SLA หากเปลี่ยนเป็นสีส้มหรือสีแดง ให้เร่งพิจารณาเป็นอันดับแรกเพื่อไม่ให้กระทบภาพรวมองค์กร</span>
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2">
+            <h5 class="font-bold text-slate-800 text-xs md:text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-slate-700">calendar_month</span>
+              การตรวจสอบความพร้อมของทีมก่อนอนุมัติ:
+            </h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              ก่อนกดยืนยันใบลา หัวหน้าแผนกควรตรวจสอบปฏิทินวันลาของทีม (Team Attendance) เพื่อเช็คว่ามีสมาชิกในตำแหน่งสำคัญลาซ้อนกันในวันดังกล่าวหรือไม่ เพื่อให้การดำเนินงานของแผนกเป็นไปอย่างราบรื่น
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: HR Guide -->
+      <section id="hr" class="scroll-mt-32" style="display: none;">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">manage_accounts</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">คู่มือการบริหารงานและสิทธิ์สำหรับระดับฝ่ายบุคคล (HR L2 / Admin)</h2>
+        </div>
+        <div class="content-card space-y-8" style="animation-delay: 0.8s">
+          <p class="text-slate-600 leading-relaxed text-sm">
+            สิทธิ์ระดับฝ่ายบุคคล (HR L2 / Admin) มีอำนาจสูงสุดในการควบคุมและบริหารจัดการระบบบุคลากรทั้งองค์กร:
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-2.5">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-cyan-700">
+                <span class="material-symbols-outlined text-xl">fact_check</span> 1. ตรวจสอบและอนุมัติขั้นสุดท้าย (HR Final Approval - hr.html)
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                ทำหน้าที่ตรวจสอบใบลาที่ผ่านการอนุมัติ L1 มาแล้ว หรือใบลาที่รอ HR ตรวจสอบโดยตรง เมื่อ HR กดยืนยันอนุมัติ ระบบจะทำการตัดยอดโควตาวันลาสะสมของพนักงานรายนั้นโดยอัตโนมัติและส่งข้อความแจ้งเตือนผ่าน LINE ทันที
+              </p>
+            </div>
+
+            <div class="p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-2.5">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-blue-700">
+                <span class="material-symbols-outlined text-xl">person_add</span> 2. จัดการข้อมูลพนักงานและสายงาน (Management Portal)
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                เพิ่ม แก้ไข หรือระงับสถานะพนักงาน กำหนดตำแหน่ง แผนก รหัสพนักงาน รวมถึงกำหนดว่าพนักงานคนใดต้องส่งใบลาให้หัวหน้างาน (L1) ท่านใดเป็นผู้พิจารณาก่อนถึงฝ่ายบุคคล
+              </p>
+            </div>
+
+            <div class="p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-2.5">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-emerald-700">
+                <span class="material-symbols-outlined text-xl">edit_calendar</span> 3. กำหนดโควตาวันลาประจำปีและวันหยุดบริษัท
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                ตั้งค่าจำนวนวันลาที่พนักงานแต่ละคนได้รับตามสัญญาจ้างหรืออายุงาน และตั้งค่าปฏิทินวันหยุดประเพณี/วันหยุดนักขัตฤกษ์ของบริษัทเพื่อใช้ในการคำนวณวันทำการ
+              </p>
+            </div>
+
+            <div class="p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-2.5">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-purple-700">
+                <span class="material-symbols-outlined text-xl">badge</span> 4. ระบบออกบัตรพนักงานดิจิทัล & QR Code
+              </h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                สร้างบัตรประจำตัวพนักงานพร้อม QR Code ส่วนบุคคล สำหรับใช้สแกนเข้าสู่ระบบได้อย่างสะดวกรวดเร็วโดยไม่ต้องจำรหัสผ่าน
+              </p>
+            </div>
+          </div>
+
+          <!-- HR SLA Monitor -->
+          <div class="p-5 bg-amber-50 rounded-2xl border border-amber-200 space-y-2">
+            <h5 class="font-bold text-amber-900 text-xs md:text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-amber-700">speed</span>
+              การมอนิเตอร์ SLA ทั้งระบบบนหน้าแรกของ HR (Dashboard SLA Hub):
+            </h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              ฝ่ายบุคคลสามารถเปิดหน้า <strong>/pages/hr/home.html</strong> เพื่อดูการ์ด SLA Tracker ของพนักงานทุกคน ทุกแผนก ที่กำลังรออนุมัติ หากพบว่ามีรายการใดกลายเป็นสีแดง (เกิน 48 ชม.) HR สามารถประสานงานกับหัวหน้าแผนกที่รับผิดชอบเพื่อเร่งรัดการลงนามได้ทันที
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: FAQ -->
+      <section id="faq" class="scroll-mt-32">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600 font-bold">help</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">คำถามที่พบบ่อย (Frequently Asked Questions)</h2>
+        </div>
+        <div class="content-card space-y-4" style="animation-delay: 0.85s">
+          <div class="space-y-4">
+            <!-- Q1 -->
+            <div class="p-4 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-1.5">
+              <strong class="text-slate-800 text-xs md:text-sm block flex items-center gap-2 text-cyan-700">
+                <span class="material-symbols-outlined text-lg">help_outline</span> Q: ยื่นใบลาแล้ว หัวหน้างานยังไม่อนุมัติเกิน 2 วัน ต้องทำอย่างไร?
+              </strong>
+              <p class="text-xs text-slate-600 leading-relaxed pl-6">
+                <strong>A:</strong> ระบบจะมีตัวนับเวลา SLA 48 ชั่วโมงแสดงสถานะสีแดงแจ้งเตือนทั้งในหน้าของหัวหน้างานและฝ่ายบุคคล พนักงานสามารถติดต่อหัวหน้างานหรือแจ้งฝ่ายบุคคลเพื่อช่วยประสานงานได้
+              </p>
+            </div>
+
+            <!-- Q2 -->
+            <div class="p-4 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-1.5">
+              <strong class="text-slate-800 text-xs md:text-sm block flex items-center gap-2 text-cyan-700">
+                <span class="material-symbols-outlined text-lg">help_outline</span> Q: หากต้องการยกเลิกใบลาที่ผ่านการอนุมัติแล้ว โควตาวันลาจะกลับมาหรือไม่?
+              </strong>
+              <p class="text-xs text-slate-600 leading-relaxed pl-6">
+                <strong>A:</strong> เมื่อกดปุ่ม "ขอยกเลิก" ในหน้าประวัติการลา และหัวหน้างาน/HR ทำการอนุมัติการยกเลิกเรียบร้อยแล้ว ระบบจะคืนยอดโควตาวันลากลับสู่โปรไฟล์ของท่านโดยอัตโนมัติ
+              </p>
+            </div>
+
+            <!-- Q3 -->
+            <div class="p-4 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-1.5">
+              <strong class="text-slate-800 text-xs md:text-sm block flex items-center gap-2 text-cyan-700">
+                <span class="material-symbols-outlined text-lg">help_outline</span> Q: ลาป่วยกี่วันจึงจำเป็นต้องแนบใบรับรองแพทย์?
+              </strong>
+              <p class="text-xs text-slate-600 leading-relaxed pl-6">
+                <strong>A:</strong> ตามกฎระเบียบบริษัท การลาป่วยติดต่อกันตั้งแต่ 3 วันทำงานขึ้นไป จำเป็นต้องอัปโหลดรูปภาพใบรับรองแพทย์จากสถานพยาบาลที่ได้รับการรับรองแนบมาในระบบ
+              </p>
+            </div>
+
+            <!-- Q4 -->
+            <div class="p-4 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-1.5">
+              <strong class="text-slate-800 text-xs md:text-sm block flex items-center gap-2 text-cyan-700">
+                <span class="material-symbols-outlined text-lg">help_outline</span> Q: ไม่ได้รับการแจ้งเตือนผลใบลาผ่าน LINE ต้องแก้ไขอย่างไร?
+              </strong>
+              <p class="text-xs text-slate-600 leading-relaxed pl-6">
+                <strong>A:</strong> ตรวจสอบว่าได้ทำการขอรหัส 6 หลักและส่งข้อความผูกบัญชีกับ LINE Official ของบริษัทแล้วหรือยัง โดยสามารถเข้าเมนู "เชื่อมต่อ LINE" บนหน้าหลักเพื่อเชื่อมต่อใหม่อีกครั้ง
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: PWA -->
+      <section id="pwa" class="scroll-mt-32 pb-20">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-3xl text-cyan-600">install_mobile</span>
+          <h2 class="heading-font text-2xl font-bold text-slate-800">ติดตั้งเป็นแอปมือถือ (PWA)</h2>
+        </div>
+        <div class="rounded-[24px] p-10 text-white shadow-2xl relative overflow-hidden" style="background: linear-gradient(135deg, #0f766e 0%, #115e59 100%); border: 1px solid rgba(255, 255, 255, 0.15); animation: slideUp 0.6s ease-out backwards; animation-delay: 0.9s">
+          <div class="relative z-10 space-y-8">
+            <p class="text-white text-lg font-medium leading-relaxed" style="color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.15);">คุณสามารถใช้งาน PVT เหมือนเป็นแอปพลิเคชันจริงบนมือถือได้โดยไม่ต้องผ่าน Store:</p>
+            <div class="grid md:grid-cols-2 gap-8">
+              <div class="space-y-4 p-6 rounded-2xl" style="background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(8px);">
+                <div class="flex items-center gap-3 font-black uppercase tracking-widest text-xs" style="color: #e2fbf5;">
+                  <span class="material-symbols-outlined text-xl" style="color: #e2fbf5;">apple</span> iOS (Safari)
+                </div>
+                <p class="text-sm leading-relaxed" style="color: #ffffff;">กดปุ่ม <strong style="color: #6ee7b7; font-weight: 800;">แชร์ (Share)</strong> ด้านล่างจอ แล้วเลือก <strong style="color: #6ee7b7; font-weight: 800;">"เพิ่มไปยังหน้าจอโฮม" (Add to Home Screen)</strong></p>
+              </div>
+              <div class="space-y-4 p-6 rounded-2xl" style="background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(8px);">
+                <div class="flex items-center gap-3 font-black uppercase tracking-widest text-xs" style="color: #e2fbf5;">
+                  <span class="material-symbols-outlined text-xl" style="color: #e2fbf5;">android</span> Android (Chrome)
+                </div>
+                <p class="text-sm leading-relaxed" style="color: #ffffff;">กดปุ่ม <strong style="color: #6ee7b7; font-weight: 800;">จุดสามจุด</strong> มุมขวาบน แล้วเลือก <strong style="color: #6ee7b7; font-weight: 800;">"ติดตั้งแอป" (Install App)</strong></p>
+              </div>
+            </div>
+          </div>
+          <!-- Background Decoration -->
+          <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-white rounded-full blur-[120px] opacity-10"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-10">
+    <div class="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
+      <p>© 2026 PVT Workforce Management System · Ver 2.5</p>
+      <p class="mt-2 text-xs">พัฒนาเพื่อยกระดับการทำงานอย่างมืออาชีพ</p>
+    </div>
+  </footer>
+
+  <script>
+    // Role-based visibility logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const userRole = localStorage.getItem('pvt_user_role') || 'employee';
+      
+      if (userRole === 'manager' || userRole === 'admin' || userRole === 'hr') {
+        const sidebarManager = document.getElementById('sidebar-manager-section');
+        const contentManager = document.getElementById('manager');
+        const chipManager = document.getElementById('chip-manager-section');
+        if(sidebarManager) sidebarManager.style.display = 'block';
+        if(contentManager) contentManager.style.display = 'block';
+        if(chipManager) chipManager.style.display = 'inline-flex';
+      }
+      
+      if (userRole === 'hr' || userRole === 'admin') {
+        const sidebarHR = document.getElementById('sidebar-hr-section');
+        const contentHR = document.getElementById('hr');
+        const chipHR = document.getElementById('chip-hr-section');
+        if(sidebarHR) sidebarHR.style.display = 'block';
+        if(contentHR) contentHR.style.display = 'block';
+        if(chipHR) chipHR.style.display = 'inline-flex';
+      }
+    });
+
+    // Simple Active Nav Highlighting
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileChips = document.querySelectorAll('.mobile-nav-chip');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        // Only consider sections that are actually visible
+        if (section.style.display !== 'none') {
+          const sectionTop = section.offsetTop;
+          if (window.pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes('#' + current)) {
+          link.classList.add('active');
+        }
+      });
+
+      mobileChips.forEach(chip => {
+        chip.classList.remove('active');
+        if (chip.getAttribute('href').includes('#' + current)) {
+          chip.classList.add('active');
+          // Auto-scroll the chips row horizontally to keep the active chip visible
+          chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+    });
+  </script>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const guideEnDict = {"คู่มือการใช้งาน - PVT Workforce Hub":"User Manual - PVT Workforce Hub","คู่มือการใช้งานระบบพนักงาน (ฉบับสมบูรณ์)":"Employee System User Manual (Complete)","ตั้งค่า":"Settings","ย้อนกลับ":"Back","หัวข้อแนะนำ":"Recommended Topics","การเข้าสู่ระบบ":"Login / Authentication","หน้าแผงควบคุม (Dashboard)":"Dashboard","ขั้นตอนการยื่นใบลา":"Leave Submission Steps","ระบบติดตามนโยบาย SLA 2 วัน":"SLA 2-Day Tracking System","ใหม่":"NEW","ตรวจสอบสถานะและประวัติ":"Check Status & History","การเชื่อมต่อ LINE":"LINE Integration","การใช้งานปฏิทิน":"Calendar Usage","สำหรับหัวหน้าแผนก (L1)":"For Department Head (L1)","สำหรับฝ่ายบุคคล (HR L2)":"For Human Resources (HR L2)","คำถามพบบ่อย (FAQ)":"Frequently Asked Questions (FAQ)","ติดตั้งเป็นแอปมือถือ":"Install Mobile App","การเข้าสู่ระบบ (Authentication)":"Authentication","2 ช่องทางหลัก":"2 Main Login Channels","วิธีที่ 1: พิมพ์ค้นหารายชื่อ":"Method 1: Search by Name","ชื่อ-นามสกุล":"First & Last Name","รหัสพนักงาน":"Employee Code","ระบบรองรับการค้นหาอัจฉริยะ พิมพ์เพียงบางส่วนระบบจะแสดงผลขึ้นมาทันที":"Smart search supported. Type partially to see results instantly.","คลิกเลือกรายชื่อตัวเองและป้อนรหัสผ่านสี่หลักเพื่อเข้าสู่ระบบ":"Click your name and enter your 4-digit PIN to log in.","วิธีที่ 2: สแกนบัตรพนักงานผ่าน QR Code":"Method 2: Scan QR Code ID Card","อนุญาตสิทธิ์การเข้าถึงกล้อง":"Allow camera access","นำบัตรพนักงานส่วนบุคคลที่มี QR Code มาส่องที่กล้อง":"Place your personal ID card with QR code in front of the camera.","ระบบจะตรวจสอบโครงสร้างความมั่นคงและนำคุณเข้าสู่แดชบอร์ดใน 1 วินาที":"The system will verify securely and log you in within 1 second.","คำแนะนำฝ่ายบุคคล (HR Notification):":"HR Notification:","หากพนักงานใหม่ไม่พบรายชื่อในช่องค้นหา หรือไม่สามารถใช้งานกล้องสแกนคิวอาร์โค้ดได้ กรุณาติดต่อฝ่ายทรัพยากรบุคคลโดยตรงเพื่อปรับปรุงฐานข้อมูลให้เป็นเวอร์ชันล่าสุด":"If new employees cannot find their names or scan QR codes, please contact HR to update the database.","หน้าแผงควบคุมหลักพนักงาน (Dashboard)":"Employee Main Dashboard","เมื่อเข้าสู่ระบบเรียบร้อยแล้ว แผงควบคุมจะแสดงข้อมูลสรุปผลวันลาและการทำงานของคุณแบบเรียลไทม์:":"Once logged in, the dashboard displays your leave summaries and real-time work status:","องค์ประกอบหลักและเมนูสำคัญ:":"Key Elements and Menus:","สิทธิ์วันลาคงเหลือแบบวงกลมสถิติ":"Leave Balance Circular Charts","ลาป่วย":"Sick Leave","ลากิจ":"Personal Leave","ลาพักร้อน":"Annual Leave","ปุ่มยื่นใบลาแบบด่วนออนไลน์":"Quick Online Leave Button","\"ยื่นใบลาออนไลน์\"":"\"Submit Leave Request\"","ตารางสถานะการทำงานเพื่อนร่วมงาน":"Colleague Work Status Table","ระบุรายชื่อและวันหยุดของคนในแผนกเดียวกันเพื่อหลีกเลี่ยงการหยุดทับซ้อนและจัดลำดับแผนงานได้อย่างไร้รอยต่อ":"Shows names and leaves of people in the same department to avoid overlapping absences and seamless planning.","ข้อมูลสิทธิ์คำนวณอย่างไร?":"How are entitlements calculated?","ระบบหลังบ้านจะหักวันลาอัตโนมัติเมื่อเอกสารได้รับการอนุมัติเสร็จสิ้นโดยฝ่ายบุคคล โดยไม่รวมวันหยุดสัปดาห์หรือวันหยุดนักขัตฤกษ์ของบริษัท":"The system deducts quotas automatically upon HR approval, excluding weekends and company holidays.","ข้อมูลควรรู้:":"Good to Know:","เครื่องหมายติดลบ (-)":"Negative Sign (-)","ขั้นตอนการยื่นใบลาอย่างละเอียด (Leave Submission Steps)":"Detailed Leave Submission Steps","ขั้นตอนการเปิดเอกสารคำขอใบลาเพื่อส่งให้ผู้อนุมัติพิจารณาในระบบออนไลน์:":"Steps to open and submit a leave request online:","โควตาหักอัตโนมัติ":"Auto Quota Deduction","รองรับครึ่งวัน/รายชั่วโมง":"Supports Half-Day/Hourly","เลือกวันที่เริ่มต้นและสิ้นสุดบนปฏิทิน และคุณสามารถเลือกตั้งค่าการลาระยะสั้นได้อย่างอิสระ:":"Select start and end dates on the calendar. You can flexibly set short-term leaves:"," ลาหยุดแบบครึ่งวัน (Half-Day Leave):":" Half-Day Leave:","⏱️ ลาหยุดแบบรายชั่วโมง (Hourly Leave):":"⏱️ Hourly Leave:","ติ๊กที่ช่อง \"ลาเป็นชั่วโมง\" ระบบจะแสดงแถบระบุชั่วโมงตั้งแต่เริ่มถึงเวลาหมดวันหยุดนั้นๆ เหมาะสำหรับไปธุระราชการระยะสั้น":"Check \"Hourly Leave\" to show a slider specifying hours. Ideal for short errands.","แนะนำโดยฝ่ายบุคคล":"HR Recommendation","กรอกเหตุผลความจำเป็นในการลาหยุด สำหรับการลาที่ต้องอาศัยหลักฐานทางกฎหมายหรือกฎข้อบังคับองค์กร:":"Enter a necessary reason. For leaves requiring proof per company rules:","การแนบใบรับรองแพทย์:":"Attaching Medical Certificates:","ยืนยันสายงานผู้อนุมัติและกดส่งคำขอ":"Confirm Approver Line & Submit","\"ส่งคำขออนุมัติ\"":"\"Submit Request\"","ระบบติดตามการอนุมัตินโยบาย 2 วัน (SLA 48 Hours Tracker)":"2-Day SLA Approval Tracker","นโยบายระยะเวลาการพิจารณาคำขอลา (Approval SLA) ภายใน 48 ชั่วโมง (2 วันทำการ)":"Leave Approval SLA Policy within 48 Hours (2 Working Days)","ระดับการแจ้งเตือน 3 สถานะของ SLA Tracker:":"3 Alert Levels of SLA Tracker:","ปลอดภัย":"Safe","เหลือมากกว่า 24 ชม.":"More than 24 Hrs left","สถานะ: อยู่ในเกณฑ์มาตรฐาน":"Status: Within Standard","การ์ดแสดงขอบสีเขียวและตัวเลขนับถอยหลังสีเขียว แสดงว่าคำขอเพิ่งถูกยื่นเข้ามาและยังอยู่ในระยะเวลาปกติ":"Green border and countdown indicate the request was recently submitted.","เร่งด่วน":"Urgent","เหลือน้อยกว่า 24 ชม.":"Less than 24 Hrs left","สถานะ: ใกล้ครบกำหนด SLA":"Status: Approaching SLA","การ์ดเปลี่ยนเป็นสีส้มเพื่อเตือนหัวหน้างาน (L1) และ HR ว่าต้องเร่งพิจารณาให้เสร็จสิ้นก่อนหมดเวลา":"Orange card warns L1 and HR to expedite approval before time expires.","เกินกำหนด":"Overdue","เกิน 48 ชม. แล้ว":"Over 48 Hrs Passed","สถานะ: Overdue (ล่าช้า)":"Status: Overdue","การ์ดเปลี่ยนเป็นสีแดงพร้อมข้อความระบุว่าเกินกำหนดไปแล้วกี่วันกี่ชั่วโมง เพื่อให้ผู้บริหารตรวจสอบสาเหตุ":"Red card displays overdue time, prompting management to investigate.","การแสดงข้อมูลผู้ยื่นบนการ์ดครบถ้วน:":"Complete Submitter Info on Cards:","รหัสพนักงาน (เช่น PVT001)":"Employee ID (e.g., PVT001)","ปุ่ม \"ดูแบบละเอียด\" (Unified Preview Modal):":"\"View Details\" Button (Unified Preview Modal):","\"ดูแบบละเอียด\"":"\"View Details\"","\"ตรวจใบลา\"":"\"Check Leave\"","ตำแหน่งของ SLA Tracker ในระบบ:":"SLA Tracker Locations:","หน้าแผงควบคุม HR (Dashboard - home.html):":"HR Dashboard (home.html):","หน้าตรวจใบลา (HR Approval - hr.html):":"Leave Approval (hr.html):","หน้าประวัติการลาพนักงาน (leave-history.html):":"Employee Leave History (leave-history.html):","การติดตามผลสถานะใบลา สั่งพิมพ์ และการขอยกเลิก":"Leave Status Tracking, Printing, and Cancellation","คุณสามารถตรวจสอบความเคลื่อนไหวของใบลาที่ยื่นขอไปแล้วได้ผ่านตารางในหน้าเมนูหลัก ซึ่งแยกแยะตามสีสัญญลักษณ์ที่เข้าใจง่าย:":"Track submitted leaves via the main menu table, sorted by intuitive color codes:","รออนุมัติ (Pending)":"Pending Approval","เอกสารอยู่ระหว่างตรวจสอบขั้นที่ 1 หรือขั้นที่ 2":"Document is undergoing L1 or L2 review","อนุมัติแล้ว (Approved)":"Approved","ได้รับการเซ็นอนุมัติผ่านระบบทั้งสายงานอย่างสมบูรณ์":"Fully signed and approved through the system.","ปฏิเสธ (Rejected)":"Rejected","ใบลาไม่ผ่านการพิจารณา สามารถกดส่อง \"รูปดวงตา\" เพื่อดูบันทึกเหตุผล":"Leave denied. Click the \"eye\" icon to view the reason.","การปริ้นเอกสารทางการสไตล์ A4 PDF:":"Printing Official A4 PDF Documents:","กดไอคอนเครื่องพิมพ์ที่อยู่ท้ายแถวตาราง ระบบจะประมวลใบขอลาลายน้ำสแตมป์ดิจิทัลสวยงามอย่างเป็นทางการ เหมาะสำหรับจัดพิมพ์หรือบันทึกเก็บเป็นหลักฐานส่วนตัว":"Click the printer icon at the row's end to generate an official digital watermarked PDF.","การขอยกเลิกคำขอลาที่ผ่านการอนุมัติแล้ว:":"Canceling an Approved Leave Request:","\"ขอยกเลิก\"":"\"Request Cancellation\"","การเปิดเชื่อมแจ้งเตือนด่วนทางแอป LINE (LINE Notify)":"LINE Notify Integration","คุณสามารถเปิดเชื่อมต่อบัญชีกับบอทแจ้งเตือนเพื่อรับสติกเกอร์และข้อความระบุทันทีเมื่อใบลาได้รับการอนุมัติหรือปฏิเสธ โดยทำตามขั้นตอนง่ายๆ:":"Connect your account to the notification bot to receive instant alerts upon approval/rejection:"," 4 ขั้นตอนผูกระบบด่วน:":" 4 Quick Integration Steps:","\"ข้อมูลส่วนตัว\" (Profile)":"\"Profile\"","\"ขอรหัสเชื่อมต่อ LINE\"":"\"Request LINE Code\"","เพิ่มเพื่อนไลน์ทางการของ PVT และพิมพ์ส่งตัวเลขสัญญลักษณ์ 6 หลักนั้นเข้ามาในแชท":"Add the PVT Official LINE account and type the 6-digit code in the chat.","เมื่อสำเร็จจะได้รับข้อความยืนยันการตั้งค่าทันที":"Upon success, receive an instant confirmation message.","การใช้งานแผงควบคุมปฏิทินวันหยุดบริษัทและวันลาทีม":"Company Holiday & Team Leave Calendar","ระบบออกแบบปฏิทินสากล 2 มุมมองหลักเพื่อให้พนักงานจัดสรรเวลาส่วนตัวได้ง่ายขึ้น":"The system features 2 calendar views for easy personal time management:","ปฏิทินวันหยุดประจำปีบริษัท (Company Holiday)":"Company Annual Holidays","รวบรวมวันหยุดสำคัญแยกประเภทสีชัดเจน เช่น วันหยุดชดเชย (สีส้ม), วันหยุดตามประเพณี (สีน้ำเงิน)":"Collects important holidays coded by color (e.g., Substitute Holidays in orange, Traditional in blue).","ปฏิทินทีมและแผนก (Team Leaves)":"Team and Department Leaves","ดูว่าใครในแผนกเดียวกันลาหยุดในช่วงเวลาใดบ้าง เพื่อการสื่อสารโอนถ่ายงานได้อย่างดีเยี่ยม":"See when team members are on leave for excellent workflow communication.","คู่มือปฏิบัติงานสำหรับผู้อนุมัติขั้น L1 (Manager Portal)":"L1 Approver Guide (Manager Portal)","ข้อจำกัดสิทธิ์สำหรับหัวหน้างานระดับแผนก (Line Manager)":"Line Manager Role Restrictions","สิทธิ์ที่จะเห็นเฉพาะพนักงานที่อยู่ใต้บังคับบัญชาตัวเองเท่านั้น":"Permissions restricted to view only direct subordinates.","เมื่อมีคำขอส่งเข้ามา หัวหน้างานจะเห็นปุ่มอนุมัติหรือปฏิเสธพร้อมช่องกรอกความเห็นเพิ่มเติม":"Upon receiving requests, managers see approve/reject buttons and a comment box.","หลังการกดผ่าน ขั้นตอนจะถูกส่งลอยฟ้าไปที่แผนก HR เพื่อตรวจขั้นตอนสุดท้าย":"After passing, the step forwards to HR for final review.","คู่มือการบริหารงานและสิทธิ์สำหรับระดับฝ่ายบุคคล (HR L2 / Admin)":"HR L2 / Admin Management Guide","พอร์ทัลจัดการขั้นสูงที่รวมสิทธิ์การดูแลไว้จุดเดียว":"Advanced management portal centralizing admin rights:","แก้ไขชื่อและจำนวนวันลาพนักงาน":"Edit Names and Leave Quotas","ฝ่ายบุคคลสามารถเข้าแท็บจัดการพนักงาน เพื่ออัปเดตสิทธิ์หรือลบพนักงานออกจากระบบได้ตามนโยบาย":"HR can access the employee management tab to update quotas or remove users per policy.","ตรวจทาน SLA และดึงข้อมูล Excel":"Review SLA and Export Excel","สรุปจำนวนรายเดือน หรือคำนวณการมาสายออกรายงานที่มุมขวาบนของตารางใบลา":"Summarize monthly leaves or late arrivals via reports in the top right corner.","อนุมัติปิดจบและยกเลิกคำร้อง: (Force Cancellation)":"Final Approvals and Force Cancellations:","เป็นสิทธิ์เดียวที่สามารถยกเลิกคำขอที่ถูกอนุมัติไปแล้วได้ 100%":"The only role able to 100% cancel an already approved request.","คำถามที่พบบ่อย (Frequently Asked Questions)":"Frequently Asked Questions (FAQ)","หากยอดสิทธิ์วันลาไม่ถูกต้อง ต้องทำอย่างไร?":"What if my leave quota is incorrect?","สิทธิ์วันลาจะคำนวณตามอายุงานโดยฝ่ายบุคคล หากพบว่าโควตาผิดพลาด โปรดติดต่อ HR โดยตรงเพื่อดำเนินการแก้ไข":"Quotas are calculated by HR based on tenure. Contact HR directly to correct errors.","ขอแก้ไขวันเวลาหลังกดส่งใบลาได้หรือไม่?":"Can I edit the date/time after submitting?","ไม่ได้. ในระบบแบบ 2 ขั้นตอน หากกดส่งไปแล้ว คุณสามารถกดยกเลิกและพิมพ์ขอใหม่เท่านั้น":"No. In the 2-step system, you must cancel the request and submit a new one.","ทำไมไอคอน LINE ไม่แจ้งเตือนแม้จะผูกรหัสแล้ว?":"Why aren't LINE notifications working after linking?","ตรวจสอบให้แน่ใจว่าไม่ได้ปิดกั้น (Block) แชทบอทของ PVT และสถานะในหน้าโปรไฟล์ขึ้นว่าเชื่อมต่อเรียบร้อยแล้ว":"Ensure you haven't blocked the PVT chatbot and your profile shows 'Connected'.","ลืมรหัสผ่าน PIN สี่หลัก":"Forgot 4-digit PIN","ติดต่อฝ่ายบุคคลเพื่อรีเซ็ตรหัสผ่านกลับไปเป็นค่าเริ่มต้น (เช่น วันเกิดหรือรหัสองค์กร)":"Contact HR to reset your PIN to the default (e.g., birthday or code).","หน้าเว็บมีปัญหาหรือใช้งานในมือถือไม่ได้":"Website issues or unusable on mobile","แนะนำให้เปิดใช้งานผ่าน Google Chrome หรือ Safari เวอร์ชันใหม่ล่าสุด และเคลียร์แคชข้อมูลเพื่อความไหลลื่น":"We recommend using the latest Chrome or Safari and clearing cache for smooth usage.","ติดตั้งเป็นแอปมือถือ (PWA)":"Install Mobile App (PWA)","สำหรับ iOS (Safari):":"For iOS (Safari):","แตะไอคอน 'แชร์' ด้านล่าง":"Tap the 'Share' icon at the bottom.","เลือก 'เพิ่มไปยังหน้าจอโฮม' (Add to Home Screen)":"Select 'Add to Home Screen'.","แตะ 'เพิ่ม' (Add) ที่มุมขวาบน":"Tap 'Add' in the top right corner.","สำหรับ Android (Chrome):":"For Android (Chrome):","แตะไอคอน 'จุด 3 จุด' ที่มุมขวาบน":"Tap the '3 dots' icon in the top right.","เลือก 'ติดตั้งแอป' (Install App) หรือ 'เพิ่มลงในหน้าจอโฮม'":"Select 'Install App' or 'Add to Home Screen'.","แตะ 'ติดตั้ง' (Install) เพื่อยืนยัน":"Tap 'Install' to confirm.","มีคำถามเพิ่มเติม?":"More questions?","หากมีปัญหาเกี่ยวกับระบบลางาน หรือข้อสงสัยเรื่องสิทธิ์ ติดต่อฝ่ายทรัพยากรบุคคล (HR) ได้ในวันจันทร์-ศุกร์ เวลา 08:30 - 17:30 น.":"For leave system issues or quota questions, contact HR Mon-Fri 08:30 - 17:30.","กลับสู่แผงควบคุม":"Back to Dashboard","คู่มือแนะนำระบบฉบับย่อ (Quick Guide)":"System Quick Guide","อ่านคู่มือการใช้งานฉบับเต็ม":"Read Full User Manual","คู่มือสแกนใบหน้า / นิ้วมือ":"Face / Fingerprint Scan Guide","คู่มือฉบับเต็ม":"Full Guide","กำลังเปิดหน้าเอกสารคู่มือการใช้งานพนักงาน...":"Opening employee user manual...","คู่มือความปลอดภัยชีวมาตร":"Biometric Security Guide","ท่านสามารถตั้งค่าการลงทะเบียน Face/Fingerprint สแกนเพื่อเข้าใช้งานได้อย่างรวดเร็วในหน้าข้อมูลส่วนตัวค่ะ":"You can configure Face/Fingerprint registration for quick login in your Profile page.","ระบบรองรับการแสดงผลทั้งบน PC และโทรศัพท์มือถือ":"The system supports both PC and mobile displays.","หมายเหตุ:":"Note:","ใบรับรองแพทย์สามารถถ่ายรูปจากโทรศัพท์มือถือและอัปโหลดเข้าสู่ระบบได้ทันที":"Medical certificates can be photographed via phone and uploaded directly.","สถานะสีแดงแจ้งเตือนทั้งในหน้าของหัวหน้างานและฝ่ายบุคคล":"Red status alerts both managers and HR.","เอกสารจะถูกส่งไปที่ HR เพื่อตรวจสอบและอนุมัติขั้นสุดท้าย":"Documents will be forwarded to HR for final review and approval.","หากคุณลืมรหัสผ่าน PIN สี่หลัก":"If you forget your 4-digit PIN","การ์ด SLA แต่ละใบจะแสดงรูปโปรไฟล์, <strong>ชื่อ-นามสกุล</strong>, ชื่อเล่น, <strong>รหัสพนักงาน (เช่น PVT001)</strong>, แผนก และตำแหน่งงาน พร้อมประเภทการลาอย่างชัดเจน ทำให้ผู้อนุมัติตรวจสอบบุคคลได้ทันทีโดยไม่ต้องค้นหาเพิ่มเติม":"Each SLA card clearly displays the profile picture, <strong>First/Last Name</strong>, nickname, <strong>Employee Code (e.g., PVT001)</strong>, department, and position along with the leave type, allowing approvers to instantly verify the person without additional searching.","สามารถคลิกปุ่ม <strong class=\"text-teal-700\">\"ดูแบบละเอียด\"</strong> หรือ <strong class=\"text-cyan-700\">\"ตรวจใบลา\"</strong> เพื่อเปิดหน้าต่างป๊อปอัป SweetAlert2 แสดงเหตุผลการลาเต็มรูปแบบ วันที่และเวลาลา ไฟล์แนบเอกสารใบรับรองแพทย์ และลำดับสถานะการอนุมัติ L1/L2 ได้ทันทีจากทุกหน้าจอ":"Click the <strong class=\"text-teal-700\">\"View Details\"</strong> or <strong class=\"text-cyan-700\">\"Check Leave\"</strong> button to open a SweetAlert2 popup showing the full leave reason, dates, medical certificate attachments, and L1/L2 approval status sequence instantly from any screen.","<li><strong>หน้าแผงควบคุม HR (Dashboard - home.html):</strong> แสดงคำขอลาของพนักงานทุกคนในองค์กรที่รอพิจารณา เพื่อให้ฝ่ายบุคคลติดตามภาพรวม SLA ได้ครบถ้วน</li>":"<li><strong>HR Dashboard (home.html):</strong> Displays all pending employee leave requests organization-wide, allowing HR to track overall SLAs comprehensively.</li>","<li><strong>หน้าตรวจใบลา (HR Approval - hr.html):</strong> แสดงการ์ดนับเวลาถอยหลัง พร้อมปุ่มลัดสำหรับเปิดตรวจและกดอนุมัติ L2 ได้ทันที</li>":"<li><strong>Leave Approval (hr.html):</strong> Shows countdown cards with quick-access buttons to review and approve L2 instantly.</li>","<li><strong>หน้าประวัติการลาพนักงาน (leave-history.html):</strong> แสดงเฉพาะคำขอของตัวพนักงานเองที่อยู่ระหว่างรอผล เพื่อให้ทราบว่าเอกสารอยู่ในคิวพิจารณาอีกกี่ชั่วโมง</li>":"<li><strong>Employee Leave History (leave-history.html):</strong> Shows only the employee's own pending requests, letting them know how many hours remain in the review queue.</li>","หากมีความจำเป็นต้องยกเลิก ให้กดปุ่มไอคอน <strong class=\"text-rose-600\">\"ขอยกเลิก\"</strong> ในหน้าตารางประวัติ เมื่อหัวหน้าแผนกตรวจสอบและอนุมัติการยกเลิกเรียบร้อย ระบบจะทำโอนยอดโควตากลับสู่โปรไฟล์ของคุณอัตโนมัติ":"If you need to cancel, click the <strong class=\"text-rose-600\">\"Request Cancel\"</strong> icon in the history table. Once the manager approves the cancellation, the system automatically transfers the quota back to your profile.","<li>ไปที่หน้ารายละเอียดข้อมูลพนักงาน <strong class=\"text-emerald-700\">\"ข้อมูลส่วนตัว\" (Profile)</strong></li>":"<li>Go to the employee details page <strong class=\"text-emerald-700\">\"Profile\"</strong></li>","<li>คลิกปุ่มสีเขียว <strong class=\"text-emerald-700\">\"ขอรหัสเชื่อมต่อ LINE\"</strong> ระบบจะให้รหัส 6 หลักมา</li>":"<li>Click the green <strong class=\"text-emerald-700\">\"Request LINE Code\"</strong> button, and the system will provide a 6-digit code</li>","ฝ่ายบุคคลสามารถเปิดหน้า <strong>/pages/hr/home.html</strong> เพื่อดูการ์ด SLA Tracker ของพนักงานทุกคน ทุกแผนก ที่กำลังรออนุมัติ หากพบว่ามีรายการใดกลายเป็นสีแดง (เกิน 48 ชม.) HR สามารถประสานงานกับหัวหน้าแผนกที่รับผิดชอบเพื่อเร่งรัดการลงนามได้ทันที":"HR can open <strong>/pages/hr/home.html</strong> to view SLA Tracker cards for all employees across all departments pending approval. If any item turns red (>48 Hrs), HR can coordinate with the responsible department head to expedite signing.","<strong>A:</strong> ระบบจะมีตัวนับเวลา SLA 48 ชั่วโมงแสดงสถานะสีแดงแจ้งเตือนทั้งในหน้าของหัวหน้างานและฝ่ายบุคคล พนักงานสามารถติดต่อหัวหน้างานหรือแจ้งฝ่ายบุคคลเพื่อช่วยประสานงานได้":"<strong>A:</strong> The system features a 48-hour SLA countdown that alerts both managers and HR in red. Employees can contact their supervisor or HR to help coordinate.","<strong>A:</strong> เมื่อกดปุ่ม \"ขอยกเลิก\" ในหน้าประวัติการลา และหัวหน้างาน/HR ทำการอนุมัติการยกเลิกเรียบร้อยแล้ว ระบบจะคืนยอดโควตาวันลากลับสู่โปรไฟล์ของท่านโดยอัตโนมัติ":"<strong>A:</strong> When clicking \"Request Cancel\" in the leave history, and after manager/HR approval, the system will automatically refund your leave quota.","<strong>A:</strong> ตามกฎระเบียบบริษัท การลาป่วยติดต่อกันตั้งแต่ 3 วันทำงานขึ้นไป จำเป็นต้องอัปโหลดรูปภาพใบรับรองแพทย์จากสถานพยาบาลที่ได้รับการรับรองแนบมาในระบบ":"<strong>A:</strong> Per company policy, consecutive sick leaves of 3 days or more require uploading a photo of a certified medical certificate.","<strong>A:</strong> ตรวจสอบว่าได้ทำการขอรหัส 6 หลักและส่งข้อความผูกบัญชีกับ LINE Official ของบริษัทแล้วหรือยัง โดยสามารถเข้าเมนู \"เชื่อมต่อ LINE\" บนหน้าหลักเพื่อเชื่อมต่อใหม่อีกครั้ง":"<strong>A:</strong> Verify if you've requested the 6-digit code and sent it to the company's Official LINE account. You can re-initiate this via \"LINE Integration\" on the main menu.","กดปุ่ม <strong style=\"color: #6ee7b7; font-weight: 800;\">แชร์ (Share)</strong> ด้านล่างจอ แล้วเลือก <strong style=\"color: #6ee7b7; font-weight: 800;\">\"เพิ่มไปยังหน้าจอโฮม\" (Add to Home Screen)</strong>":"Tap the <strong style=\"color: #6ee7b7; font-weight: 800;\">Share</strong> button at the bottom and select <strong style=\"color: #6ee7b7; font-weight: 800;\">\"Add to Home Screen\"</strong>","กดปุ่ม <strong style=\"color: #6ee7b7; font-weight: 800;\">จุดสามจุด</strong> มุมขวาบน แล้วเลือก <strong style=\"color: #6ee7b7; font-weight: 800;\">\"ติดตั้งแอป\" (Install App)</strong>":"Tap the <strong style=\"color: #6ee7b7; font-weight: 800;\">3 Dots</strong> at the top right and select <strong style=\"color: #6ee7b7; font-weight: 800;\">\"Install App\"</strong>","หน้าคู่มือแนะนำการใช้งานระบบ (User Manual)":"System User Manual Page"};
+
+  function applyGuideTranslation() {
+    const lang = localStorage.getItem('pvt_login_lang') || 'th';
+    if (lang === 'en') {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      while ((node = walker.nextNode())) {
+        const text = node.nodeValue.trim();
+        if (text && guideEnDict[text]) {
+          node.nodeValue = node.nodeValue.replace(text, guideEnDict[text]);
+        }
+      }
+      
+      // Also do innerHTML replacements for complex tags that TreeWalker might misalign
+      const complexKeys = Object.keys(guideEnDict).filter(k => k.includes('<') || k.includes('A:'));
+      if (complexKeys.length > 0) {
+          let html = document.body.innerHTML;
+          let changed = false;
+          complexKeys.forEach(k => {
+             if (html.includes(k)) {
+                html = html.split(k).join(guideEnDict[k]);
+                changed = true;
+             }
+          });
+          if (changed) document.body.innerHTML = html;
+      }
+    }
+  }
+
+  // Run on load and listen for language changes
+  applyGuideTranslation();
+  window.addEventListener('pvt-lang-changed', applyGuideTranslation);
+});
+</script>
+
+  </main>
+  </div>
+
+  <script>
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById("sidebarMenu");
+      if (sidebar) {
+        sidebar.classList.toggle("active");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <filter id="dashShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#4c1d95" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Browser Window Outer Frame (Purple) -->
+  <rect x="4" y="6" width="56" height="52" rx="8" fill="#7c3aed" filter="url(#dashShadow)" />
+
+  <!-- Top Title Bar Controls -->
+  <!-- Red Circle -->
+  <circle cx="11" cy="13" r="2.5" fill="#f43f5e" />
+  <!-- Yellow Square -->
+  <rect x="16" y="10.5" width="5" height="5" rx="1.2" fill="#facc15" />
+  <!-- Green Pill -->
+  <rect x="23.5" y="11" width="7" height="4" rx="2" fill="#22c55e" />
+  <!-- Address Bar -->
+  <rect x="34" y="10" width="22" height="6" rx="3" fill="#6d28d9" opacity="0.8" />
+
+  <!-- Inner Canvas Area (White) -->
+  <rect x="6" y="18" width="52" height="38" rx="4" fill="#ffffff" />
+
+  <!-- Chart Grid Line (Subtle) -->
+  <line x1="8" y1="48" x2="56" y2="48" stroke="#e2e8f0" stroke-width="1.5" stroke-linecap="round" />
+
+  <!-- 4 Colored Bar Charts -->
+  <!-- Bar 1: Red -->
+  <rect x="11" y="32" width="6" height="16" rx="2.5" fill="#ef4444" />
+  <!-- Bar 2: Orange -->
+  <rect x="20" y="24" width="6" height="24" rx="2.5" fill="#f97316" />
+  <!-- Bar 3: Teal Green -->
+  <rect x="29" y="36" width="6" height="12" rx="2.5" fill="#10b981" />
+  <!-- Bar 4: Pink / Crimson -->
+  <rect x="38" y="28" width="6" height="20" rx="2.5" fill="#ec4899" />
+
+  <!-- Line Chart Overlay with Nodes -->
+  <polyline points="14,30 23,21 32,32 41,25" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Dots -->
+  <circle cx="14" cy="30" r="2.2" fill="#ef4444" stroke="#ffffff" stroke-width="1" />
+  <circle cx="23" cy="21" r="2.2" fill="#10b981" stroke="#ffffff" stroke-width="1" />
+  <circle cx="32" cy="32" r="2.2" fill="#f59e0b" stroke="#ffffff" stroke-width="1" />
+  <circle cx="41" cy="25" r="2.2" fill="#ef4444" stroke="#ffffff" stroke-width="1" />
+
+  <!-- Magnifying Glass -->
+  <!-- Glass Outer Ring -->
+  <circle cx="43" cy="37" r="9" fill="none" stroke="#0284c7" stroke-width="3" />
+  <!-- Glass Lens Fill -->
+  <circle cx="43" cy="37" r="7.5" fill="#38bdf8" opacity="0.3" />
+  <!-- Lens Glare -->
+  <path d="M38 33 A 6 6 0 0 1 44 30" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+  <!-- Handle -->
+  <line x1="50" y1="44" x2="59" y2="53" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+  <line x1="50" y1="44" x2="59" y2="53" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" />
+</svg>

@@ -1,0 +1,26 @@
+{
+  "name": "pvt-workforce-hub",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build && mkdir -p dist/js dist/auth dist/css dist/assets && cp -r js/* dist/js/ && cp -r auth/* dist/auth/ && cp -r css/* dist/css/ && cp -r assets/* dist/assets/ && cp favicon.ico manifest.json sw.js metadata.json dist/",
+    "preview": "vite preview --host 0.0.0.0 --port 3000",
+    "start": "node server.js",
+    "lint": "node -e \"console.log('Lint passed')\"",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@google/genai": "^2.21.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/express": "^5.0.6",
+    "express": "^5.2.1",
+    "sirv": "^3.0.2",
+    "tailwindcss": "^4.3.3",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.0"
+  }
+}

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Connecting Hierarchy Black Tree Lines -->
+  <g stroke="#0f172a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Vertical drop from center of each person -->
+    <path d="M102 210 V232 C102 242 110 250 120 250 H392 C402 250 410 242 410 232 V210" />
+    <!-- Center drop connecting to gear -->
+    <path d="M256 210 V300" />
+  </g>
+
+  <!-- Left Avatar (Green Body) -->
+  <g id="avatarLeft">
+    <!-- Body / Torso -->
+    <path d="M52 208 C52 165 74 150 102 150 C130 150 152 165 152 208 Z" fill="#00c853" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+    <!-- Head -->
+    <circle cx="102" cy="92" r="48" fill="#ffd1bc" stroke="#0f172a" stroke-width="14" />
+  </g>
+
+  <!-- Middle Avatar (Cyan/Blue Body) -->
+  <g id="avatarCenter">
+    <!-- Body / Torso -->
+    <path d="M206 208 C206 165 228 150 256 150 C284 150 306 165 306 208 Z" fill="#00b0ff" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+    <!-- Head -->
+    <circle cx="256" cy="92" r="48" fill="#ffd1bc" stroke="#0f172a" stroke-width="14" />
+  </g>
+
+  <!-- Right Avatar (Yellow/Amber Body) -->
+  <g id="avatarRight">
+    <!-- Body / Torso -->
+    <path d="M360 208 C360 165 382 150 410 150 C438 150 460 165 460 208 Z" fill="#ffd54f" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+    <!-- Head -->
+    <circle cx="410" cy="92" r="48" fill="#ffd1bc" stroke="#0f172a" stroke-width="14" />
+  </g>
+
+  <!-- Mechanical Gear at Bottom -->
+  <g id="gearBottom">
+    <!-- 8-teeth gear path -->
+    <path d="
+      M 236 266 L 276 266 L 282 288 L 302 296 L 322 284 L 350 312 L 338 332 L 346 352 L 368 358 L 368 398 L 346 404 L 338 424 L 350 444 L 322 472 L 302 460 L 282 468 L 276 490 L 236 490 L 230 468 L 210 460 L 190 472 L 162 444 L 174 424 L 166 404 L 144 398 L 144 358 L 166 352 L 174 332 L 162 312 L 190 284 L 210 296 L 230 288 Z
+    " fill="#78909c" stroke="#0f172a" stroke-width="16" stroke-linejoin="round" />
+
+    <!-- Gear 3D Shadow Highlight Half -->
+    <path d="
+      M 256 266 L 276 266 L 282 288 L 302 296 L 322 284 L 350 312 L 338 332 L 346 352 L 368 358 L 368 398 L 346 404 L 338 424 L 350 444 L 322 472 L 302 460 L 282 468 L 276 490 L 256 490 Z
+    " fill="#607d8b" opacity="0.3" />
+
+    <!-- Center Hole -->
+    <circle cx="256" cy="378" r="48" fill="#cfd8dc" stroke="#0f172a" stroke-width="16" />
+    
+    <!-- C-shaped groove in center hole -->
+    <path d="M 276 358 A 26 26 0 1 0 276 398" fill="none" stroke="#0f172a" stroke-width="10" stroke-linecap="round" />
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Clock Circle Base -->
+  <circle cx="256" cy="256" r="215" fill="#f8fafc" stroke="#0f172a" stroke-width="16" />
+  
+  <!-- Outer Colorful Ring -->
+  <circle cx="256" cy="256" r="195" fill="none" stroke="#8b5cf6" stroke-width="26" stroke-dasharray="800 200" stroke-linecap="round" />
+  
+  <!-- Clock Face Hub -->
+  <circle cx="256" cy="256" r="28" fill="#ef4444" stroke="#0f172a" stroke-width="8" />
+
+  <!-- Clock Hands (Time passing) -->
+  <!-- Hour hand (pointing to 9 o'clock) -->
+  <line x1="256" y1="256" x2="160" y2="256" stroke="#0f172a" stroke-width="18" stroke-linecap="round" />
+  <!-- Minute hand (pointing to 12 o'clock) -->
+  <line x1="256" y1="256" x2="256" y2="135" stroke="#0f172a" stroke-width="14" stroke-linecap="round" />
+  
+  <!-- Reversing History Circular Arrow -->
+  <path d="M120 220 A 155 155 0 1 1 210 405" fill="none" stroke="#06b6d4" stroke-width="20" stroke-linecap="round" />
+  <polygon points="85,210 135,175 140,245" fill="#06b6d4" stroke="#0f172a" stroke-width="6" stroke-linejoin="round" />
+
+  <!-- Small History Checkmark in Green Badge -->
+  <circle cx="370" cy="370" r="60" fill="#10b981" stroke="#0f172a" stroke-width="10" />
+  <path d="M346 370 L364 388 L396 352" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

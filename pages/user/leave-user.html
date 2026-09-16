@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <!-- เพิ่ม viewport-fit=cover เพื่อให้รองรับ Safe Area บน iOS/iPhone -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <meta name="google" content="notranslate" />
+  <title>ใบลาออนไลน์ | PVT HR Leave</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/leave-user.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="topbar-container">
+      
+      <div class="topbar-left" style="display: flex; align-items: center; gap: 12px;">
+        <button type="button" class="btn-back" onclick="history.back(); return false;" style="display: flex; align-items: center; gap: 8px;">
+           <!-- เปลี่ยนจาก ← เป็น arrow_back เพื่อให้ Material Symbols แสดงผลตรงตามมาตรฐานทุกระบบ -->
+           <span class="material-symbols-outlined">arrow_back</span>ย้อนกลับ
+          <span style="color: var(--border); margin: 0 2px;">|</span>
+          <img src="/assets/icons/Logo_PVT_2026_B.png" alt="PVT" style="height: 32px; width: auto; object-fit: contain; vertical-align: middle; mix-blend-mode: multiply; border-radius: 6px;"/>
+        </button>
+      </div>
+      
+      <div class="topbar-center">
+        <span class="topbar-title">ใบลาออนไลน์</span>
+        <span class="topbar-subtitle">บริษัท พี.วี.ที. แอนด์ ที.พลาส จำกัด · ปี 2569</span>
+        <p class="topbar-subtitle">วันที่ 1 ธันวาคม  – 30 พฤศจิกายน </p>
+      </div>
+      
+      <div class="topbar-actions" style="display: flex; align-items: center; gap: 8px;">
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <div class="print-header">
+      <h1>บริษัท พี.วี.ที. แอนด์ ที.พลาส จำกัด</h1>
+      <h2>ใบลา ประจำปี 2569</h2>
+      <p>วันที่ 1 ธันวาคม 2568 – 30 พฤศจิกายน 2569</p>
+    </div>
+
+    <div class="notice-box no-print">
+       <strong>แจ้งเตือนผ่าน LINE:</strong> ระบบจะส่งแจ้งเตือนสถานะใบลานี้ไปยัง LINE ของท่านและหัวหน้างานทันทีที่กดส่งคำขอ และเมื่อได้รับการอนุมัติ/ปฏิเสธ<br/>
+      ️ <strong>ตรวจสอบก่อนบันทึก:</strong> ลาพักผ่อนล่วงหน้าอย่างน้อย 3 วัน · ลากิจแจ้งล่วงหน้า 1 วัน · ลาป่วยแจ้งภายใน 4 ชั่วโมงแรก พร้อมใบรับรองแพทย์
+    </div>
+
+    <div class="leave-cards-container">
+      <div class="container-head">
+        <h2>ใบขออนุญาติลา</h2>
+        <button type="button" class="btn btn-green btn-sm no-print" onclick="addLeaveRow()">＋ เพิ่มรายการลา</button>
+      </div>
+      
+      <div id="leaveCardsList"></div>
+    </div>
+
+   <div class="bottom-actions no-print">
+      <button class="btn btn-green" type="button" onclick="addLeaveRow()">＋ เพิ่มรายการลา</button>
+      <button class="btn btn-primary" type="button" id="btnSaveLeave" onclick="saveLeave()"> บันทึกคำขอลา</button>
+    </div>
+
+  </div>
+
+  <div class="form-guide-wrapper">
+    <div id="form-leave-guide-card" class="form-guide-popup" style="display: none;">
+      <div class="form-guide-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined">menu_book</span>
+          <span>วิธีกรอกแบบฟอร์มใบลา</span>
+        </div>
+        <button type="button" onclick="toggleFormLeaveGuide()" class="form-guide-close-btn">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="form-guide-body">
+        <div class="form-guide-item">
+          <span class="form-guide-emoji"> </span>
+          <div><strong>เลือกกรอบเวลา:</strong> คลิกเลือก <span style="color:#0891b2">เริ่มวันที่ลา</span> และ <span style="color:#0891b2">ถึงวันที่ลา</span> ระบบจะล็อก "วันที่เขียนคำขอ" เป็นวันปัจจุบันให้อัตโนมัติ</div>
+        </div>
+        
+        <div class="form-guide-item">
+          <span class="form-guide-emoji">⏱️</span>
+          <div><strong>กรณีลาครึ่งวัน / รายชั่วโมง:</strong> ให้กรอกจำนวนชั่วโมงในช่อง <span style="color:#0891b2">ช่วงเช้า</span> หรือ <span style="color:#0891b2">ช่วงบ่าย</span> (ใส่ได้ 0-4 ชั่วโมง) หากลาเต็มวันให้ปล่อยเป็น 0 ไว้ครับ</div>
+        </div>
+        
+        <div class="form-guide-item">
+          <span class="form-guide-emoji"></span>
+          <div><strong>สรุปรวมจำนวนวัน:</strong> ช่องนี้เป็นระบบ Auto-Calculate ตัวเลขจะคำนวณและแสดงผลรวมวันลาให้อัตโนมัติหลังจากกรอกเวลาเสร็จ</div>
+        </div>
+        
+        <div class="form-guide-item">
+          <span class="form-guide-emoji"></span>
+          <div><strong>แนบหลักฐานรูปภาพ:</strong> หาก <span style="color:#e11d48">ลาป่วย</span> หรือลากิจจำเป็น ให้กดปุ่มเพื่ออัปโหลดรูปใบรับรองแพทย์หรือเอกสารประกอบ</div>
+        </div>
+        
+        <div class="form-guide-item" style="border: none; padding-bottom: 0;">
+          <span class="form-guide-emoji"> </span>
+          <div><strong>สายงานอนุมัติ (ด้านล่าง):</strong> เมื่อกดส่งคำขอ สถานะจะขึ้น <span style="color:#64748b">"รอพิจารณา"</span> ซึ่งใบลาจะวิ่งไปตามลำดับขั้น: หัวหน้าฝ่าย ️ ผู้จัดการ ️ ฝ่ายบุคคล ตามลำดับ</div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" id="form-leave-guide-fab" onclick="toggleFormLeaveGuide()" class="form-fab-btn">
+      <span id="form-leave-guide-icon" class="material-symbols-outlined">help</span>
+      <span class="form-fab-text">แนะนำการกรอกฟอร์ม</span>
+    </button>
+  </div>
+
+  <div id="statusToast" class="status-toast"></div>
+
+  <script type="module" src="/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="/js/auth-guard.js"></script>
+  <script type="module" src="/js/system-settings.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/th.js"></script>
+  <script type="module" src="/js/leave-user.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "PVT Workforce Hub",
+  "description": "Integrated HR Management & Leave Dashboard System with Supabase authentication and approval workflows.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

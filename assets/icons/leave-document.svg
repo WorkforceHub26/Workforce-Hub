@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Sky blue back document -->
+  <rect x="36" y="52" width="290" height="380" rx="36" fill="#7fd6fc" stroke="#0f172a" stroke-width="16" stroke-linejoin="round" />
+  
+  <!-- Front white document with folded top-right corner -->
+  <path d="M96 28 H300 L388 116 V408 C388 424 374 438 358 438 H96 C80 438 66 424 66 408 V58 C66 42 80 28 96 28 Z" fill="#ffffff" stroke="#0f172a" stroke-width="16" stroke-linejoin="round" />
+  
+  <!-- Folded corner tab -->
+  <path d="M300 28 V96 C300 107 309 116 320 116 H388 Z" fill="#0088ff" stroke="#0f172a" stroke-width="16" stroke-linejoin="round" />
+
+  <!-- Document horizontal text lines -->
+  <rect x="110" y="148" width="165" height="18" rx="9" fill="#0f172a" />
+  <rect x="110" y="196" width="205" height="18" rx="9" fill="#0f172a" />
+  <rect x="110" y="244" width="180" height="18" rx="9" fill="#0f172a" />
+  <rect x="110" y="292" width="150" height="18" rx="9" fill="#0f172a" />
+  <rect x="110" y="340" width="125" height="18" rx="9" fill="#0f172a" />
+
+  <!-- Magnifying glass handle -->
+  <g transform="rotate(45 370 370)">
+    <!-- Connector ferrule -->
+    <rect x="352" y="445" width="36" height="24" rx="6" fill="#cbd5e1" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+    <!-- Red handle -->
+    <path d="M346 468 C346 468 340 550 348 570 C356 590 384 590 392 570 C400 550 394 468 394 468 Z" fill="#ef4444" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+    <!-- Handle highlight -->
+    <path d="M358 480 Q354 535 362 558" stroke="#fca5a5" stroke-width="6" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Magnifying glass circular rim -->
+  <circle cx="360" cy="285" r="92" fill="#a5f3fc" stroke="#0f172a" stroke-width="18" />
+  
+  <!-- Glass lens reflection highlight -->
+  <path d="M320 225 A 65 65 0 0 1 405 240" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" />
+</svg>

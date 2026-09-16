@@ -1,0 +1,1631 @@
+/* ==========================================================================
+   🤍 PVT WORKFORCE HUB - Holidays Management Stylesheet
+   ========================================================================== */
+
+@import url('./home.css');
+
+/* ==========================================================================
+   🌟 HERO UPCOMING HOLIDAY BANNER
+   ========================================================================== */
+.holiday-hero-banner {
+  background: linear-gradient(135deg, #0d9488 0%, #0b845c 50%, #064e3b 100%);
+  border-radius: var(--radius-lg, 16px);
+  padding: 28px 32px;
+  color: #ffffff;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 30px -6px rgba(15, 164, 114, 0.35);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  animation: fluidPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.holiday-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-content {
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.hero-badge span.material-symbols-outlined {
+  font-size: 16px;
+  color: #fde047;
+}
+
+.hero-content h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.hero-countdown-box {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  padding: 16px 28px;
+  border-radius: var(--radius-md, 12px);
+  text-align: center;
+  min-width: 140px;
+  z-index: 2;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.countdown-number {
+  display: block;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.countdown-label {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
+  text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ==========================================================================
+   🎛️ CONTROLS & TOOLBAR PANEL
+   ========================================================================== */
+.holiday-controls-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  min-width: 240px;
+  flex: 1;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 14px 10px 40px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: var(--radius-sm, 8px);
+  background: #f8fafc;
+  color: var(--text, #0f172a);
+  transition: all 0.2s;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary, #0d9488);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(15, 164, 114, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-soft, #64748b);
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.select-group select {
+  min-width: 160px;
+  height: 42px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: var(--radius-sm, 8px);
+  background-color: #ffffff;
+  color: var(--text, #0f172a);
+  outline: none;
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.view-switch {
+  display: flex;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.btn-view {
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-view:hover {
+  color: var(--primary, #0d9488);
+  background: rgba(13, 148, 136, 0.05);
+}
+
+.btn-view.active {
+  background: #ffffff;
+  color: var(--primary, #0d9488);
+  box-shadow: 0 2px 4px rgba(13, 148, 136, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+#btnAddHoliday {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+#btnAddHoliday:hover {
+  background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.35);
+  transform: translateY(-1px);
+}
+
+#btnAddHoliday:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.2);
+}
+
+/* ==========================================================================
+   📅 GRID VIEW CARDS & ACTIONS
+   ========================================================================== */
+.holiday-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.holiday-card {
+  background: var(--card, #ffffff);
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid var(--border, #e2e8f0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+}
+
+.holiday-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  border-color: rgba(15, 164, 114, 0.4);
+}
+
+.holiday-card.past-holiday {
+  opacity: 0.65;
+  background: #f8fafc;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.date-badge-box {
+  background: rgba(15, 164, 114, 0.1);
+  border: 1px solid rgba(15, 164, 114, 0.2);
+  border-radius: var(--radius-md, 12px);
+  padding: 8px 14px;
+  text-align: center;
+  min-width: 68px;
+}
+
+.date-badge-day {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary, #0d9488);
+  line-height: 1;
+  display: block;
+}
+
+.date-badge-month {
+  font-size: 11px;
+  font-weight: 700;
+  color: #064e3b;
+  text-transform: uppercase;
+  margin-top: 2px;
+  display: block;
+}
+
+.tag-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tag-badge.official { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+.tag-badge.company { background: #f3e8ff; color: #7e22ce; border: 1px solid #d8b4fe; }
+.tag-badge.substitution { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+
+.card-body-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 6px 0 2px 0;
+}
+
+.day-name {
+  font-size: 13px;
+  color: #0d9488;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.description-text {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card-footer-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.days-left-text {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.card-action-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-icon-action {
+  background: #f1f5f9;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-icon-action:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-icon-action.delete:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.btn-icon-action span {
+  font-size: 16px;
+}
+
+/* ==========================================================================
+   📋 TABLE PANEL & BUTTON ACTIONS
+   ========================================================================== */
+.table-panel {
+  background: #ffffff;
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid var(--border, #e2e8f0);
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.table-responsive table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.table-responsive th {
+  background: #f8fafc;
+  color: #64748b;
+  padding: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.table-responsive td {
+  padding: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.table-action-btns {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-table-edit, .btn-table-delete {
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-table-edit { background: #eff6ff; color: #2563eb; }
+.btn-table-edit:hover { background: #2563eb; color: #fff; }
+
+.btn-table-delete { background: #fef2f2; color: #ef4444; }
+.btn-table-delete:hover { background: #ef4444; color: #fff; }
+
+.table-empty-state {
+  text-align: center;
+  padding: 32px !important;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   🪟 MODAL DESIGN
+   ========================================================================== */
+.holiday-modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.holiday-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.btn-close-x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #f1f5f9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.btn-close-x:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.icon-calendar-header {
+  width: 42px;
+  height: 42px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #0f172a;
+  background-color: #fff;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-divider {
+  border: none;
+  border-top: 1px solid #f1f5f9;
+  margin: 20px 0 16px 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancel {
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancel:hover { background: #e2e8f0; }
+
+.btn-save-holiday {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-save-holiday:hover { background: #1d4ed8; }
+
+/* ==========================================================================
+   🛠️ TOPBAR & USER PROFILE BAR
+   ========================================================================== */
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.app-container,
+.app-shell {
+  display: flex !important;
+  width: 100% !important;
+  min-height: 100vh;
+  box-sizing: border-box !important;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  width: calc(100% - 260px) !important;
+  max-width: 1600px !important;
+  margin-left: 260px !important;
+  padding: 28px 36px !important;
+  box-sizing: border-box !important;
+  transition: all 0.25s ease;
+}
+
+body.desktop-sidebar-collapsed .main-content {
+  margin-left: 72px !important;
+  width: calc(100% - 72px) !important;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 16px !important;
+  }
+}
+
+/* 🏷️ Topbar Header Container */
+div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
+.topbar {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 24px !important;
+  gap: 16px;
+  position: relative;
+  z-index: 20;
+  background: #ffffff;
+  padding: 14px 20px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.topbar-left .title-wrap {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.topbar-left .title-wrap h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-left .title-wrap p {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #64748b;
+  margin: 2px 0 0 0;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* CSS selector 4: Topbar Right Container */
+div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2),
+.topbar-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+}
+
+/* CSS selector 1: Global Language Switcher Inner Container */
+div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div#globalLangSwitcherContainer:nth-of-type(1) > div:nth-of-type(1),
+#globalLangSwitcherContainer .lang-switcher {
+  display: inline-flex !important;
+  gap: 2px !important;
+  align-items: center !important;
+  background: #f1f5f9 !important;
+  padding: 3px !important;
+  border-radius: 9999px !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #cbd5e1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+/* CSS selector 2: Header Button 1 */
+div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) {
+  position: relative !important;
+  z-index: 5 !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+#globalLangSwitcherContainer .lang-btn {
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #64748b !important;
+  background: transparent !important;
+  transition: all 0.15s ease !important;
+  line-height: 1 !important;
+}
+
+#globalLangSwitcherContainer .lang-btn.active,
+#globalLangSwitcherContainer .lang-btn:hover {
+  background: #ffffff !important;
+  color: #0d9488 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* CSS selector 5: User Profile Badge */
+div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2),
+.user-profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 4px 12px 4px 4px;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background: #0d9488;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.user-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-size: 10px;
+  color: #0d9488;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+/* CSS selector 3: Back Button */
+div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1),
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  background-color: #f1f5f9;
+  color: #0d9488;
+  border-color: #cbd5e1;
+  transform: translateX(-2px);
+}
+
+/* 📱 Responsive Mobile (Header / Topbar & Layout) */
+@media screen and (max-width: 768px) {
+  /* CSS selector 1: Topbar Header on Mobile */
+  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
+  .topbar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+    margin-bottom: 14px !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .topbar-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* CSS selector 3: Back Button on Mobile */
+  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1),
+  .topbar-left .btn-back,
+  .topbar-left .back-btn {
+    padding: 6px 12px !important;
+    font-size: 12.5px !important;
+    border-radius: 8px !important;
+    min-height: 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .topbar-left .title-wrap {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .topbar-left .title-wrap h1 {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .topbar-left .title-wrap p {
+    font-size: 10px !important;
+    color: #64748b !important;
+    margin: 1px 0 0 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* CSS selector 4: Topbar Right on Mobile */
+  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2),
+  .topbar-right {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+    padding-top: 8px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    margin: 0 !important;
+  }
+
+  /* CSS selector 2: Lang Switcher on Mobile */
+  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div#globalLangSwitcherContainer:nth-of-type(1) > div:nth-of-type(1),
+  #globalLangSwitcherContainer .lang-switcher {
+    padding: 2px !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  #globalLangSwitcherContainer .lang-btn {
+    padding: 3px 6px !important;
+    font-size: 10.5px !important;
+  }
+
+  /* CSS selector 5: Profile Badge on Mobile */
+  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2),
+  .user-profile-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 3px 8px 3px 3px !important;
+    border-radius: 9999px !important;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    max-width: 180px !important;
+  }
+
+  .user-avatar {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 10.5px !important;
+  }
+
+  .user-info {
+    min-width: 0 !important;
+  }
+
+  .user-name {
+    font-size: 11.5px !important;
+    max-width: 95px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .user-role {
+    font-size: 9px !important;
+  }
+
+  .holiday-tabs-container {
+    padding: 0 !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .holiday-tabs-container::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .holiday-tab-btn {
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  .holidays-page, .calendar-container {
+    padding: 12px;
+  }
+
+  .holidays-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .holidays-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .holidays-controls select, .holidays-controls input {
+    width: 100%;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  div:nth-of-type(1) > main:nth-of-type(1) > header:nth-of-type(1),
+  .topbar {
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .topbar-left .title-wrap h1 {
+    font-size: 16px !important;
+  }
+
+  .topbar-left .title-wrap p {
+    font-size: 10px !important;
+  }
+
+  .topbar-left .btn-back,
+  .topbar-left .back-btn {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ==========================================================================
+   📅 TEAM / COMPANY CALENDAR LAYOUT & RESPONSIVE CALENDAR GRID
+   ========================================================================== */
+#companyCalendarLayout,
+.team-calendar-layout {
+  display: flex;
+  gap: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: visible;
+  margin-bottom: 32px;
+  min-height: 480px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* CSS selector 1: Calendar Main Panel (Company & Team Leaves) */
+div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1),
+div:nth-of-type(1) > main:nth-of-type(1) > div#teamLeavesWrapper:nth-of-type(3) > div#teamCalendarLayout:nth-of-type(1) > div:nth-of-type(1),
+#companyCalendarLayout .team-calendar-main,
+#teamCalendarLayout .team-calendar-main,
+.team-calendar-main {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+}
+
+/* CSS selector 2: Team Summary Sidebar Content */
+div:nth-of-type(1) > main:nth-of-type(1) > div#teamLeavesWrapper:nth-of-type(3) > div#teamCalendarLayout:nth-of-type(1) > div#teamSummarySidebar:nth-of-type(2) > div:nth-of-type(1),
+#teamSummarySidebar .sidebar-content {
+  padding: 20px;
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* CSS selector 1: Team Leave List First Item & All Team Leave Cards */
+div:nth-of-type(1) > main:nth-of-type(1) > div#teamLeavesWrapper:nth-of-type(3) > div#teamCalendarLayout:nth-of-type(1) > div#teamSummarySidebar:nth-of-type(2) > div:nth-of-type(1) > div#teamLeavesList:nth-of-type(3) > div:nth-of-type(1),
+#teamLeavesList .team-leave-item-card,
+#teamLeavesList > div:not(.loading-state-box) {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+div:nth-of-type(1) > main:nth-of-type(1) > div#teamLeavesWrapper:nth-of-type(3) > div#teamCalendarLayout:nth-of-type(1) > div#teamSummarySidebar:nth-of-type(2) > div:nth-of-type(1) > div#teamLeavesList:nth-of-type(3) > div:nth-of-type(1):hover,
+#teamLeavesList .team-leave-item-card:hover,
+#teamLeavesList > div:not(.loading-state-box):hover {
+  background: #f8fafc !important;
+  border-color: #0fa472 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(15, 164, 114, 0.12) !important;
+}
+
+.team-leave-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.btn-leave-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-leave-action:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.btn-leave-action.btn-action-primary {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.btn-leave-action.btn-action-primary:hover {
+  background: #d1fae5;
+  border-color: #6ee7b7;
+  color: #047857;
+}
+
+.btn-leave-action.btn-action-approval {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+
+.btn-leave-action.btn-action-approval:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+@keyframes pulseHighlightDay {
+  0% {
+    outline: 3px solid #0fa472;
+    box-shadow: 0 0 0 0 rgba(15, 164, 114, 0.7);
+    transform: scale(1.06);
+  }
+  50% {
+    outline: 3px solid #0fa472;
+    box-shadow: 0 0 0 8px rgba(15, 164, 114, 0);
+    transform: scale(1.08);
+  }
+  100% {
+    outline: 2.5px solid #0fa472;
+    box-shadow: 0 0 10px rgba(15, 164, 114, 0.35);
+    transform: scale(1.02);
+  }
+}
+
+.cal-day-cell.highlight-day-active {
+  animation: pulseHighlightDay 0.6s ease-in-out forwards !important;
+  z-index: 10 !important;
+  border-color: #0fa472 !important;
+}
+
+/* CSS selector 2: Calendar Day Grid */
+div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1) > div#companyCalGrid:nth-of-type(3),
+#companyCalGrid,
+.calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#companyCalendarLayout .calendar-days-header,
+.calendar-days-header {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.team-summary-sidebar {
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-sidebar-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: #0d9488;
+  color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.toggle-sidebar-btn:hover {
+  background: #0f766e;
+  transform: scale(1.08);
+}
+
+.team-summary-sidebar.collapsed {
+  width: 0 !important;
+  border: none !important;
+}
+
+.team-summary-sidebar.collapsed .sidebar-content {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+@media (max-width: 1024px) {
+  #companyCalendarLayout,
+  .team-calendar-layout {
+    flex-direction: column !important;
+    gap: 16px !important;
+    overflow: visible !important;
+  }
+
+  /* Mobile / Tablet Behavior: Stack sidebar cleanly below calendar */
+  .team-summary-sidebar {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+    height: auto !important;
+    max-height: none !important;
+    margin-top: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 1 !important;
+  }
+
+  .team-summary-sidebar.collapsed {
+    width: 100% !important;
+  }
+
+  .team-summary-sidebar .sidebar-content,
+  .team-summary-sidebar.collapsed .sidebar-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    padding: 16px !important;
+  }
+
+  .toggle-sidebar-btn {
+    display: none !important;
+  }
+}
+
+/* Calendar Day Cell Styles */
+.cal-day-cell {
+  aspect-ratio: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 4px;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.cal-day-cell:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+.cal-day-cell.other-month {
+  color: #cbd5e1;
+  background: #f8fafc;
+}
+.cal-day-cell.today {
+  border-color: #0d9488;
+  background: #f0fdf4;
+}
+.cal-day-number {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e293b;
+  display: block;
+  line-height: 1.2;
+}
+.cal-day-cell.other-month .cal-day-number {
+  color: #cbd5e1;
+}
+.cal-leave-dots {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.cal-leave-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   📅 CALENDAR VIEW HEADER & TITLE HEADING (FOCUS MODE STYLES)
+   ========================================================================== */
+/* CSS selector 1: Calendar Monthly Title */
+div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1),
+#companyCalendarLayout .team-calendar-main h3,
+.team-calendar-main h3 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  letter-spacing: -0.2px !important;
+  line-height: 1.3 !important;
+  white-space: normal !important;
+}
+
+.calendar-view-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 24px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.calendar-nav-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #f8fafc !important;
+  padding: 4px 8px !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  flex-shrink: 0 !important;
+}
+
+/* 📱 MOBILE / TABLET CALENDAR OPTIMIZATION (IOS & ANDROID) */
+@media (max-width: 768px) {
+  #companyCalendarLayout,
+  .team-calendar-layout {
+    gap: 16px !important;
+    overflow-x: hidden !important;
+  }
+
+  div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1),
+  #companyCalendarLayout .team-calendar-main,
+  .team-calendar-main {
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1) > div#companyCalGrid:nth-of-type(3),
+  #companyCalGrid,
+  .calendar-grid {
+    gap: 4px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #companyCalendarLayout .calendar-days-header,
+  .calendar-days-header {
+    gap: 4px !important;
+    font-size: 12px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .cal-day-cell {
+    padding: 3px 2px !important;
+    border-radius: 6px !important;
+    min-height: 38px !important;
+  }
+
+  .cal-day-number {
+    font-size: 11px !important;
+    text-align: center !important;
+  }
+
+  .cal-leave-dots {
+    gap: 2px !important;
+    margin-top: 2px !important;
+    justify-content: center !important;
+  }
+
+  .cal-leave-dot {
+    width: 5px !important;
+    height: 5px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .calendar-view-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    padding-bottom: 14px !important;
+    margin-bottom: 18px !important;
+  }
+
+  div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1),
+  #companyCalendarLayout .team-calendar-main h3,
+  .team-calendar-main h3 {
+    font-size: 18px !important;
+    width: 100% !important;
+  }
+
+  .calendar-nav-controls {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .calendar-nav-controls h4 {
+    flex: 1 !important;
+    text-align: center !important;
+  }
+}
+
+/* 📱 SMALL MOBILE DEVICES (IPHONE SE, SMALL ANDROID <= 380px) */
+@media (max-width: 380px) {
+  div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1),
+  #companyCalendarLayout .team-calendar-main,
+  .team-calendar-main {
+    padding: 16px 12px !important;
+  }
+
+  div:nth-of-type(1) > main:nth-of-type(1) > div#companyHolidaysWrapper:nth-of-type(2) > div#companyCalendarLayout:nth-of-type(2) > div:nth-of-type(1) > div#companyCalGrid:nth-of-type(3),
+  #companyCalGrid,
+  .calendar-grid {
+    gap: 2px !important;
+  }
+
+  #companyCalendarLayout .calendar-days-header,
+  .calendar-days-header {
+    gap: 3px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+
+  .cal-day-cell {
+    padding: 4px 3px !important;
+    border-radius: 6px !important;
+    min-height: 48px !important;
+  }
+
+  .cal-day-number {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* ==========================================================================
+   Full Fill Holiday Cells & Selected Active Date Highlight
+   ========================================================================== */
+.cal-day-cell.is-company-holiday {
+  background: #fef2f2 !important;
+  border: 1.5px solid #fca5a5 !important;
+}
+
+.cal-day-cell.is-company-holiday.holiday-official {
+  background: linear-gradient(135deg, #fef2f2 0%, #ffe4e6 100%) !important;
+  border-color: #f87171 !important;
+}
+
+.cal-day-cell.is-company-holiday.holiday-company {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%) !important;
+  border-color: #60a5fa !important;
+}
+
+.cal-day-cell.is-company-holiday.holiday-substitution {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+  border-color: #fbbf24 !important;
+}
+
+.cal-day-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cal-holiday-badge-type {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.holiday-official .cal-holiday-badge-type {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.holiday-company .cal-holiday-badge-type {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.holiday-substitution .cal-holiday-badge-type {
+  background: #d97706;
+  color: #ffffff;
+}
+
+.cal-holiday-full-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.holiday-official .cal-holiday-full-label {
+  color: #991b1b;
+}
+
+.holiday-company .cal-holiday-full-label {
+  color: #1e40af;
+}
+
+.holiday-substitution .cal-holiday-full-label {
+  color: #92400e;
+}
+
+.company-summary-card-item:hover {
+  transform: translateY(-2px);
+  border-color: #0d9488 !important;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15) !important;
+}
+
+.company-summary-card-item:active {
+  transform: scale(0.98);
+}
+
+/* 🌟 Active Selected Date Cell Highlight (Full Cell Outline & Glow) */
+.cal-day-cell.highlight-day-active {
+  outline: 3px solid #0d9488 !important;
+  outline-offset: -2px !important;
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 16px rgba(13, 148, 136, 0.5) !important;
+  transform: scale(1.05);
+  z-index: 20 !important;
+  animation: pulseActiveCell 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+@keyframes pulseActiveCell {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1.04); }
+}

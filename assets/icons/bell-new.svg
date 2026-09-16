@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Blue Circle Background -->
+  <circle cx="256" cy="256" r="256" fill="#2196F3"/>
+  
+  <!-- Long Shadow (Simplified) -->
+  <path d="M 256 120 L 480 344 L 440 512 L 256 512 Z" fill="#1976D2" opacity="0.5"/>
+
+  <!-- Yellow Bell Body -->
+  <path d="M 256 100 C 200 100 156 144 156 200 L 156 290 L 116 350 L 116 390 L 396 390 L 396 350 L 356 290 L 356 200 C 356 144 312 100 256 100 Z" fill="#FFC107"/>
+  
+  <!-- Bell Top Knob -->
+  <circle cx="256" cy="90" r="30" fill="#FFB300"/>
+  
+  <!-- Bell Clapper (Bottom) -->
+  <path d="M 216 390 A 40 40 0 0 0 296 390 Z" fill="#FFA000"/>
+</svg>

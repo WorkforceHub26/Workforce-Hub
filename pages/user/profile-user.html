@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>ข้อมูลพนักงาน | PVT HR Leave</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/index-user.css" />
+  <link rel="stylesheet" href="/css/profile-user.css" />
+  <link rel="stylesheet" href="/css/leave-history.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  <link rel="stylesheet" href="/css/health-wellness.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div class="app-container" id="appLayout">
+    <!--  1. LEFT SIDEBAR MENU (UNIFIED EMPLOYEE SIDEBAR) -->
+    <aside class="sidebar" id="sidebarMenu">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">groups</span>
+        </div>
+        <div class="brand-name">PVT WORKFORCE HUB</div>
+        <button type="button" class="btn-close-sidebar" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(false);}else if(typeof window.closeMobileSidebar==='function'){window.closeMobileSidebar();}" style="display: none;" title="ปิดเมนู">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+      </div>
+
+      <!--  ปุ่มกดยื่นใบลา (Action CTA) -->
+      <div class="sidebar-cta-wrap">
+        <button type="button" class="sidebar-cta-btn" onclick="goToLeaveForm()" title="ยื่นใบลาออนไลน์">
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
+          <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
+        </button>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <a href="/pages/user/index-user.html" class="menu-item">
+          <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+          <span>หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="menu-item active">
+          <img src="/assets/icons/user-profile.svg" alt="ข้อมูลส่วนตัว" class="nav-icon-custom" />
+          <span>ข้อมูลส่วนตัว</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="menu-item">
+          <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" class="nav-icon-custom" />
+          <span>ประวัติการลา</span>
+        </a>
+        <a href="/pages/user/holidays.html" class="menu-item">
+          <img src="/assets/icons/calendar-event.svg" alt="ปฏิทิน" class="nav-icon-custom" />
+          <span>ปฏิทิน</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-title">บริการด่วน</div>
+
+        <!-- 🪪 ปุ่มบัตรพนักงานดิจิทัล -->
+        <button type="button" class="menu-item" onclick="viewMyDigitalCard()" title="บัตรพนักงานดิจิทัล">
+          <img src="/assets/icons/employee-card-badge.svg" alt="บัตรพนักงาน" class="nav-icon-custom" />
+          <span>บัตรพนักงาน</span>
+        </button>
+
+        <!--  ปุ่มเชื่อมต่อ LINE -->
+        <button type="button" class="menu-item" onclick="generateLineLinkToken()" title="เชื่อมต่อ LINE แจ้งเตือน">
+          <img src="/assets/icons/line.svg" alt="LINE" class="nav-icon-custom" />
+          <span>LINE</span>
+        </button>
+
+        <!--  ปุ่มดูกฎระเบียบบริษัท -->
+        <a href="/pages/user/leave-rules.html" class="menu-item" title="กฎระเบียบและเงื่อนไขการลา">
+          <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" class="nav-icon-custom" />
+          <span>กฎระเบียบ</span>
+        </a>
+
+        <!--  ปุ่มคู่มือการใช้งาน -->
+        <a href="/pages/user/full-guide.html" class="menu-item" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span>แนะนำระบบ</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="/pages/user/news.html" class="menu-item">
+          <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+          <span>ข่าวสาร</span>
+        </a>
+        <button type="button" class="menu-item" onclick="openSystemSettingsModal()" title="การตั้งค่าระบบ (ขนาดตัวอักษร, ธีมสี, เชื่อมต่อ LINE)">
+          <img src="/assets/icons/settings.svg" alt="ตั้งค่า" class="nav-icon-custom" style="border-radius: 6px;" />
+          <span>ตั้งค่า</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button type="button" class="btn-logout" onclick="logout(); return false;" title="ออกจากระบบ">
+          <img src="/assets/icons/logout.svg" alt="ออกจากระบบ" class="nav-icon-custom" />
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!--  2. MAIN CONTENT -->
+    <main class="main-content" style="width: 100%; flex: 1; padding: 0;">
+      <div class="app" style="max-width: 1000px; padding: 24px 16px; margin: 0 auto; width: 100%;">
+        <header class="user-header" id="profileUserHeader">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <!-- Mobile Hamburger button -->
+            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(event);}else if(typeof toggleMobileSidebar==='function'){toggleMobileSidebar();}" title="เปิดเมนู">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; width: 22px; height: 22px;"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+            <div class="brand-row">
+              <img src="/assets/icons/Logo_PVT_2026_B.png" alt="PVT" class="header-brand-logo" style="width: 52px; height: 52px; object-fit: contain; border-radius: 12px; background: #ffffff; border: 1px solid rgba(226, 232, 240, 0.9); mix-blend-mode: multiply; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);" />
+              <div>
+                <p class="hello" id="profileBrandTitle">PVT HR Leave</p>
+                <h1 id="profileHeaderTitle">ข้อมูลพนักงาน</h1>
+                <span id="profileHeaderSubtitle">ตรวจสอบข้อมูลโปรไฟล์และการแจ้งเตือน LINE</span>
+              </div>
+            </div>
+          </div>
+          <div class="user-header-actions" style="display: flex; align-items: center; gap: 10px;">
+            <button class="logout-btn" onclick="location.href='/pages/user/index-user.html'">กลับ</button>
+          </div>
+        </header>
+
+    <section class="recent-card">
+      <div class="section-head">
+        <h2>รายละเอียดโปรไฟล์</h2>
+      </div>
+      <div id="profileBox" class="recent-list">
+        <div class="empty-state">กำลังโหลดข้อมูลพนักงาน...</div>
+      </div>
+    </section>
+
+
+
+    <!--  ตั้งค่าระบบแจ้งเตือน LINE สำหรับใบลานี้ -->
+    <section class="recent-card" style="margin-top: 20px;">
+      <div class="section-head" style="display: flex; align-items: center; gap: 8px;">
+        <img src="/assets/icons/line.svg" alt="LINE" style="width: 24px; height: 24px; object-fit: contain;" />
+        <h2>การแจ้งเตือนใบลานี้ผ่าน LINE (LINE Notification)</h2>
+      </div>
+      <div id="lineSettingBox" style="padding: 16px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; margin-top: 10px;">
+        <div style="font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 16px;">
+          เมื่อเปิดใช้งานและผูก <strong>LINE User ID</strong> เรียบร้อยแล้ว ระบบจะส่งข้อความแจ้งเตือนสถานะใบลากลับมายังแอป LINE ของคุณทันทีเมื่อ:
+          <ul style="margin: 6px 0 0 20px; padding: 0;">
+            <li>ส่งคำขอลาใหม่สำเร็จ</li>
+            <li>หัวหน้างานหรือ HR พิจารณาอนุมัติใบลา</li>
+            <li>ใบลามีการปฏิเสธ หรือต้องการข้อมูลเพิ่มเติม</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">
+            ผูกบัญชี LINE อัตโนมัติ (แนะนำ)
+          </label>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">
+            รับรหัสเชื่อมต่อและส่งไปที่ LINE OA เพื่อผูกบัญชีทันทีโดยไม่ต้องหา User ID เอง
+          </p>
+          <button type="button" onclick="generateLineLinkCode()" style="background: #00b900; color: #ffffff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
+            <img src="/assets/icons/line.svg" style="width: 22px; height: 22px; object-fit: contain;" alt="LINE" />
+            ขอรหัสเชื่อมต่อ LINE
+          </button>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">
+            หรือระบุ LINE User ID ด้วยตนเอง
+          </label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="userLineIdInput" placeholder="เช่น U1234567890abcdef..." style="flex: 1; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-family: monospace;" />
+            <button type="button" onclick="saveUserLineId()" style="background: #059669; color: #ffffff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">
+               บันทึก
+            </button>
+          </div>
+        </div>
+
+        
+      </div>
+    </section>
+
+    <!--  ระบบยืนยันตัวตนชีวมาตร (WebAuthn Biometric & Passkeys) -->
+    <section class="recent-card" style="margin-top: 20px;">
+      <div class="section-head" style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 22px;"></span>
+        <h2>ระบบล็อกอินด้วยลายนิ้วมือ / ใบหน้า (WebAuthn Biometrics)</h2>
+      </div>
+      <div id="biometricSettingBox" style="padding: 16px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; margin-top: 10px;">
+        <div style="font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 12px;">
+          ลงทะเบียนอุปกรณ์นี้ด้วยระบบสแกนลายนิ้วมือ หรือ สแกนใบหน้า (Touch ID / Face ID / Windows Hello) เพื่อใช้ในการเข้าสู่ระบบทดแทนการกรอกรหัสผ่านได้อย่างสะดวกรวดเร็วและปลอดภัยสูงสุด
+        </div>
+
+        <div style="margin-bottom: 20px; display: flex;">
+          <button type="button" onclick="showBiometricGuideModal()" style="background: #f0fdfa; color: #0f766e; border: 1px dashed #5eead4; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='#ccfbf1'" onmouseout="this.style.background='#f0fdfa'">
+            <span class="material-symbols-outlined" style="font-size: 18px;">help_outline</span>
+            วิธีเปิดใช้งานและการใช้งานสแกนนิ้ว / ใบหน้า (Biometric Guide)
+          </button>
+        </div>
+
+        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
+          <div id="biometricSupportStatus" style="font-size: 13.5px; font-weight: 600; padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+            กำลังตรวจสอบความสามารถของอุปกรณ์...
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+            <label style="font-size: 13px; font-weight: 600; color: #1e293b;">
+              ตั้งชื่อเรียกอุปกรณ์ (Device Nickname)
+            </label>
+            <input type="text" id="biometricDeviceName" placeholder="เช่น โทรศัพท์ส่วนตัว, โน้ตบุ๊กทำงาน..." style="padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;" />
+          </div>
+
+          <button type="button" id="btnRegisterBiometric" onclick="registerCurrentBiometricDevice()" style="background: #0d9488; color: #ffffff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; justify-content: center; margin-top: 12px; transition: background 0.2s;" disabled>
+            <span class="material-symbols-outlined" style="font-size: 20px;">fingerprint</span>
+            เปิดใช้งานระบบสแกนบนอุปกรณ์นี้
+          </button>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 13.5px; font-weight: 600; color: #1e293b; margin-bottom: 10px;">
+            อุปกรณ์ที่ลงทะเบียนไว้แล้ว (Registered Devices)
+          </label>
+          <div id="registeredBiometricList" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 12.5px; color: #64748b; padding: 10px; text-align: center; background: #f8fafc; border-radius: 8px;">
+              ไม่มีอุปกรณ์ที่ลงทะเบียนไว้ในปัจจุบัน
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/supabase-config.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/system-settings.js"></script>
+  <script src="/js/health-wellness.js"></script>
+  <script src="/js/webauthn-service.js"></script>
+  <script src="/js/profile-user.js"></script>
+
+  <script>
+    function goToLeaveForm() {
+      window.location.href = "/pages/user/leave-user.html";
+    }
+    function viewMyDigitalCard() {
+      window.location.href = "/pages/user/index-user.html?action=digital_card";
+    }
+    function generateLineLinkToken() {
+      window.location.href = "/pages/user/index-user.html?action=line_link";
+    }
+    function triggerBiometricHelp() {
+      if (window.SystemDiagnostics && typeof window.SystemDiagnostics.showUnifiedHelpPopup === 'function') {
+        window.SystemDiagnostics.showUnifiedHelpPopup();
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'คู่มือความปลอดภัยชีวมาตร',
+          text: 'สามารถตั้งค่าการลงทะเบียน Face/Fingerprint สแกนเพื่อเข้าใช้งานได้อย่างรวดเร็วในหน้าข้อมูลส่วนตัวค่ะ',
+          confirmButtonColor: '#0f766e'
+        });
+      }
+    }
+  </script>
+</body>
+</html>

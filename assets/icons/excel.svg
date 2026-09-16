@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <filter id="excelShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="4" dy="8" stdDeviation="12" flood-color="#052e16" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Right Spreadsheet Grid Panel -->
+  <rect x="180" y="65" width="270" height="380" rx="16" fill="#107c41" />
+
+  <!-- Grid Cell Lines & Fills (Microsoft Excel Format) -->
+  <!-- Header row shading -->
+  <path d="M180 81 c0-8.8 7.2-16 16-16 h238 c8.8 0 16 7.2 16 16 v75 H180 Z" fill="#185c37" />
+  
+  <!-- Subtle diagonal fold shadow on top right -->
+  <path d="M300 65 L450 215 L450 65 Z" fill="#0e4b2a" opacity="0.25" />
+
+  <!-- Grid Cells (White Grid with Clean Cell Separation) -->
+  <g fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="square">
+    <!-- Horizontal Grid Lines -->
+    <line x1="180" y1="140" x2="450" y2="140" />
+    <line x1="180" y1="205" x2="450" y2="205" />
+    <line x1="180" y1="270" x2="450" y2="270" />
+    <line x1="180" y1="335" x2="450" y2="335" />
+    <line x1="180" y1="400" x2="450" y2="400" />
+    
+    <!-- Vertical Grid Lines -->
+    <line x1="265" y1="65" x2="265" y2="445" />
+    <line x1="355" y1="65" x2="355" y2="445" />
+  </g>
+
+  <!-- Left Overlapping "X" Tile with Soft Drop Shadow -->
+  <g filter="url(#excelShadow)">
+    <rect x="62" y="116" width="220" height="280" rx="20" fill="#22a45d" />
+    <!-- Gradient / Shade across the X tile -->
+    <path d="M62 136 c0-11 9-20 20-20 h180 c11 0 20 9 20 20 v120 L62 376 Z" fill="#2ebd6e" />
+  </g>
+
+  <!-- Crisp White "X" Letter in the Tile -->
+  <path d="M125 180 L158 180 L178 226 L198 180 L231 180 L196 256 L233 332 L200 332 L178 285 L156 332 L123 332 L160 256 Z" fill="#ffffff" />
+</svg>

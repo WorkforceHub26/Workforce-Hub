@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Clipboard Board (Warm Wood/Amber) -->
+  <rect x="96" y="80" width="320" height="380" rx="28" fill="#f59e0b" stroke="#0f172a" stroke-width="16" stroke-linejoin="round" />
+  
+  <!-- Clipboard Paper (Crisp White) -->
+  <rect x="126" y="120" width="260" height="320" rx="16" fill="#ffffff" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+
+  <!-- Top Metal Clip -->
+  <path d="M196 90 C196 66 216 48 240 48 H272 C296 48 316 66 316 90 H340 V130 H172 V90 Z" fill="#0284c7" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+  <circle cx="256" cy="80" r="14" fill="#ffffff" stroke="#0f172a" stroke-width="6" />
+
+  <!-- Row 1: Approved Item -->
+  <circle cx="170" cy="180" r="16" fill="#10b981" stroke="#0f172a" stroke-width="6" />
+  <path d="M162 180 L168 186 L178 174" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="205" y1="180" x2="340" y2="180" stroke="#0f172a" stroke-width="10" stroke-linecap="round" />
+
+  <!-- Row 2: Approved Item -->
+  <circle cx="170" cy="240" r="16" fill="#10b981" stroke="#0f172a" stroke-width="6" />
+  <path d="M162 240 L168 246 L178 234" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="205" y1="240" x2="320" y2="240" stroke="#0f172a" stroke-width="10" stroke-linecap="round" />
+
+  <!-- Row 3: In Progress Item -->
+  <circle cx="170" cy="300" r="16" fill="#06b6d4" stroke="#0f172a" stroke-width="6" />
+  <circle cx="170" cy="300" r="4" fill="#ffffff" />
+  <line x1="205" y1="300" x2="350" y2="300" stroke="#0f172a" stroke-width="10" stroke-linecap="round" />
+
+  <!-- Big Glowing Approved Stamp at bottom right -->
+  <circle cx="350" cy="360" r="54" fill="#10b981" stroke="#0f172a" stroke-width="10" />
+  <path d="M330 360 L344 374 L374 344" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

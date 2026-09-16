@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Document Base -->
+  <path d="M 120 40 L 320 40 L 400 120 L 400 480 C 400 491.046 391.046 500 380 500 L 120 500 C 108.954 500 100 491.046 100 480 L 100 60 C 100 48.954 108.954 40 120 40 Z" fill="#E2E8F0"/>
+  <!-- Folded Corner -->
+  <path d="M 320 40 L 320 120 L 400 120 Z" fill="#CBD5E1"/>
+  <path d="M 100 120 L 180 120 L 180 40 Z" fill="#475569"/>
+
+  <!-- Lines -->
+  <rect x="140" y="140" width="80" height="16" rx="8" fill="#475569"/>
+  <rect x="230" y="140" width="60" height="16" rx="8" fill="#475569"/>
+  <rect x="140" y="180" width="150" height="16" rx="8" fill="#475569"/>
+
+  <!-- Checkboxes -->
+  <rect x="300" y="140" width="60" height="60" fill="#FB7185"/>
+  <path d="M 315 170 L 330 185 L 375 140" stroke="#1E293B" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <rect x="140" y="240" width="80" height="16" rx="8" fill="#475569"/>
+  <rect x="230" y="240" width="60" height="16" rx="8" fill="#475569"/>
+  <rect x="140" y="280" width="150" height="16" rx="8" fill="#475569"/>
+
+  <rect x="300" y="240" width="60" height="60" fill="#4ADE80"/>
+  <path d="M 315 270 L 330 285 L 375 240" stroke="#1E293B" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Clock Badge Overlay -->
+  <circle cx="360" cy="400" r="90" fill="#3B82F6"/>
+  <circle cx="360" cy="400" r="60" fill="#DBEAFE"/>
+  <path d="M 360 360 L 360 400 L 390 420" stroke="#1E293B" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

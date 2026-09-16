@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>หลักเกณฑ์การลา | PVT HR Hub</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/leave-rules.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <!-- Security Auth Guard (Head Check) -->
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/system-settings.js"></script>
+
+  <style>
+    /* สไตล์เพิ่มเติมสำหรับจัดการ Layout แบบไม่มี Sidebar */
+    .rules-page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .rules-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 20px;
+    }
+
+    .rules-title-section h1 {
+      font-size: 28px;
+      color: var(--text, #0f172a);
+      margin: 0 0 4px 0;
+      font-weight: 700;
+    }
+
+    .rules-title-section p {
+      color: var(--text-soft, #64748b);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* ปรับแต่งตำแหน่ง Caution Box ท้ายตารางให้เต็มความกว้างเพื่อความสวยงาม */
+    .caution-box-fullwidth {
+      grid-column: 1 / -1;
+      border-top: 6px solid var(--danger, #ef4444) !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      .rules-page-container { padding: 16px 12px; }
+      .rules-top-bar { flex-direction: column; align-items: stretch; gap: 12px; }
+      .btn-header-back, .btn-header-action {
+        padding: 6px 12px !important;
+        font-size: 11.5px !important;
+        gap: 4px !important;
+        flex: 1;
+        min-width: 0;
+      }
+      .btn-header-back .material-symbols-outlined,
+      .btn-header-action .material-symbols-outlined {
+        font-size: 14px !important;
+      }
+      .rules-title-section {
+        text-align: left !important;
+      }
+      .rules-title-section h1 {
+        font-size: 20px !important;
+      }
+      .rules-title-section p {
+        font-size: 12px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-container" id="appLayout">
+    
+    <!--  1. LEFT SIDEBAR MENU (UNIFIED LAYOUT) -->
+    <aside class="sidebar" id="sidebarMenu">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">groups</span>
+        </div>
+        <div class="brand-name">PVT WORKFORCE HUB</div>
+        <button type="button" class="btn-close-sidebar" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(false);}else if(typeof window.closeMobileSidebar==='function'){window.closeMobileSidebar();}" style="display: none;" title="ปิดเมนู">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+      </div>
+
+      <!--  ปุ่มกดยื่นใบลา (Action CTA) -->
+      <div class="sidebar-cta-wrap">
+        <button type="button" class="sidebar-cta-btn" onclick="window.location.href='/pages/user/leave-user.html'" title="ยื่นใบลาออนไลน์">
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
+          <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
+        </button>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <a href="/pages/user/index-user.html" class="menu-item">
+          <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+          <span>หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="menu-item">
+          <img src="/assets/icons/user-profile.svg" alt="ข้อมูลส่วนตัว" class="nav-icon-custom" />
+          <span>ข้อมูลส่วนตัว</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="menu-item">
+          <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" class="nav-icon-custom" />
+          <span>ประวัติการลา</span>
+        </a>
+        <a href="/pages/user/holidays.html" class="menu-item">
+          <img src="/assets/icons/calendar-event.svg" alt="ปฏิทิน" class="nav-icon-custom" />
+          <span>ปฏิทิน</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-title">บริการด่วน</div>
+
+        <!--  ปุ่มดูกฎระเบียบบริษัท -->
+        <a href="/pages/user/leave-rules.html" class="menu-item active" title="กฎระเบียบและเงื่อนไขการลา">
+          <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" class="nav-icon-custom" />
+          <span>กฎระเบียบ</span>
+        </a>
+
+        <!--  ปุ่มคู่มือการใช้งาน -->
+        <a href="/pages/user/full-guide.html" class="menu-item" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span>แนะนำระบบ</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="/pages/user/news.html" class="menu-item">
+          <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+          <span>ข่าวสาร</span>
+        </a>
+        <button type="button" class="menu-item" onclick="if(typeof openSystemSettingsModal==='function')openSystemSettingsModal()" title="การตั้งค่าระบบ">
+          <img src="/assets/icons/settings.svg" alt="ตั้งค่า" class="nav-icon-custom" style="border-radius: 6px;" />
+          <span>ตั้งค่า</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-top: 1px solid #f1f5f9;">
+        <button type="button" class="btn-logout menu-item" onclick="if(typeof logout==='function')logout(); else history.back();" title="ออกจากระบบ" style="color: #ef4444; width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: 500;">
+          <img src="/assets/icons/logout.svg" alt="ออกจากระบบ" class="nav-icon-custom" style="width: 20px; height: 20px;" />
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!--  2. MAIN WORKSPACE CONTENT -->
+    <main class="main-content" style="width: 100%; flex: 1;">
+      <div class="rules-page-container">
+        
+        <header class="rules-top-bar">
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <!-- Mobile Menu Toggle Button -->
+            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileSidebar()" title="เปิดเมนู" style="display: none; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 8px; cursor: pointer; color: #64748b; margin-right: 8px;">
+              <span class="material-symbols-outlined" style="font-size: 22px; display: block;">menu</span>
+            </button>
+            <button class="btn-header-back" onclick="history.back()"><span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle;">arrow_back</span> ย้อนกลับ</button>
+            <button class="btn-header-action" onclick="window.location.href='/pages/user/full-guide.html'" style="background: #e0f2fe; color: #0369a1; border-color: #bae6fd;"> คู่มือใช้งานฉบับเต็ม</button>
+          </div>
+          
+          <div class="rules-title-section" style="text-align: right;">
+            <h1>หลักเกณฑ์และเงื่อนไขการลา</h1>
+            <p>สิทธิประโยชน์และข้อกำหนดทางวินัยพนักงาน PVT</p>
+          </div>
+        </header>
+
+    <main class="rules-grid-layout">
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">medical_services</span> 1. การลาป่วย
+        </div>
+        <ul class="rule-list-item">
+          <li>ลาได้เท่าที่ป่วยจริง โดยได้รับค่าจ้างตามปกติ <b>ไม่เกิน 30 วันทำงาน/ปี</b></li>
+          <li class="rule-caution">การลาป่วยตั้งแต่ 1 วันทำงานขึ้นไป ต้องนำส่งใบรับรองแพทย์แผนปัจจุบัน</li>
+          <li>กรณีลาป่วยเท็จ จะถูกพิจารณาเป็นความผิดทางวินัยร้ายแรง</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">assignment_ind</span> 2. การลากิจเพื่อธุรกิจอันจำเป็น
+        </div>
+        <ul class="rule-list-item">
+          <li>ได้รับอนุมัติสิทธิลากิจโดยได้รับค่าจ้าง <b>ไม่เกิน 3 วันทำงาน/ปี</b></li>
+          <li>ต้องเป็นกิจธุระที่ต้องจัดการด้วยตนเอง และไม่สามารถทำนอกเวลางานได้</li>
+          <li>ต้องส่งใบลาล่วงหน้าอย่างน้อย 1 วันทำการ (ยกเว้นกรณีฉุกเฉิน)</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">flight_takeoff</span> 3. วันหยุดพักผ่อนประจำปี
+        </div>
+        <ul class="rule-list-item">
+          <li>พนักงานที่ทำงานครบ 1 ปี มีสิทธิลาพักร้อนได้ <b>ไม่น้อยกว่า 6 วันทำการ/ปี</b></li>
+          <li>ต้องส่งล่วงหน้าเพื่อให้หัวหน้างานจัดสรรกำลังพลและอนุมัติก่อนเสมอ</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">child_care</span> 4. การลาเพื่อการคลอดบุตร
+        </div>
+        <ul class="rule-list-item">
+          <li>พนักงานลาเพื่อคลอดบุตรได้ <b>ไม่เกิน 120 วัน</b> (รวมวันหยุดประจำสัปดาห์)</li>
+          <li>บริษัทจ่ายค่าจ้างให้ตามปกติ 60 วัน และรับเงินอุดหนุนจากประกันสังคมอีก 60 วัน</li>
+          <li>สามารถยื่นขอลาก่อนกำหนดคลอดจริงได้ตามความเหมาะสม</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">vaccines</span> 5. การลาเพื่อทำหมัน
+        </div>
+        <ul class="rule-list-item">
+          <li>มีสิทธิลาหยุดได้ตามระยะเวลาที่แพทย์แผนปัจจุบันกำหนด</li>
+          <li>ได้รับค่าจ้างในวันลานั้นเต็มจำนวนตามที่ระบุในใบรับรองแพทย์</li>
+          <li>ต้องแจ้งและส่งใบลาล่วงหน้าพร้อมเอกสารจองนัดหมายแพทย์</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">military_tech</span> 6. การลาเพื่อรับราชการทหาร
+        </div>
+        <ul class="rule-list-item">
+          <li>ลาเพื่อเข้ารับการเรียกพล ตรวจสอบ หรือฝึกภาคสนามตามหมายเรียกของทางราชการ</li>
+          <li>ได้รับค่าจ้างตามปกติในระหว่างลา <b>ไม่เกิน 60 วัน/ปี</b></li>
+          <li>ต้องแนบสำเนาหมายเรียกพลประกอบการยื่นใบลาทันทีที่ได้รับเอกสาร</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">heart_broken</span> 7. การลาเพื่อฌาปนกิจศพ
+        </div>
+        <ul class="rule-list-item">
+          <li>กรณีคู่สมรส บุตร บิดา หรือมารดาเสียชีวิต สามารถใช้สิทธิลาได้ตามความเหมาะสม</li>
+          <li>บริษัทมอบสิทธิลาพิเศษโดยได้รับค่าจ้าง (จำนวนวันตามโครงสร้างสวัสดิการบริษัท)</li>
+          <li>ยื่นหลักฐาน เช่น ใบมรณบัตร ย้อนหลังได้ภายใน 7 วันหลังกลับเข้าปฏิบัติงาน</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">temple_buddhist</span> 8. การลาอุปสมบท 
+        </div>
+        <ul class="rule-list-item">
+          <li>ได้รับค่าจ้างตามความเป็นจริง <b>ไม่เกิน 15 วัน</b> (ตลอดอายุงานใช้สิทธิได้เพียง 1 ครั้ง)</li>
+          <li>ต้องขออนุมัติล่วงหน้าไม่น้อยกว่า 15 วัน และกลับเข้าทำงานภายใน 3 วันหลังลาสิกขาบท</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag">
+          <span class="material-symbols-outlined">school</span> 9. การลาเพื่อฝึกอบรมพัฒนาความรู้
+        </div>
+        <ul class="rule-list-item">
+          <li>ลาเพื่อประโยชน์ต่อการจ้างงาน/สวัสดิการ หรือเพิ่มทักษะความชำนาญในตำแหน่งหน้าที่</li>
+          <li class="rule-caution">การลาเพื่อการศึกษาต่อของพนักงานเอง ไม่สามารถใช้สิทธิการลาประเภทนี้ได้</li>
+          <li>ต้องแจ้งล่วงหน้าไม่น้อยกว่า 7 วัน และต้องได้รับอนุมัติจากผู้บริหารก่อนทุกครั้ง</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card">
+        <div class="card-header-tag" style="background: #fff7ed; color: #c2410c; border-color: #fed7aa;">
+          <span class="material-symbols-outlined">schedule</span> 10. กรอบเวลาการพิจารณาอนุมัติใบลา (SLA 2 วัน)
+        </div>
+        <ul class="rule-list-item">
+          <li>หัวหน้างาน (L1) และ ผู้จัดการ (L2) ต้องพิจารณาอนุมัติใบลา <b>ภายใน 2 วันทำการ</b> นับจากวันที่ยื่นคำขอ</li>
+          <li class="rule-caution">หากเกิน 2 วัน ระบบจะขึ้นสถานะ <b>"เกินกำหนด"</b> และแสดงข้อความ <i>"ใบลาไม่ได้รับการพิจารณาในเวลาที่กำหนด"</i></li>
+          <li>พนักงานสามารถติดตามสถานะหรือประสานงานหัวหน้า/HR เพื่อเร่งรัดการพิจารณาได้</li>
+        </ul>
+      </article>
+
+      <article class="rule-box-card caution-box-layout caution-box-fullwidth">
+        <div class="card-header-tag" style="background: #fef2f2; color: var(--danger, #ef4444); border-color: #fecaca;">
+          <span class="material-symbols-outlined">warning</span> ข้อควรระวัง & บทลงโทษทางวินัย
+        </div>
+        <ul class="rule-list-item">
+          <li class="rule-caution">พนักงานที่มาสาย <b>3 ครั้งภายในรอบเดือน</b> จะได้รับหนังสือเตือนเป็นลายลักษณ์อักษร</li>
+          <li class="rule-caution">การหยุดงานโดยไม่ส่งใบลา หรือใบลาไม่ได้รับการอนุมัติ ถือเป็นการขาดงานโดยเจตนา</li>
+          <li class="rule-caution">ขาดงานติดต่อกัน <b>3 วันทำงาน</b> โดยไม่มีเหตุอันสมควร บริษัทมีสิทธิ์เลิกจ้างทันทีโดยไม่จ่ายค่าชดเชย</li>
+        </ul>
+      </article>
+
+    </main>
+  </div>
+  </div>
+
+  <script>
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById("sidebarMenu");
+      if (sidebar) {
+        sidebar.classList.toggle("active");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Check if we need to show the mobile menu button
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      if (mobileBtn && window.innerWidth <= 1024) {
+        mobileBtn.style.display = "block";
+      }
+      
+      window.addEventListener("resize", () => {
+        if (mobileBtn) {
+          mobileBtn.style.display = window.innerWidth <= 1024 ? "block" : "none";
+        }
+      });
+
+      if (typeof window.renderLeaveRulesCards === "function") {
+        const lang = window.getGlobalLanguage ? window.getGlobalLanguage() : "th";
+        window.renderLeaveRulesCards(lang);
+      }
+    });
+
+    window.addEventListener("pvt-lang-changed", (e) => {
+      const lang = (e.detail && e.detail.lang) || (window.getGlobalLanguage ? window.getGlobalLanguage() : "th");
+      if (typeof window.renderLeaveRulesCards === "function") {
+        window.renderLeaveRulesCards(lang);
+      }
+    });
+  </script>
+</body>
+</html>

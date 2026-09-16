@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>ปฏิทินวันหยุดประจำปี | PVT HR Management</title>
+  
+  <!-- Fonts & Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/holidays.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  
+  <!-- Third Party Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div class="app-container" id="appLayout">
+    <!--  1. LEFT SIDEBAR MENU (UNIFIED ADAPTIVE SIDEBAR) -->
+    <aside class="sidebar sidebar-light" id="sidebarMenu">
+      <div class="sidebar-brand brand-zone">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">groups</span>
+        </div>
+        <div class="brand-name">PVT WORKFORCE HUB</div>
+        <button type="button" class="btn-close-sidebar" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(false);}else if(typeof window.closeMobileSidebar==='function'){window.closeMobileSidebar();}" style="display: none;" title="ปิดเมนู">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+      </div>
+
+      <!--  ปุ่มกดยื่นใบลา (Action CTA) -->
+      <div class="sidebar-cta-wrap" id="sidebarCtaZone">
+        <button type="button" class="sidebar-cta-btn" onclick="goToLeaveForm()" title="ยื่นใบลาออนไลน์">
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
+          <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
+        </button>
+      </div>
+      
+      <nav class="sidebar-menu" id="sidebarNavMenu">
+        <a href="/pages/user/index-user.html" class="menu-item">
+          <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+          <span>หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="menu-item">
+          <img src="/assets/icons/user-profile.svg" alt="ข้อมูลส่วนตัว" class="nav-icon-custom" />
+          <span>ข้อมูลส่วนตัว</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="menu-item">
+          <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" class="nav-icon-custom" />
+          <span>ประวัติการลา</span>
+        </a>
+        <a href="/pages/user/holidays.html" class="menu-item active">
+          <img src="/assets/icons/calendar-event.svg" alt="ปฏิทิน" class="nav-icon-custom" />
+          <span>ปฏิทิน</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-title">บริการด่วน</div>
+
+        <!-- 🪪 ปุ่มบัตรพนักงานดิจิทัล -->
+        <button type="button" class="menu-item" onclick="viewMyDigitalCard()" title="บัตรพนักงานดิจิทัล">
+          <img src="/assets/icons/employee-card-badge.svg" alt="บัตรพนักงาน" class="nav-icon-custom" />
+          <span>บัตรพนักงาน</span>
+        </button>
+
+        <!--  ปุ่มเชื่อมต่อ LINE -->
+        <button type="button" class="menu-item" onclick="generateLineLinkToken()" title="เชื่อมต่อ LINE แจ้งเตือน">
+          <img src="/assets/icons/line.svg" alt="LINE" class="nav-icon-custom" />
+          <span>LINE</span>
+        </button>
+
+        <!--  ปุ่มดูกฎระเบียบบริษัท -->
+        <a href="/pages/user/leave-rules.html" class="menu-item" title="กฎระเบียบและเงื่อนไขการลา">
+          <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" class="nav-icon-custom" />
+          <span>กฎระเบียบ</span>
+        </a>
+
+        <!--  ปุ่มคู่มือการใช้งาน -->
+        <a href="/pages/user/full-guide.html" class="menu-item" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span>แนะนำระบบ</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="/pages/user/news.html" class="menu-item">
+          <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+          <span>ข่าวสาร</span>
+        </a>
+        <button type="button" class="menu-item" onclick="if(typeof openSystemSettingsModal==='function'){openSystemSettingsModal();}else{window.location.href='/pages/user/index-user.html?action=settings';}" title="การตั้งค่าระบบ (ขนาดตัวอักษร, ธีมสี, เชื่อมต่อ LINE)">
+          <img src="/assets/icons/settings.svg" alt="ตั้งค่า" class="nav-icon-custom" style="border-radius: 6px;" />
+          <span>ตั้งค่า</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer" id="sidebarFooterZone" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-top: 1px solid #f1f5f9;">
+        <button type="button" class="menu-item" onclick="triggerBiometricHelp()" style="color: var(--primary);">
+          <img src="/assets/icons/help-support.svg" alt="ช่วยเหลือ" class="nav-icon-custom" />
+          <span>ช่วยเหลือ</span>
+        </button>
+        <button type="button" class="btn-logout menu-item" onclick="handleLogout()" title="ออกจากระบบ" style="color: #ef4444; width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: 500;">
+          <img src="/assets/icons/logout.svg" alt="ออกจากระบบ" class="nav-icon-custom" style="width: 20px; height: 20px;" />
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!--  MAIN CONTENT -->
+    <main class="main-content">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left" style="display: flex; align-items: center; gap: 12px;">
+          <!-- Mobile Hamburger Menu Button -->
+          <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(event);}else if(typeof toggleMobileSidebar==='function'){toggleMobileSidebar();}" title="เปิดเมนู">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; width: 22px; height: 22px;"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="title-wrap">
+            <h1>ปฏิทินวันหยุดประจำปี</h1>
+            <p>PVT HR HOLIDAY MANAGEMENT SYSTEM</p>
+          </div>
+        </div>
+
+        <div class="topbar-right" style="display: flex; align-items: center; gap: 8px;">
+          <div class="user-profile-badge">
+            <div class="user-avatar" id="userAvatar">HR</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">ผู้ใช้งานระบบ</span>
+              <span class="user-role" id="userRole">STAFF</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 🎛️ TABS FOR SWITCHING (SOLID SEGMENTED CONTROL) -->
+      <div class="holiday-tabs-wrapper" style="padding: 0 24px; margin-bottom: 24px;">
+        <div class="holiday-tabs-container" style="display: inline-flex; background: #e2e8f0; padding: 5px; border-radius: 14px; gap: 6px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #cbd5e1;">
+          <button type="button" class="holiday-tab-btn active" id="tabCompanyHolidays" style="padding: 10px 22px; font-weight: 700; font-family: inherit; font-size: 15px; border: none; border-radius: 10px; background: #0f766e; color: #ffffff; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(15, 118, 110, 0.35);" onclick="switchHolidayTab('company')">
+            <span class="material-symbols-outlined" style="font-size: 20px;">event</span>
+            <span>วันหยุดบริษัท</span>
+          </button>
+          <button type="button" class="holiday-tab-btn" id="tabTeamLeaves" style="display: none; padding: 10px 22px; font-weight: 600; font-family: inherit; font-size: 15px; border: none; border-radius: 10px; background: transparent; color: #475569; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); align-items: center; gap: 8px;" onclick="switchHolidayTab('team')">
+            <span class="material-symbols-outlined" style="font-size: 20px;">groups</span>
+            <span>วันลาของพนักงานในแผนก</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="companyHolidaysWrapper">
+      <!--   KPI STATS CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card border-blue">
+          <div class="icon-box bg-blue" style="display: flex; align-items: center; justify-content: center;">
+            <img src="/assets/icons/calendar-event.svg" alt="วันหยุด" style="width: 28px; height: 28px; object-fit: contain;" />
+          </div>
+          <div class="stat-info">
+            <span class="label">วันหยุดรวมทั้งหมด (ปีนี้)</span>
+            <span class="value" id="statTotalHolidays">0 วัน</span>
+          </div>
+        </div>
+
+        <div class="stat-card border-green">
+          <div class="icon-box bg-green">
+            <span class="material-symbols-outlined">event_upcoming</span>
+          </div>
+          <div class="stat-info">
+            <span class="label">วันหยุดถัดไป</span>
+            <span class="value" id="statNextHolidayName" style="font-size: 18px; line-height: 1.2;">-</span>
+            <span id="statNextHolidayDate" style="font-size: 12px; color: var(--primary, #0fa472); font-weight: 600;">-</span>
+          </div>
+        </div>
+
+        <div class="stat-card border-orange">
+          <div class="icon-box bg-orange">
+            <span class="material-symbols-outlined">beach_access</span>
+          </div>
+          <div class="stat-info">
+            <span class="label">วันหยุดคงเหลือปีนี้</span>
+            <span class="value" id="statRemainingHolidays">0 วัน</span>
+          </div>
+        </div>
+      </div>
+
+      <!--  HIGHLIGHT HERO BANNER -->
+      <section class="holiday-hero-banner" id="upcomingHeroBanner">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="material-symbols-outlined">star</span>
+            <span>วันหยุดถัดไปที่กำลังจะถึง</span>
+          </div>
+          <h2 id="heroHolidayTitle">กำลังโหลดข้อมูลวันหยุด...</h2>
+          <p id="heroHolidayDateDetails">โปรดรอสักครู่ ระบบกำลังประมวลผลปฏิทิน</p>
+        </div>
+        <div class="hero-countdown-box">
+          <span class="countdown-number" id="heroCountdownDays">0</span>
+          <span class="countdown-label">วันข้างหน้า</span>
+        </div>
+      </section>
+
+      <!-- ️ CONTROLS & TOOLBAR PANEL -->
+      <section class="panel holiday-controls-panel">
+        <div class="controls-left">
+          <div class="search-box">
+            <span class="material-symbols-outlined search-icon">search</span>
+            <input type="text" id="holidaySearchInput" placeholder="ค้นหาชื่อวันหยุด หรือวันที่..." oninput="filterHolidays()" />
+          </div>
+
+          <div class="select-group">
+            <select id="yearSelect" onchange="changeYearOrMonth()">
+              <option value="2026">ปี 2026 (2569)</option>
+              <option value="2025">ปี 2025 (2568)</option>
+              <option value="2027">ปี 2027 (2570)</option>
+            </select>
+          </div>
+
+          <div class="select-group">
+            <select id="monthSelect" onchange="changeYearOrMonth()">
+              <option value="all"> แสดงทั้งปี (สรุปรายปี)</option>
+              <option value="0">มกราคม</option>
+              <option value="1">กุมภาพันธ์</option>
+              <option value="2">มีนาคม</option>
+              <option value="3">เมษายน</option>
+              <option value="4">พฤษภาคม</option>
+              <option value="5">มิถุนายน</option>
+              <option value="6">กรกฎาคม</option>
+              <option value="7">สิงหาคม</option>
+              <option value="8">กันยายน</option>
+              <option value="9">ตุลาคม</option>
+              <option value="10">พฤศจิกายน</option>
+              <option value="11">ธันวาคม</option>
+            </select>
+          </div>
+
+          <div class="select-group">
+            <select id="categorySelect" onchange="filterHolidays()">
+              <option value="all">ทุกประเภทวันหยุด</option>
+              <option value="official">วันหยุดนักขัตฤกษ์ / ตามประเพณี</option>
+              <option value="company">วันหยุดพิเศษบริษัท</option>
+              <option value="substitution">วันหยุดชดเชย</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="controls-right">
+          <div class="view-switch">
+            <button type="button" class="btn-view active" id="btnViewGrid" onclick="switchView('grid')" title="แสดงแบบการ์ด">
+              <span class="material-symbols-outlined">grid_view</span>
+            </button>
+            <button type="button" class="btn-view" id="btnViewTable" onclick="switchView('table')" title="แสดงแบบตาราง">
+              <span class="material-symbols-outlined">table_rows</span>
+            </button>
+          </div>
+
+          <button type="button" class="btn-primary" id="btnAddHoliday" style="display: none;" onclick="openHolidayModal()">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span>เพิ่มวันหยุดใหม่</span>
+          </button>
+        </div>
+      </section>
+
+      <!--  CALENDAR VIEW CONTAINER -->
+      <div class="team-calendar-layout" id="companyCalendarLayout">
+        <!-- Left: Calendar Grid -->
+        <div class="team-calendar-main panel" style="flex: 1; min-width: 0; max-width: 100%; box-sizing: border-box; transition: all 0.3s ease;">
+          <!-- Calendar Header with Prominent Title & Sleek Navigation -->
+          <div class="calendar-view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9; gap: 16px; flex-wrap: wrap;">
+            <h3 class="calendar-title-heading" style="font-size: 20px; font-weight: 700; color: #0f172a; margin: 0; display: inline-flex; align-items: center; gap: 12px; letter-spacing: -0.2px; line-height: 1.3;">
+              <span class="cal-title-icon" style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); color: #0fa472; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #a7f3d0; box-shadow: 0 1px 3px rgba(15, 164, 114, 0.12);"><span class="material-symbols-outlined" style="font-size: 22px;">calendar_month</span></span>
+              <span class="cal-title-text">ปฏิทินวันหยุด (แบบรายเดือน)</span>
+            </h3>
+            <div class="calendar-nav-controls" style="display: inline-flex; align-items: center; gap: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+              <button type="button" onclick="companyCalPrevMonth()" style="background: white; border: 1px solid #e2e8f0; cursor: pointer; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #475569; transition: all 0.2s;" title="เดือนก่อนหน้า">
+                <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+              </button>
+              <h4 id="companyCalMonthYear" style="margin: 0; min-width: 160px; text-align: center; font-size: 18px; font-weight: 800; color: #0f172a; letter-spacing: -0.2px;">-</h4>
+              <button type="button" onclick="companyCalNextMonth()" style="background: white; border: 1px solid #e2e8f0; cursor: pointer; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1e293b; font-weight: 700; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" title="เดือนถัดไป">
+                <span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+              </button>
+            </div>
+          </div>
+          <div class="calendar-days-header" id="companyCalDaysHeader" style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); text-align: center; font-weight: 700; color: #334155; margin-bottom: 10px; font-size: 15px; gap: 8px;">
+            <span style="color:#dc2626;">อา.</span><span>จ.</span><span>อ.</span><span>พ.</span><span>พฤ.</span><span>ศ.</span><span>ส.</span>
+          </div>
+          <div class="calendar-grid" id="companyCalGrid" style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: 100%; box-sizing: border-box;">
+             <!-- Days will be generated by JS -->
+          </div>
+          <div id="yearlyCalendarGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 100%; box-sizing: border-box;">
+             <!-- Yearly view mini calendars will be generated by JS -->
+          </div>
+        </div>
+
+        <!-- Right: Summary Sidebar -->
+        <div class="team-summary-sidebar" id="companySummarySidebar">
+          <button class="toggle-sidebar-btn" type="button" onclick="toggleCompanySidebar()" title="ย่อ/ขยายสรุปวันหยุด">
+            <span class="material-symbols-outlined" id="companySidebarIcon">chevron_right</span>
+          </button>
+          
+          <div class="sidebar-content" style="padding: 20px; width: 100%; max-width: 320px; box-sizing: border-box; height: 100%; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h4 style="margin: 0; font-size: 16px; font-weight: 600; color: #0f172a;" id="companySummaryTitle">สรุปวันหยุดเดือนนี้</h4>
+            </div>
+            <div id="companySummaryList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-right: -8px; padding-right: 8px;">
+               <!-- Sidebar list rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  TABLE VIEW CONTAINER -->
+      <section class="panel table-panel" id="holidayTableContainer" style="display: none;">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 70px; text-align: center;">ลำดับ</th>
+                <th>วันที่หยุด</th>
+                <th>วันในสัปดาห์</th>
+                <th>ชื่อวันหยุด</th>
+                <th>ประเภทวันหยุด</th>
+                <th>นับถอยหลัง</th>
+                <th>หมายเหตุ / รายละเอียด</th>
+                <th style="text-align: center; width: 130px;">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="holidayTableBody">
+              <tr>
+                <td colspan="8" class="table-empty-state">กำลังดึงข้อมูลตารางวันหยุด...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      </div> <!-- End companyHolidaysWrapper -->
+
+      <!--   TEAM LEAVES WRAPPER -->
+      <div id="teamLeavesWrapper" style="display: none; padding: 0 24px;">
+        <div class="team-calendar-layout" id="teamCalendarLayout">
+          
+          <!-- Left: Calendar Grid -->
+          <div class="team-calendar-main panel" style="flex: 1; min-width: 0; max-width: 100%; box-sizing: border-box; transition: all 0.3s ease;">
+            <!-- Calendar Header with Prominent Title & Sleek Navigation -->
+            <div class="calendar-view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9; gap: 16px; flex-wrap: wrap;">
+              <h3 class="calendar-title-heading" style="font-size: 20px; font-weight: 700; color: #0f172a; margin: 0; display: inline-flex; align-items: center; gap: 12px; letter-spacing: -0.2px; line-height: 1.3;">
+                <span class="cal-title-icon" style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); color: #2563eb; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #bfdbfe; box-shadow: 0 1px 3px rgba(37, 99, 235, 0.12);"><span class="material-symbols-outlined" style="font-size: 22px;">date_range</span></span>
+                <span class="cal-title-text" id="teamCalendarTitleText">ปฏิทินวันลาของพนักงานในแผนก</span>
+              </h3>
+              <div class="calendar-nav-controls" style="display: inline-flex; align-items: center; gap: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+                <button type="button" onclick="teamCalPrevMonth()" style="background: white; border: 1px solid #e2e8f0; cursor: pointer; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1e293b; font-weight: 700; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" title="เดือนก่อนหน้า">
+                  <span class="material-symbols-outlined" style="font-size: 20px;">chevron_left</span>
+                </button>
+                <h4 id="teamCalMonthYear" style="margin: 0; min-width: 160px; text-align: center; font-size: 18px; font-weight: 800; color: #0f172a; letter-spacing: -0.2px;">สิงหาคม 2026</h4>
+                <button type="button" onclick="teamCalNextMonth()" style="background: white; border: 1px solid #e2e8f0; cursor: pointer; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1e293b; font-weight: 700; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" title="เดือนถัดไป">
+                  <span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="calendar-days-header" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; color: #334155; margin-bottom: 10px; font-size: 15px;">
+              <span style="color:#dc2626;">อา.</span><span>จ.</span><span>อ.</span><span>พ.</span><span>พฤ.</span><span>ศ.</span><span>ส.</span>
+            </div>
+            
+            <div class="calendar-grid" id="teamCalGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">
+               <!-- Days will be generated by JS -->
+            </div>
+          </div>
+
+          <!-- Right: Summary Sidebar -->
+          <div class="team-summary-sidebar" id="teamSummarySidebar">
+            <button class="toggle-sidebar-btn" type="button" onclick="toggleTeamSidebar()" title="ย่อ/ขยายสรุปวันลา">
+              <span class="material-symbols-outlined" id="teamSidebarIcon">chevron_right</span>
+            </button>
+            
+            <div class="sidebar-content" style="padding: 20px; width: 100%; max-width: 320px; box-sizing: border-box; height: 100%; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h4 id="teamSummaryTitle" style="margin: 0; font-size: 16px; font-weight: 600; color: #0f172a;">สรุปรายชื่อผู้ลา</h4>
+              </div>
+              <div style="position: relative; margin-bottom: 16px;">
+                <span class="material-symbols-outlined" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 18px;">search</span>
+                <input type="text" id="teamSearchInput" placeholder="ค้นหาชื่อ..." style="padding: 8px 8px 8px 36px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 13px; outline: none; width: 100%;" oninput="filterTeamLeaves()" />
+              </div>
+              <div id="teamLeavesList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-right: -8px; padding-right: 8px;">
+                 <!-- Sidebar list rendered by JS -->
+                 <div class="loading-state-box" style="text-align: center; padding: 40px 0; color: #64748b;">
+                   <span class="material-symbols-outlined spinning-icon" style="font-size: 24px; margin-bottom: 8px;">sync</span>
+                   <p style="font-size:13px;">กำลังโหลด...</p>
+                 </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- 🪟 MODAL FORM: ADD / EDIT HOLIDAY -->
+  <div id="holidayModalOverlay" class="holiday-modal-overlay" style="display: none;">
+    <div class="modal-card holiday-modal-card">
+      <button type="button" class="btn-close-x" onclick="closeHolidayModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      
+      <div class="modal-header">
+        <div class="icon-calendar-header">
+          <span class="material-symbols-outlined">calendar_add_on</span>
+        </div>
+        <h2 id="modalTitleText">เพิ่มวันหยุดใหม่</h2>
+      </div>
+
+      <form id="holidayForm" onsubmit="handleSaveHoliday(event)">
+        <input type="hidden" id="holidayId" value="" />
+
+        <div class="form-group">
+          <label for="holidayDate">วันที่หยุด</label>
+          <input type="date" id="holidayDate" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+          <label for="holidayName">ชื่อวันหยุด</label>
+          <input type="text" id="holidayName" class="form-control" placeholder="เช่น วันขึ้นปีใหม่, วันสงกรานต์" required />
+        </div>
+
+        <div class="form-group">
+          <label for="holidayCategory">ประเภทวันหยุด</label>
+          <select id="holidayCategory" class="form-control">
+            <option value="official">วันหยุดนักขัตฤกษ์ / ตามประเพณี</option>
+            <option value="company">วันหยุดประจำปีบริษัท</option>
+            <option value="substitution">วันหยุดชดเชย</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="holidayDescription">หมายเหตุ / รายละเอียด</label>
+          <textarea id="holidayDescription" class="form-control" rows="3" placeholder="ระบุรายละเอียดเพิ่มเติม..."></textarea>
+        </div>
+
+        <hr class="modal-divider" />
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeHolidayModal()">ยกเลิก</button>
+          <button type="submit" class="btn-save-holiday">บันทึกวันหยุด</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🪟 MODAL: LEAVE DETAILS & APPROVAL ACTION -->
+  <div id="leaveDetailModalOverlay" class="holiday-modal-overlay" style="display: none; z-index: 1000;">
+    <div class="modal-card holiday-modal-card" style="max-width: 480px;">
+      <button type="button" class="btn-close-x" onclick="closeLeaveDetailModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      
+      <div class="modal-header" style="border-bottom: 1px solid #f1f5f9; padding-bottom: 14px;">
+        <div class="icon-calendar-header" style="background: #ecfdf5; color: #0fa472; border: 1px solid #a7f3d0;">
+          <span class="material-symbols-outlined">assignment_ind</span>
+        </div>
+        <div>
+          <h2 id="detailModalTitle" style="font-size: 18px; margin: 0; color: #0f172a;">รายละเอียดข้อมูลการลา</h2>
+          <p id="detailModalSubtitle" style="font-size: 12px; color: #64748b; margin: 2px 0 0 0;">ข้อมูลคำขอลาหยุดงานของทีม</p>
+        </div>
+      </div>
+
+      <div id="leaveDetailModalBody" style="padding: 16px 0; display: flex; flex-direction: column; gap: 14px;">
+        <!-- Filled dynamically by JS -->
+      </div>
+
+      <hr class="modal-divider" style="margin: 0 0 16px 0;" />
+
+      <div class="modal-actions" style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;">
+        <button type="button" class="btn-cancel" onclick="closeLeaveDetailModal()">ปิด</button>
+        <button type="button" id="btnDetailFocusDate" class="btn-cancel" style="background: #ecfdf5; color: #065f46; border-color: #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span> ดูบนปฏิทิน
+        </button>
+        <a id="btnDetailGoApproval" href="/pages/hr/hr.html" class="btn-save-holiday" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px; background: #0d9488;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">fact_check</span> ไปหน้าตรวจใบลา / อนุมัติ
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/supabase-config.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/system-settings.js"></script>
+  <script src="/js/holidays.js"></script>
+  <script>
+    function goToLeaveForm() {
+      window.location.href = "/pages/user/leave-user.html";
+    }
+    function viewMyDigitalCard() {
+      window.location.href = "/pages/user/index-user.html?action=digital_card";
+    }
+    function generateLineLinkToken() {
+      window.location.href = "/pages/user/index-user.html?action=line_link";
+    }
+    function triggerBiometricHelp() {
+      if (window.SystemDiagnostics && typeof window.SystemDiagnostics.showUnifiedHelpPopup === 'function') {
+        window.SystemDiagnostics.showUnifiedHelpPopup();
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'คู่มือความปลอดภัยชีวมาตร',
+          text: 'สามารถตั้งค่าการลงทะเบียน Face/Fingerprint สแกนเพื่อเข้าใช้งานได้อย่างรวดเร็วในหน้าข้อมูลส่วนตัวค่ะ',
+          confirmButtonColor: '#0f766e'
+        });
+      }
+    }
+  </script>
+</body>
+</html>

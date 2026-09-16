@@ -1,0 +1,32 @@
+/* Connection Status Indicator */
+.connection-status-container {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 12px;
+  border-radius: 20px;
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1; /* Default grey */
+}
+
+.status-dot.connected { background: #10b981; }
+.status-dot.disconnected { background: #ef4444; }
+.status-dot.checking { background: #f59e0b; }

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="256" cy="256" r="236" />
+    </clipPath>
+  </defs>
+
+  <!-- Deep ocean teal circular backdrop -->
+  <circle cx="256" cy="256" r="236" fill="#0b587a" />
+
+  <!-- Diagonal long cast shadow (clipped to circle) -->
+  <g clip-path="url(#circleClip)">
+    <polygon points="295,140 512,357 512,512 250,512 120,410 100,340 180,310" fill="#06384e" opacity="0.5" />
+  </g>
+
+  <!-- Sound wave bursts / rays -->
+  <g fill="#ffc700" stroke="#0b587a" stroke-width="3">
+    <!-- Top ray -->
+    <polygon points="340,118 368,132 352,176 325,160" rx="3" />
+    <!-- Center ray -->
+    <polygon points="368,185 432,168 440,192 376,210" rx="3" />
+    <!-- Bottom ray -->
+    <polygon points="378,252 436,268 430,294 372,278" rx="3" />
+  </g>
+
+  <!-- Megaphone Handle -->
+  <g transform="rotate(-15 200 370)">
+    <polygon points="175,320 228,306 256,410 205,424" fill="#b94a28" stroke="#0f172a" stroke-width="4" />
+    <polygon points="205,424 256,410 252,430 200,442" fill="#8c3318" />
+  </g>
+
+  <!-- Megaphone Body Cone (white) -->
+  <polygon points="120,335 158,260 308,135 348,328" fill="#ffffff" stroke="#0f172a" stroke-width="4" />
+
+  <!-- Megaphone Horn Rim (orange/coral) -->
+  <ellipse cx="328" cy="232" rx="38" ry="102" fill="#ff5a26" stroke="#0f172a" stroke-width="4" transform="rotate(-25 328 232)" />
+  <ellipse cx="324" cy="234" rx="26" ry="84" fill="#d93d10" transform="rotate(-25 324 234)" />
+
+  <!-- Megaphone Back Cap (orange/coral) -->
+  <polygon points="98,320 134,250 148,276 112,346" fill="#ff5a26" stroke="#0f172a" stroke-width="4" />
+  <ellipse cx="116" cy="298" rx="14" ry="42" fill="#d93d10" transform="rotate(-25 116 298)" />
+
+  <!-- Subtle shadow on lower half of cone -->
+  <polygon points="120,335 140,300 315,250 348,328" fill="#e2e8f0" opacity="0.6" />
+</svg>

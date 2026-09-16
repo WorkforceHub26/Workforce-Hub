@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <clipPath id="circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#circle-clip)">
+    <!-- Blue background -->
+    <rect x="0" y="0" width="512" height="512" fill="#009bf9" />
+    
+    <!-- Geometric Background Shades (Optional but adds depth) -->
+    <path d="M0 0 L256 256 L0 512 Z" fill="#0092f2" opacity="0.5" />
+    <path d="M512 0 L256 256 L512 512 Z" fill="#0089e8" opacity="0.5" />
+
+    <!-- Left White Page -->
+    <rect x="56" y="160" width="200" height="360" fill="#ffffff" />
+    
+    <!-- Right Light Blue Page -->
+    <rect x="256" y="160" width="200" height="360" fill="#eaf6f6" />
+    
+    <!-- Left Dark Header -->
+    <rect x="56" y="160" width="200" height="80" fill="#2b3648" />
+    
+    <!-- Right Dark Header -->
+    <rect x="256" y="160" width="200" height="80" fill="#1e2638" />
+
+    <!-- Left Gold Ring -->
+    <circle cx="150" cy="200" r="32" fill="#e5a700" />
+    <circle cx="150" cy="200" r="26" fill="#ffcc00" />
+    <circle cx="150" cy="200" r="14" fill="#2b3648" />
+    
+    <!-- Left White Rod -->
+    <rect x="138" y="136" width="24" height="74" rx="12" fill="#f0f4f8" />
+    <rect x="144" y="142" width="12" height="62" rx="6" fill="#ffffff" />
+
+    <!-- Right Gold Ring -->
+    <circle cx="362" cy="200" r="32" fill="#e5a700" />
+    <circle cx="362" cy="200" r="26" fill="#ffcc00" />
+    <circle cx="362" cy="200" r="14" fill="#1e2638" />
+
+    <!-- Right White Rod -->
+    <rect x="350" y="136" width="24" height="74" rx="12" fill="#f0f4f8" />
+    <rect x="356" y="142" width="12" height="62" rx="6" fill="#ffffff" />
+
+    <!-- Pills (Row 1 under header) -->
+    <!-- Left Pills -->
+    <rect x="96" y="270" width="36" height="12" rx="6" fill="#2b3648" />
+    <rect x="156" y="270" width="36" height="12" rx="6" fill="#2b3648" />
+    <rect x="216" y="270" width="36" height="12" rx="6" fill="#2b3648" />
+    <!-- Right Pills -->
+    <rect x="260" y="270" width="36" height="12" rx="6" fill="#2b3648" />
+    <rect x="320" y="270" width="36" height="12" rx="6" fill="#e81e62" />
+    <rect x="380" y="270" width="36" height="12" rx="6" fill="#e81e62" />
+
+    <!-- Dots Row 1 -->
+    <circle cx="114" cy="320" r="14" fill="#009bf9" />
+    <circle cx="174" cy="320" r="14" fill="#009bf9" />
+    <circle cx="234" cy="320" r="14" fill="#009bf9" />
+    
+    <circle cx="278" cy="320" r="14" fill="#009bf9" />
+    <circle cx="338" cy="320" r="14" fill="#e81e62" />
+    <circle cx="398" cy="320" r="14" fill="#e81e62" />
+
+    <!-- Dots Row 2 -->
+    <circle cx="114" cy="370" r="14" fill="#009bf9" />
+    <circle cx="174" cy="370" r="14" fill="#009bf9" />
+    <circle cx="234" cy="370" r="14" fill="#009bf9" />
+    
+    <circle cx="278" cy="370" r="14" fill="#009bf9" />
+    
+    <!-- Pink Heart (Two-Tone) -->
+    <g transform="translate(318.5, 351) scale(1.6)">
+       <!-- Left Half -->
+       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09V21.35z" fill="#ff5a84"/>
+       <!-- Right Half -->
+       <path d="M12 21.35V5.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e81e62"/>
+    </g>
+
+    <circle cx="398" cy="370" r="14" fill="#e81e62" />
+
+    <!-- Dots Row 3 -->
+    <circle cx="114" cy="420" r="14" fill="#009bf9" />
+    <circle cx="174" cy="420" r="14" fill="#009bf9" />
+    <circle cx="234" cy="420" r="14" fill="#009bf9" />
+    
+    <circle cx="278" cy="420" r="14" fill="#009bf9" />
+    <circle cx="338" cy="420" r="14" fill="#e81e62" />
+    <circle cx="398" cy="420" r="14" fill="#e81e62" />
+    
+    <!-- Dots Row 4 -->
+    <circle cx="114" cy="470" r="14" fill="#009bf9" />
+    <circle cx="174" cy="470" r="14" fill="#009bf9" />
+    <circle cx="234" cy="470" r="14" fill="#009bf9" />
+    
+    <circle cx="278" cy="470" r="14" fill="#009bf9" />
+    <circle cx="338" cy="470" r="14" fill="#e81e62" />
+    <circle cx="398" cy="470" r="14" fill="#e81e62" />
+
+  </g>
+</svg>

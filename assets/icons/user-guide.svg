@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="bulbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="pageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Outer Badge -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Glow Effect -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#38bdf8" stroke-width="8" opacity="0.4"/>
+
+  <!-- Open Book Base -->
+  <path d="M 100 190 C 150 170 210 170 256 185 C 302 170 362 170 412 190 L 412 370 C 362 350 302 350 256 365 C 210 350 150 350 100 370 Z" fill="url(#pageGrad)" stroke="#1e293b" stroke-width="12" stroke-linejoin="round"/>
+  
+  <!-- Book Divider Line -->
+  <line x1="256" y1="185" x2="256" y2="365" stroke="#94a3b8" stroke-width="8" stroke-dasharray="12 8"/>
+
+  <!-- Page Lines (Left) -->
+  <line x1="130" y1="230" x2="226" y2="215" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+  <line x1="130" y1="270" x2="226" y2="255" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+  <line x1="130" y1="310" x2="196" y2="295" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Page Lines (Right) -->
+  <line x1="286" y1="215" x2="382" y2="230" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+  <line x1="286" y1="255" x2="382" y2="270" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+  <line x1="286" y1="295" x2="352" y2="310" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Glowing Lightbulb Badge Over top center -->
+  <circle cx="256" cy="125" r="55" fill="#0f172a"/>
+  <circle cx="256" cy="125" r="48" fill="url(#bulbGrad)"/>
+  
+  <!-- Lightbulb Filament / Info Symbol 'i' in bulb -->
+  <path d="M 256 95 A 18 18 0 0 1 256 131 C 250 131 246 136 246 142 L 266 142 C 266 136 262 131 256 131 Z" fill="#78350f"/>
+  <rect x="246" y="146" width="20" height="8" rx="4" fill="#451a03"/>
+  <circle cx="256" cy="108" r="6" fill="#ffffff"/>
+
+  <!-- Sun rays from lightbulb -->
+  <line x1="256" y1="52" x2="256" y2="62" stroke="#fef08a" stroke-width="8" stroke-linecap="round"/>
+  <line x1="198" y1="76" x2="206" y2="84" stroke="#fef08a" stroke-width="8" stroke-linecap="round"/>
+  <line x1="314" y1="76" x2="306" y2="84" stroke="#fef08a" stroke-width="8" stroke-linecap="round"/>
+  <line x1="178" y1="125" x2="188" y2="125" stroke="#fef08a" stroke-width="8" stroke-linecap="round"/>
+  <line x1="334" y1="125" x2="324" y2="125" stroke="#fef08a" stroke-width="8" stroke-linecap="round"/>
+</svg>

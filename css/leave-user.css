@@ -1,0 +1,903 @@
+/* ==========================================================================
+   🏢 PVT HR Leave — ใบลาออนไลน์ (Cross-Platform Fully Responsive CSS)
+   ========================================================================== */
+
+/* ─── 1. BASE RESET & CROSS-BROWSER NORMALIZATION ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+:root {
+  --primary: #06b6d4;
+  --primary-light: rgba(6, 182, 212, 0.15);
+  --primary-dark: #0891b2;
+  --green: #10b981;
+  --green-light: #f0fdf4;
+  --green-dark: #059669;
+  --red: #ef4444;
+  --bg: #f0fdfa;        
+  --card: rgba(255, 255, 255, 0.85);
+  --card-solid: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;     
+  --border: #cbd5e1;    
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --ease: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --sidebar-width: 260px;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Sarabun", "Kanit", "Noto Sans Thai", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg); 
+  background-image: 
+    radial-gradient(circle at 10% 10%, #bae6fd 0px, transparent 50%), 
+    radial-gradient(circle at 90% 20%, #a7f3d0 0px, transparent 50%), 
+    radial-gradient(circle at 80% 90%, #e0f2fe 0px, transparent 50%),
+    radial-gradient(circle at 20% 80%, #ccfbf1 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── 2. TOPBAR (รองรับ iOS Safe Area Notch) ─── */
+.topbar {
+  background: var(--card);
+  border-bottom: 2px solid #e2e8f0; 
+  padding: 14px 24px; 
+  padding-top: max(14px, env(safe-area-inset-top));
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+}
+
+@supports not (backdrop-filter: blur(16px)) {
+  .topbar { background: var(--card-solid); }
+}
+
+.topbar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.btn-back {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 18px; 
+  background: #ffffff;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--ease);
+  touch-action: manipulation;
+}
+.btn-back:hover { background: #f1f5f9; border-color: var(--primary); color: var(--primary); }
+
+.topbar-center { text-align: center; flex: 1; }
+.topbar-title { font-size: 20px; font-weight: 700; color: var(--text); display: block; }
+.topbar-subtitle { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; }
+
+/* ─── 3. LAYOUT & RESPONSIVE GRID SYSTEM ─── */
+.page { 
+  padding: 32px 24px 140px; 
+  max-width: 1400px; 
+  margin: 0 auto;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+}
+
+/* EMPLOYEE INFO CARD */
+.info-card {
+  background: var(--card);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px; 
+  padding: 28px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.info-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.info-card-head h2 { font-size: 18px; font-weight: 700; color: #1e293b; }
+.badge-autofill { font-size: 12px; font-weight: 600; background: var(--primary-light); color: var(--primary); padding: 4px 14px; border-radius: 99px; border: 1.5px solid #bfdbfe; }
+
+.info-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+  gap: 20px; 
+}
+.info-field { display: flex; flex-direction: column; gap: 8px; }
+.info-field label { font-size: 13px; font-weight: 700; color: var(--muted); }
+
+.notice-box { 
+  background: var(--primary-light); 
+  border: 2px solid #bfdbfe; 
+  border-radius: 12px; 
+  padding: 16px 20px; 
+  margin-bottom: 32px; 
+  font-size: 14px; 
+  color: #1e40af; 
+  line-height: 1.5; 
+}
+
+/* ─── 4. LEAVE CARDS (กล่องรายการลา) ─── */
+.leave-cards-container { margin-bottom: 32px; }
+.container-head { 
+  padding: 16px 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  margin-bottom: 16px; 
+  border-bottom: 2px solid #e2e8f0; 
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.container-head h2 { font-size: 20px; font-weight: 700; color: #1e293b; }
+
+.leave-box-item {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: var(--ease);
+}
+.leave-box-item:hover { border-color: var(--primary); box-shadow: 0 12px 35px rgba(37, 99, 235, 0.07); }
+
+.row-divider {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.grid-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.input-group { display: flex; flex-direction: column; gap: 8px; }
+.input-group label { font-size: 13.5px; font-weight: 700; color: var(--text); }
+
+/* ─── 5. INPUTS, SELECTS & TOUCH TARGETS ─── */
+.input-group input, 
+.input-group select, 
+.info-field input,
+textarea {
+  width: 100%;
+  height: 48px; 
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 16px; /* 16px ป้องกัน iOS Safari Auto-Zoom */
+  color: var(--text);
+  background: var(--input-bg);
+  outline: none;
+  transition: var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input-group select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23475569' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+.input-group input:focus, .input-group select:focus { 
+  border-color: var(--primary); 
+  background: #ffffff; 
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15); 
+}
+
+.readonly-highlight { 
+  background: #f1f5f9 !important; 
+  color: #475569 !important; 
+  font-weight: 700; 
+}
+
+.badge-status {
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* FILE UPLOAD */
+.custom-file-upload { display: block; width: 100%; }
+.custom-file-upload input[type="file"] { display: none !important; }
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--ease);
+  touch-action: manipulation;
+}
+.file-upload-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+
+.box-item-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 2px dashed #e2e8f0;
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+/* ─── 6. BUTTONS & BOTTOM STICKY BAR ─── */
+.btn { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+  border: none; 
+  border-radius: 10px; 
+  padding: 12px 24px; 
+  font-family: inherit; 
+  font-size: 15px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: var(--ease); 
+  touch-action: manipulation;
+  min-height: 48px;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.btn:active { transform: translateY(0); }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: var(--green-dark); }
+.btn-ghost { border: 2px solid var(--border); background: #fff; color: var(--text); }
+.btn-ghost:hover { background: #f1f5f9; }
+.btn-danger { background: #fee2e2; color: #b91c1c; border: 2px solid #fecaca; }
+.btn-danger:hover { background: #fecaca; }
+.btn-sm { padding: 8px 16px; font-size: 14px; min-height: 40px; border-radius: 8px; }
+
+.bottom-actions { 
+  background: var(--card); 
+  border: 2px solid #e2e8f0; 
+  border-radius: 16px; 
+  padding: 16px 24px; 
+  display: flex; 
+  gap: 16px; 
+  align-items: center; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── 7. FLATPICKR STYLING & LARGE DATE PICKER ─── */
+.date-picker-large-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.date-input-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px 16px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.date-input-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.12);
+}
+
+.date-input-card.highlight-start-card {
+  border-color: #a5f3fc;
+  background: #f0fdfa;
+}
+.date-input-card.highlight-start-card:focus-within,
+.date-input-card.highlight-start-card:hover {
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
+}
+
+.date-input-card.highlight-end-card {
+  border-color: #a7f3d0;
+  background: #f0fdf4;
+}
+.date-input-card.highlight-end-card:focus-within,
+.date-input-card.highlight-end-card:hover {
+  border-color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.date-input-card label {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+.large-date-field,
+.input-group input.large-date-field,
+.input-group input.flatpickr-input {
+  height: 54px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  border-radius: 12px !important;
+  border: 2px solid #cbd5e1 !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+  transition: all 0.2s ease !important;
+}
+
+.large-date-field:focus,
+.input-group input.flatpickr-input:focus {
+  border-color: #06b6d4 !important;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2) !important;
+}
+
+/* 🗓️ FLATPICKR CALENDAR ENLARGEMENT (ปรับปฏิทินให้ใหญ่เต็มตา เลือกง่าย) */
+.flatpickr-calendar {
+  width: 440px !important;
+  max-width: 95vw !important;
+  border-radius: 24px !important;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05) !important;
+  padding: 20px 16px 16px !important;
+  border: none !important;
+  background: #ffffff !important;
+  font-family: inherit !important;
+  z-index: 99999 !important;
+}
+
+.flatpickr-months {
+  align-items: center !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 8px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.flatpickr-current-month {
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  padding-top: 0 !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+}
+
+.flatpickr-current-month input.cur-year {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+.flatpickr-months .flatpickr-prev-month, 
+.flatpickr-months .flatpickr-next-month {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 8px !important;
+  border-radius: 12px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover, 
+.flatpickr-months .flatpickr-next-month:hover {
+  background: #e0f2fe !important;
+  color: #0284c7 !important;
+}
+
+.flatpickr-weekdays {
+  height: 36px !important;
+  margin-bottom: 6px !important;
+}
+
+span.flatpickr-weekday {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #0891b2 !important;
+}
+
+.flatpickr-days {
+  width: 100% !important;
+}
+
+.dayContainer {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-around !important;
+}
+
+.flatpickr-day {
+  max-width: calc(100% / 7 - 4px) !important;
+  flex-basis: calc(100% / 7 - 4px) !important;
+  height: 52px !important;
+  line-height: 50px !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  border-radius: 14px !important;
+  margin: 3px 2px !important;
+  transition: all 0.15s ease !important;
+}
+
+.flatpickr-day:hover {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+}
+
+.flatpickr-day.today {
+  border: 2.5px solid #06b6d4 !important;
+  color: #0891b2 !important;
+  font-weight: 800 !important;
+  background: #f0fdfa !important;
+}
+
+.flatpickr-day.selected, 
+.flatpickr-day.startRange, 
+.flatpickr-day.endRange {
+  background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border: none !important;
+  box-shadow: 0 6px 16px rgba(6, 182, 212, 0.4) !important;
+}
+
+.flatpickr-day.inRange {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  box-shadow: -4px 0 0 #e0f2fe, 4px 0 0 #e0f2fe !important;
+}
+
+.flatpickr-day.flatpickr-disabled, 
+.flatpickr-day.flatpickr-disabled:hover {
+  background-color: #fef2f2 !important;
+  color: #ef4444 !important;
+  text-decoration: line-through !important;
+  opacity: 0.55 !important;
+  border-radius: 10px !important;
+}
+
+/* ─── 8. FORM GUIDE POPUP ─── */
+.form-guide-wrapper {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  right: max(24px, env(safe-area-inset-right));
+  z-index: 999;
+  font-family: inherit;
+}
+
+.form-guide-popup {
+  width: 340px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(6, 182, 212, 0.18);
+  margin-bottom: 12px;
+  overflow: hidden;
+  animation: formGuideFadeIn 0.25s ease-out;
+}
+
+.form-guide-header {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: #ffffff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+.form-guide-close-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.form-guide-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.form-guide-item {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1e293b;
+  border-bottom: 1px dashed rgba(6, 182, 212, 0.15);
+  padding-bottom: 10px;
+}
+
+.form-fab-btn {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #0891b2;
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+  transition: all 0.2s ease;
+  float: right;
+  touch-action: manipulation;
+}
+
+@keyframes formGuideFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── 9. RESPONSIVE BREAKPOINTS ─── */
+@media screen and (max-width: 1024px) {
+  .grid-row-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .page { padding: 24px 16px 140px; }
+}
+
+@media screen and (max-width: 768px) {
+  .page { padding: 20px 12px 160px !important; }
+
+  .grid-row-3, .info-grid, .date-picker-large-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .topbar { padding: 10px 12px !important; }
+  .topbar-subtitle { font-size: 11px !important; }
+  .topbar-title { font-size: 16px !important; }
+  
+  .btn-back { padding: 6px 10px !important; font-size: 12px !important; }
+  .btn-back span:nth-child(2) { display: none !important; }
+
+  .info-card, .leave-box-item {
+    padding: 18px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .form-guide-wrapper { 
+    right: 12px !important; 
+    bottom: max(75px, env(safe-area-inset-bottom)) !important; 
+  }
+  .form-guide-popup { width: calc(100vw - 24px); }
+  .form-fab-text { display: none; }
+  .form-fab-btn { padding: 10px; border-radius: 50%; }
+
+  .bottom-actions {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    border-top: 1px solid #cbd5e1 !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    padding: 10px 16px max(12px, env(safe-area-inset-bottom)) !important;
+    z-index: 900 !important;
+    box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08) !important;
+    flex-direction: row;
+  }
+
+  .bottom-actions .btn {
+    flex: 1;
+    min-height: 44px;
+    font-size: 14px;
+    padding: 0 8px;
+  }
+}
+
+/* ─── 10. PRINT ENGINE (แสดงเฉพาะเมื่อกดสั่งพิมพ์งาน) ─── */
+.print-header { 
+  display: none !important; /* ซ่อนไว้เสมอเมื่ออยู่บนหน้าจอปกติ */
+}
+
+@media print {
+  @page { size: A4 portrait; margin: 8mm 10mm; }
+  body, html { 
+    background: #ffffff !important; 
+    color: #000000 !important; 
+    font-size: 11px !important; 
+  }
+  .page { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+  .topbar, .bottom-actions, .notice-box, .no-print, .form-guide-wrapper, .custom-file-upload { 
+    display: none !important; 
+  } 
+
+  .print-header { 
+    display: flex !important; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+    margin-bottom: 12px !important; 
+    border-bottom: 2px solid #000; 
+    padding-bottom: 6px; 
+  } 
+
+  .print-header h1 { font-size: 18px; font-weight: bold; color: #000; margin: 0; }
+  .print-header h2 { font-size: 14px; font-weight: bold; color: #000; margin: 2px 0; }
+  .print-header p { display: block !important; font-size: 12px; color: #000; margin: 0; }
+
+  .info-card, .leave-box-item { 
+    border: 1px solid #000 !important; 
+    border-radius: 6px !important; 
+    padding: 10px !important; 
+    margin-bottom: 10px !important; 
+    box-shadow: none !important; 
+    page-break-inside: avoid; 
+  }
+
+  .grid-row-3 { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+  .input-group input, .input-group select, .info-field input { 
+    height: 26px !important; 
+    border: 1px solid #000 !important; 
+    background: transparent !important; 
+    font-size: 11px !important; 
+  }
+}
+
+/* ==========================================
+   FIX: TOPBAR RESPONSIVE (รองรับมือถือจอเล็กทุกรุ่น)
+   ========================================== */
+.topbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px !important;
+}
+
+/* ล็อกกล่องตรงกลางไม่ให้โดนบีบจนตัวอักษรพับเป็นแนวตั้ง */
+.topbar-center {
+  text-align: center;
+  flex: 1;
+  min-width: 0 !important; /* ป้องกัน Flexbox ดันข้อความล้น */
+  overflow: hidden;
+}
+
+.topbar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* แสดง ... ถ้าชื่อยาวเกิน */
+}
+
+/* ล็อกไม่ให้ปุ่มซ้ายและขวายืดหรือดันพื้นที่คนอื่น */
+.btn-back, 
+.topbar-center + *,
+.topbar-container > *:last-child {
+  flex-shrink: 0 !important;
+}
+
+/* 📱 ปรับแต่งพิเศษสำหรับหน้าจอมือถือ (<= 600px) */
+@media screen and (max-width: 600px) {
+  .topbar {
+    padding: 8px 10px !important;
+  }
+
+  /* ย่อขนาดปุ่มซ้าย และซ่อนรูปโลโก้ PVT บนมือถือ */
+  .btn-back {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+  .btn-back img {
+    display: none !important; /* ซ่อนโลโก้ในปุ่มย้อนกลับเพื่อประหยัดพื้นที่ */
+  }
+
+  /* ย่อขนาดปุ่มหลักเกณฑ์ด้านขวา */
+  .topbar-container > *:last-child {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .topbar-title {
+    font-size: 15px !important;
+  }
+
+  /* ซ่อนชื่อบริษัทบรรทัดล่างสุดบนมือถือ เพื่อให้ Header คลีนขึ้น */
+  .topbar-subtitle {
+    display: none !important;
+  }
+}
+
+/* ==========================================
+   📱 MOBILE STEPPER & LARGE TOUCH TARGETS
+   ========================================== */
+.stepper-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.stepper-container input {
+  text-align: center !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  flex: 1;
+}
+
+/* ปุ่ม + และ - ขนาดใหญ่พิเศษสำหรับนิ้วสัมผัส */
+.btn-stepper {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: #ffffff;
+  color: var(--primary-dark);
+  font-size: 22px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  transition: var(--ease);
+}
+
+.btn-stepper:active {
+  background: var(--primary-light);
+  transform: scale(0.95);
+}
+
+/* ซ่อนปุ่มเมื่อช่องกรอกถูก Disable */
+.stepper-container:has(input:disabled) .btn-stepper,
+.stepper-container input:disabled ~ .btn-stepper {
+  opacity: 0.4;
+  pointer-events: none;
+  background: #f1f5f9;
+}
+
+/* 📱 ขยายปุ่มทั้งหมดให้กดง่ายบนหน้าจอมือถือ (<= 768px) */
+@media screen and (max-width: 768px) {
+  .btn, .btn-back, .file-upload-label, .input-group input, .input-group select {
+    min-height: 52px !important;
+    font-size: 16px !important;
+  }
+
+  .btn-stepper {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+}
+
+/* ==========================================
+   📱 STEPPER BUTTONS (ANDROID FIX)
+   ========================================== */
+.stepper-container {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 6px !important;
+}
+
+.stepper-container input[type="number"] {
+  text-align: center !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.btn-stepper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  border: 1px solid #cbd5e1 !important;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  -webkit-appearance: none !important; /* Fix สำหรับ Android Chrome */
+  appearance: none !important;
+  touch-action: manipulation !important;
+  user-select: none !important;
+  cursor: pointer !important;
+}
+
+.btn-stepper:active {
+  background-color: #e2e8f0 !important;
+}
+
+/* ล็อคปุ่มเมื่อยังไม่เลือกประเภทการลา */
+.btn-stepper:disabled {
+  opacity: 0.3 !important;
+  background-color: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed !important;
+}

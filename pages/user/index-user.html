@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d9488" />
+  <meta name="google" content="notranslate" />
+  <title>หน้าหลัก | PVT WORKFORCE HUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Lao:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/index-user.css" />
+  <link rel="stylesheet" href="/css/leave-history.css" />
+  <link rel="stylesheet" href="/css/system-settings.css" />
+  <link rel="stylesheet" href="/css/company-news.css" />
+</head>
+
+<body>
+
+  <div class="app-container" id="appLayout">
+    
+    <!--  1. LEFT SIDEBAR MENU (UNIFIED LAYOUT) -->
+    <aside class="sidebar" id="sidebarMenu">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">groups</span>
+        </div>
+        <div class="brand-name">PVT WORKFORCE HUB</div>
+        <button type="button" class="btn-close-sidebar" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(false);}else if(typeof window.closeMobileSidebar==='function'){window.closeMobileSidebar();}" style="display: none;" title="ปิดเมนู">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+      </div>
+
+      <!--  ปุ่มกดยื่นใบลา (Action CTA) -->
+      <div class="sidebar-cta-wrap">
+        <button type="button" class="sidebar-cta-btn" onclick="goToLeaveForm()" title="ยื่นใบลาออนไลน์">
+          <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" class="nav-icon-custom" style="width: 24px; height: 24px; object-fit: contain;" />
+          <span class="sidebar-cta-label">ยื่นใบลาออนไลน์</span>
+        </button>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <a href="/pages/user/index-user.html" class="menu-item active animate-fade delay-100 hover-lift">
+          <img src="/assets/icons/home-dashboard.svg" alt="หน้าหลัก" class="nav-icon-custom" />
+          <span>หน้าหลัก</span>
+        </a>
+        <a href="/pages/user/profile-user.html" class="menu-item animate-fade delay-150 hover-lift">
+          <img src="/assets/icons/user-profile.svg" alt="ข้อมูลส่วนตัว" class="nav-icon-custom" />
+          <span>ข้อมูลส่วนตัว</span>
+        </a>
+        <a href="/pages/user/leave-history.html" class="menu-item animate-fade delay-200 hover-lift">
+          <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" class="nav-icon-custom" />
+          <span>ประวัติการลา</span>
+        </a>
+        <a href="/pages/user/holidays.html" class="menu-item animate-fade delay-300 hover-lift">
+          <img src="/assets/icons/calendar-event.svg" alt="ปฏิทิน" class="nav-icon-custom" />
+          <span>ปฏิทิน</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-title">บริการด่วน</div>
+
+        <!-- 🪪 ปุ่มบัตรพนักงานดิจิทัล -->
+        <button type="button" class="menu-item animate-fade delay-400 hover-lift" onclick="viewMyDigitalCard()" title="บัตรพนักงานดิจิทัล">
+          <img src="/assets/icons/employee-card-badge.svg" alt="บัตรพนักงาน" class="nav-icon-custom" />
+          <span>บัตรพนักงาน</span>
+        </button>
+
+        <!--  ปุ่มเชื่อมต่อ LINE -->
+        <button type="button" class="menu-item animate-fade delay-500 hover-lift" onclick="generateLineLinkToken()" title="เชื่อมต่อ LINE แจ้งเตือน">
+          <img src="/assets/icons/line.svg" alt="LINE" class="nav-icon-custom" />
+          <span>LINE</span>
+        </button>
+
+        <!--  ปุ่มดูกฎระเบียบบริษัท -->
+        <a href="/pages/user/leave-rules.html" class="menu-item" title="กฎระเบียบและเงื่อนไขการลา">
+          <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" class="nav-icon-custom" />
+          <span>กฎระเบียบ</span>
+        </a>
+
+        <!--  ปุ่มคู่มือการใช้งาน -->
+        <a href="/pages/user/full-guide.html" class="menu-item" title="แนะนำระบบการใช้งาน">
+          <img src="/assets/icons/user-guide.svg" alt="แนะนำระบบ" class="nav-icon-custom" />
+          <span>แนะนำระบบ</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="/pages/user/news.html" class="menu-item">
+          <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" class="nav-icon-custom" />
+          <span>ข่าวสาร</span>
+        </a>
+        <button type="button" class="menu-item" onclick="openSystemSettingsModal()" title="การตั้งค่าระบบ (ขนาดตัวอักษร, ธีมสี, เชื่อมต่อ LINE)">
+          <img src="/assets/icons/settings.svg" alt="ตั้งค่า" class="nav-icon-custom" style="border-radius: 6px;" />
+          <span>ตั้งค่า</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-top: 1px solid #f1f5f9;">
+        <button type="button" class="menu-item" onclick="triggerBiometricHelp()" style="color: var(--primary);">
+          <img src="/assets/icons/help-support.svg" alt="ช่วยเหลือ" class="nav-icon-custom" />
+          <span>ช่วยเหลือ</span>
+        </button>
+        <button type="button" class="btn-logout menu-item" onclick="logout(); return false;" title="ออกจากระบบ" style="color: #ef4444; width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: 500;">
+          <img src="/assets/icons/logout.svg" alt="ออกจากระบบ" class="nav-icon-custom" style="width: 20px; height: 20px;" />
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </aside>
+
+    <!--  2. MAIN WORKSPACE CONTENT -->
+    <main class="main-content" style="width: 100%; flex: 1;">
+      <div class="app" style="max-width: 1000px; padding: 24px 16px; margin: 0 auto; width: 100%;">
+        
+        <!-- ⚡ TOP ACTION BAR: ปุ่มสลับเพื่ออนุมัติคนในแผนก และหน้าหลักผู้บริหาร/หัวหน้างาน -->
+        <div id="approverActionContainer" style="display: none; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+          
+          <!--  ปุ่มสลับเพื่ออนุมัติคนในแผนก (สำหรับหัวหน้างานและผู้จัดการฝ่าย) -->
+          <a href="/pages/hr/hr.html" id="btnSwitchDeptApproval" style="display: flex; width: 100%; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #0d9488 0%, #0284c7 50%, #6366f1 100%); color: white; padding: 18px 22px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.35); font-weight: 600; text-decoration: none; box-shadow: 0 12px 32px rgba(13, 148, 136, 0.4), 0 4px 12px rgba(99, 102, 241, 0.25); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-align: left; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 16px 40px rgba(13, 148, 136, 0.5), 0 6px 16px rgba(99, 102, 241, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 32px rgba(13, 148, 136, 0.4), 0 4px 12px rgba(99, 102, 241, 0.25)';">
+            <div style="position: absolute; top: -50%; right: -20%; width: 150px; height: 150px; background: rgba(255,255,255,0.15); border-radius: 50%; pointer-events: none; filter: blur(20px);"></div>
+            <div style="display: flex; align-items: center; gap: 16px; z-index: 1;">
+              <div style="width: 52px; height: 52px; background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.4); box-shadow: inset 0 2px 6px rgba(255,255,255,0.3);">
+                <span class="material-symbols-outlined" style="font-size: 30px; color: #ffffff; animation: pulse 2s infinite;">how_to_reg</span>
+              </div>
+              <div style="text-align: left; line-height: 1.4;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <span style="font-size: 17px; font-weight: 800; color: #ffffff; letter-spacing: 0.2px;">✨ ปุ่มสลับเพื่ออนุมัติคนในแผนก</span>
+                  <span style="font-size: 11px; background: #fef08a; color: #854d0e; padding: 3px 10px; border-radius: 12px; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">⚡ ด่วน / แนะนำ</span>
+                </div>
+                <span style="display: block; font-size: 13px; color: #e0f2fe; font-weight: 500; margin-top: 3px;">สำหรับหัวหน้างานและผู้จัดการฝ่าย ตรวจสอบและลงนามอนุมัติใบลาของทีมได้ทันที</span>
+              </div>
+            </div>
+            <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1;">
+              <span class="material-symbols-outlined" style="color: #ffffff; font-size: 24px;">arrow_forward</span>
+            </div>
+          </a>
+
+          <!--  ปุ่มเข้าสู่หน้าหลักผู้บริหารและหัวหน้างาน (แสดงเฉพาะ Leader / Manager / HR / Admin) -->
+          <a href="/pages/hr/home.html" id="approverModeBtn" style="display: flex; width: 100%; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); color: white; padding: 14px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); font-weight: 600; text-decoration: none; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2); transition: all 0.25s ease; text-align: left;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);">
+                <span class="material-symbols-outlined" style="font-size: 22px; color: #38bdf8;">home</span>
+              </div>
+              <div style="text-align: left; line-height: 1.3;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 14.5px; font-weight: 700; color: #ffffff;"> หน้าหลักผู้บริหารและหัวหน้างาน (Home)</span>
+                  <span style="font-size: 11px; background: #0284c7; color: #ffffff; padding: 2px 8px; border-radius: 10px; font-weight: 700;">ภาพรวมองค์กร </span>
+                </div>
+                <span style="display: block; font-size: 11.5px; color: #cbd5e1; font-weight: 400; margin-top: 2px;">เข้าสู่หน้าหลักภาพรวมองค์กรและระบบจัดการ</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined" style="color: #38bdf8; font-size: 22px;">chevron_right</span>
+          </a>
+
+        </div>
+
+        <!-- Header ข้อมูลพนักงาน (Responsive Mobile-First Architecture) -->
+        <header class="user-header animate-fade delay-100" id="indexUserHeader">
+          <!-- 📱 แถวบน: เมนูลัดและเครื่องมือ (Nav & Utilities Bar) -->
+          <div class="user-header-top">
+
+            <!-- Actions Toolbar (Refresh, Notif, Logout, Menu) -->
+            <div class="user-header-actions">
+              <button id="refreshBtn" class="notif-btn" onclick="refreshUserData()" title="รีเฟรชข้อมูลล่าสุด" aria-label="รีเฟรชข้อมูล">
+                <span class="material-symbols-outlined">refresh</span>
+              </button>
+
+              <!-- 🔔 NOTIFICATION COMPONENT (REAL DATA DROPDOWN - LARGE & CLEAR UI) -->
+              <div class="notif-wrapper" style="position: relative; display: inline-block;">
+                <button id="notificationBtn" class="notif-btn" onclick="toggleUserNotifDropdown(event)" title="การแจ้งเตือนใบลา" aria-label="การแจ้งเตือน">
+                  <span class="material-symbols-outlined">notifications</span>
+                  <span id="notifBadge" class="notif-badge" style="display: none;">0</span>
+                </button>
+
+                <div class="notif-dropdown" id="userNotifDropdown" style="position: absolute; top: calc(100% + 14px); right: 0; width: 440px; background: #ffffff; border: 1.5px solid #cbd5e1; max-width: calc(100vw - 24px); border-radius: 20px; box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.22), 0 10px 20px -5px rgba(0, 0, 0, 0.12); z-index: 99999; display: none; flex-direction: column; overflow: hidden;">
+                  <div class="notif-header" style="padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px solid #e2e8f0; background: #f8fafc; flex-wrap: wrap; gap: 8px;">
+                    <div class="notif-title" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                      <span class="material-symbols-outlined" style="font-size: 22px; color: #0284c7;">notifications</span>
+                      <strong style="font-size: 16px; color: #0f172a; font-weight: 800; letter-spacing: -0.01em;">การแจ้งเตือน</strong>
+                      <span class="notif-count-pill" id="userNotifCount" style="font-size: 12px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">0 รายการใหม่</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
+                      <button type="button" class="btn-mark-read" onclick="markAllUserNotificationsAsRead(event)" style="background: #f0fdfa; border: 1px solid #ccfbf1; font-size: 12px; color: #0f766e; font-weight: 700; cursor: pointer; padding: 5px 10px; border-radius: 8px; transition: all 0.2s; white-space: nowrap;">อ่านทั้งหมด</button>
+                      <button type="button" class="btn-close-notif" onclick="toggleUserNotifDropdown(event)" style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; color: #64748b; cursor: pointer; transition: all 0.2s; flex-shrink: 0;" title="ปิดหน้าต่าง">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="notif-body" id="userNotifList" style="max-height: 460px; overflow-y: auto;">
+                    <div style="padding: 36px 20px; text-align: center; color: #64748b; font-size: 15px;">
+                      ⌛ กำลังโหลดแจ้งเตือน...
+                    </div>
+                  </div>
+                  <div class="notif-footer" style="padding: 14px 20px; text-align: center; border-top: 1.5px solid #e2e8f0; background: #f8fafc;">
+                    <a href="#" onclick="openAllUserNotificationsModal(event); return false;" style="color: #0284c7; text-decoration: none; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                      <span class="material-symbols-outlined" style="font-size: 20px;">visibility</span> ดูประวัติแจ้งเตือนและติดตามสถานะ
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="logout-btn" onclick="logout(); return false;" title="ออกจากระบบ">
+                <span class="material-symbols-outlined">logout</span>
+                <span>ออก</span>
+              </button>
+
+              <!-- ☰ Mobile Menu Toggle Button (ย้ายมาขวามือสุดท้ายตามคำสั่งผู้ใช้! และเปลี่ยนเป็นจุด 3 จุด) -->
+              <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" onclick="if(typeof window.toggleMobileSidebar==='function'){window.toggleMobileSidebar(event);}else if(typeof toggleMobileSidebar==='function'){toggleMobileSidebar();}" title="เปิดเมนู" aria-label="เปิดเมนูหลัก">
+                <span class="material-symbols-outlined">more_vert</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 👤 ข้อมูลโปรไฟล์พนักงาน (User Profile Banner) -->
+          <div class="user-header-profile user-header-left">
+            <div class="brand-row">
+              <img id="userAvatar" src="/assets/img/default-avatar.jpg" alt="PVT" />
+              <div class="user-profile-info">
+                <p class="hello" id="userHelloText">สวัสดีค่ะ</p>
+                <h1 id="userName">กำลังโหลด...</h1>
+                <span id="userDepartment">PVT HR Leave</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!--  ปุ่มใหญ่สำหรับยื่นใบลา (แยกออกมาเดี่ยวๆ แบบสะดุดตา หาง่าย) -->
+        <div class="hero-leave-container animate-slide-up delay-200" style="margin-bottom: 20px;">
+          <button type="button" class="btn-hero-leave hover-lift" onclick="goToLeaveForm()" title="คลิกเพื่อยื่นใบลาออนไลน์" aria-label="ยื่นใบลาออนไลน์">
+            <div class="btn-hero-icon">
+              <img src="/assets/icons/leave-document.svg" alt="ยื่นใบลา" />
+            </div>
+            <div class="btn-hero-text">
+              <strong>ยื่นใบลาออนไลน์</strong>
+              <span class="btn-hero-sub">แตะเพื่อส่งคำขอลา (24 ชม.)</span>
+            </div>
+            <div class="btn-hero-arrow-box">
+              <span class="material-symbols-outlined btn-hero-arrow">arrow_forward</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- ⚡ เมนูด่วน (Quick Menu) - พร้อมกรอบการ์ดพื้นหลัง -->
+        <section class="quick-menu-section animate-slide-up delay-300">
+          <div class="section-header" style="margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+            <h2 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">เมนูด่วน</h2>
+          </div>
+          <div class="menu-cards-grid">
+            <div class="menu-card animate-scale delay-400 hover-lift" onclick="goToLeaveHistory()">
+              <div class="menu-icon-box" style="background: rgba(59, 130, 246, 0.12);">
+                <img src="/assets/icons/leave-history.svg" alt="ประวัติการลา" style="width: 24px; height: 24px; object-fit: contain;" />
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 13.5px; font-weight: 700; color: #0f172a;">ประวัติการลา</h3>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #64748b;">ดูสถานะใบลา</p>
+              </div>
+            </div>
+            
+            <div class="menu-card animate-scale delay-500 hover-lift" onclick="location.href='/pages/user/leave-rules.html'">
+              <div class="menu-icon-box" style="background: rgba(99, 102, 241, 0.12);">
+                <img src="/assets/icons/leave-policy.svg" alt="กฎระเบียบ" style="width: 24px; height: 24px; object-fit: contain;" />
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 13.5px; font-weight: 700; color: #0f172a;">กฎระเบียบ</h3>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #64748b;">เงื่อนไขการลา</p>
+              </div>
+            </div>
+            
+            <div class="menu-card animate-scale delay-500 hover-lift" onclick="location.href='/pages/user/holidays.html'">
+              <div class="menu-icon-box" style="background: rgba(16, 185, 129, 0.12);">
+                <img src="/assets/icons/calendar-event.svg" alt="ปฏิทินวันหยุด" style="width: 24px; height: 24px; object-fit: contain;" />
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 13.5px; font-weight: 700; color: #0f172a;">ปฏิทินวันหยุด</h3>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #64748b;">วันหยุดบริษัท</p>
+              </div>
+            </div>
+            
+            <div class="menu-card animate-scale delay-500 hover-lift" onclick="showStaffCard()">
+              <div class="menu-icon-box" style="background: rgba(2, 132, 199, 0.12);">
+                <img src="/assets/icons/employee-card-badge.svg" alt="บัตรพนักงาน" style="width: 24px; height: 24px; object-fit: contain;" />
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 13.5px; font-weight: 700; color: #0f172a;">บัตรพนักงาน</h3>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #64748b;">สแกนเข้างาน</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+        <!-- ส่วนแสดงสิทธิ์วันลาคงเหลือ -->
+        <div class="leave-section">
+          <div class="leave-header-row" style="flex-wrap: wrap; gap: 10px;">
+            <h2>สิทธิ์วันลาคงเหลือ</h2>
+            <div class="leave-header-controls" style="margin-left: auto;">
+              <select id="yearFilter" onchange="handleYearChange(this.value)" class="year-select">
+              </select>
+              <button type="button" class="btn-toggle-icon" onclick="toggleSection('leaveBalancesContainer', this)" title="ซ่อน/แสดง สิทธิ์วันลา">
+                <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" style="width: 24px; height: 24px; color: currentColor;" />
+              </button>
+            </div>
+          </div>
+
+          <div id="leaveBalancesContainer" class="leave-grid">
+            <span class="loading-text">กำลังโหลดข้อมูลสิทธิ์วันลา...</span>
+          </div>
+        </div>
+
+        <!-- รายการลาล่าสุด -->
+        <section class="recent-card">
+          <div class="section-head">
+            <h2>รายการล่าสุด</h2>
+            <button onclick="goToLeaveHistory()">ดูทั้งหมด</button>
+                    
+            <button type="button" class="btn-toggle-icon" onclick="toggleSection('recentList', this)">
+              <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" style="width: 24px; height: 24px; color: currentColor;" />
+            </button>
+            <!-- กล่องรายการต้องใส่ id="recentList" -->
+          </div>
+          <div id="recentList" class="recent-list">
+            <div class="empty-state">กำลังโหลดรายการลา...</div>
+          </div>
+        </section>
+
+        <!--  PANEL: สมาชิกพนักงานในแผนก -->
+        <section class="panel mb-6" id="departmentTeamSection" style="display: none; margin-top: 24px;">
+          <div class="panel-header" style="justify-content: space-between; align-items: center; display: flex; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="material-symbols-outlined text-primary" style="font-size: 26px; color: var(--primary);">badge</span>
+              <div>
+                <h2 id="teamSectionTitle" style="margin: 0; font-size: 16px; font-weight: 700;">สมาชิกพนักงานในแผนก</h2>
+                <p id="teamSectionSubtitle" style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-soft);">เพื่อนร่วมงานในแผนกของคุณ</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="teamCountBadge" style="background: var(--primary-soft, #e0f2fe); color: var(--primary, #0284c7); font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 20px;">0 คน</span>
+              <button type="button" class="btn-toggle-icon" onclick="toggleSection('teamMembersContainer', this)" title="ซ่อน/แสดง รายชื่อสมาชิก" style="background: transparent; border: none; cursor: pointer; color: var(--text-soft); display: flex; align-items: center; justify-content: center;">
+                <img class="toggle-eye-icon" src="/assets/icons/eye-open.svg" style="width: 24px; height: 24px; color: currentColor;" />
+              </button>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 16px;">
+            <div id="teamMembersContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;">
+              <div style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-soft); font-size: 13px;">
+                ⏳ กำลังโหลดข้อมูลสมาชิกในแผนก...
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!--  ข่าวสาร & ประชาสัมพันธ์องค์กร (Company Announcements) -->
+        <section class="news-section" id="news">
+          <div class="news-section-header">
+            <div class="news-header-left">
+              <div class="news-icon" style="background: transparent; box-shadow: none;">
+                <img src="/assets/icons/news-announcement.svg" alt="ข่าวสาร" style="width: 38px; height: 38px; object-fit: contain;" />
+              </div>
+              <div>
+                <h2>ข่าวสาร & ประกาศองค์กร</h2>
+                <p>ข้อมูลอัปเดต สวัสดิการ และข่าวสารล่าสุดจากฝ่ายบุคคล</p>
+              </div>
+            </div>
+            <div class="news-filter-chips" id="newsFilterChips">
+              <button type="button" class="news-chip active" onclick="filterUserNews('all', this)">ทั้งหมด</button>
+              <button type="button" class="news-chip" onclick="filterUserNews('urgent', this)"> ด่วน</button>
+              <button type="button" class="news-chip" onclick="filterUserNews('announcement', this)"> ประชาสัมพันธ์</button>
+              <button type="button" class="news-chip" onclick="filterUserNews('holiday', this)"> วันหยุด</button>
+              <button type="button" class="news-chip" onclick="filterUserNews('welfare', this)"> สวัสดิการ</button>
+              <a href="/pages/user/news.html" class="news-chip" style="text-decoration: none; background: #f0fdfa; color: #0f766e; border-color: #99f6e4; font-weight: 700;" title="เปิดดูศูนย์ข่าวสารฉบับเต็ม">
+                <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: -2px;">open_in_new</span> ดูทั้งหมด
+              </a>
+            </div>
+          </div>
+
+          <div id="companyNewsFeed" class="news-grid">
+            <div style="grid-column: 1 / -1; padding: 24px; text-align: center; color: #94a3b8; font-size: 13px;">
+              ⏳ กำลังโหลดข่าวสารองค์กร...
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!--  VISUAL PROGRESS TRACKER MODAL (STEPPER TIMELINE) -->
+  <div class="pvt-modal-overlay" id="visualTimelineModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 16px;">
+    <div class="pvt-modal-card" style="background: #ffffff; width: 100%; max-width: 580px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
+      <div class="modal-header" style="padding: 18px 24px; background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%); color: #ffffff; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="material-symbols-outlined" style="font-size: 26px;">timeline</span>
+          <div>
+            <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #ffffff;">ติดตามสถานะใบลา (Visual Progress Tracker)</h3>
+            <span style="font-size: 12px; opacity: 0.85;">ตรวจสอบขั้นตอนการพิจารณาตามลำดับสายงาน</span>
+          </div>
+        </div>
+        <button type="button" onclick="closeVisualTimelineModal()" style="background: rgba(255,255,255,0.2); border: none; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body" id="visualTimelineBody" style="padding: 24px; overflow-y: auto;">
+        <!-- Loading state -->
+        <div style="text-align: center; padding: 40px; color: #64748b;">
+          <span class="material-symbols-outlined" style="font-size: 36px; animation: spin 1s linear infinite;">sync</span>
+          <p style="margin-top: 8px;">กำลังโหลดข้อมูลขั้นตอนการอนุมัติ...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  HR AI CHATBOT WIDGET (POLICY Q&A 24 HRS) -->
+  <div id="hrChatbotWidget">
+    <!-- Floating Action Button -->
+    <button id="hrChatbotFab" class="hover-lift" onclick="toggleHrChatbot()" title="ถามผู้ช่วย HR AI เกี่ยวกับนโยบายและสิทธิวันลา" aria-label="ถามผู้ช่วย HR AI" style="position: fixed; bottom: 24px; right: 24px; z-index: 9998; width: 52px; height: 52px; background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.45), 0 8px 10px -6px rgba(13, 148, 136, 0.25); cursor: pointer;">
+      <span class="material-symbols-outlined" style="font-size: 26px;">forum</span>
+    </button>
+
+    <!-- Chat Modal Window -->
+    <div id="hrChatbotModal" style="display: none; position: fixed; bottom: 84px; right: 24px; width: 390px; max-width: calc(100vw - 32px); height: 530px; max-height: calc(100vh - 110px); background: #ffffff; border-radius: 20px; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.25); border: 1px solid #e2e8f0; z-index: 9999; flex-direction: column; overflow: hidden; animation: popIn 0.2s ease;">
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%); color: #ffffff; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">support_agent</span>
+          </div>
+          <div>
+            <h4 style="margin: 0; font-size: 14px; font-weight: 700; color: #ffffff;">HR Policy & Welfare AI</h4>
+            <span style="font-size: 11px; opacity: 0.9; display: flex; align-items: center; gap: 4px;">
+              <span style="width: 6px; height: 6px; background: #4ade80; border-radius: 50%;"></span>
+              ตอบข้อสงสัยนโยบายและสิทธิประโยชน์ 24 ชม.
+            </span>
+          </div>
+        </div>
+        <button type="button" onclick="toggleHrChatbot()" style="background: rgba(255,255,255,0.2); border: none; color: #ffffff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+        </button>
+      </div>
+
+      <!-- Suggested Question Chips -->
+      <div id="hrChatbotChips" style="padding: 10px 14px; background: #f8fafc; border-bottom: 1px solid #f1f5f9; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;">
+        <button type="button" onclick="askHrQuestion('ลาป่วยกี่วันต้องใช้ใบรับรองแพทย์?')" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 14px; font-size: 11px; color: #334155; cursor: pointer;">
+          🩺 ใบรับรองแพทย์ลาป่วย?
+        </button>
+        <button type="button" onclick="askHrQuestion('วันลาพักร้อนสะสมไปปีหน้าได้ไหม?')" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 14px; font-size: 11px; color: #334155; cursor: pointer;">
+          ️ สะสมวันลาพักร้อน?
+        </button>
+        <button type="button" onclick="askHrQuestion('สิทธิการลาคลอดบุตรและการรับเงินสงเคราะห์เป็นอย่างไร?')" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 14px; font-size: 11px; color: #334155; cursor: pointer;">
+           สิทธิลาคลอดบุตร?
+        </button>
+        <button type="button" onclick="askHrQuestion('เงื่อนไขการเบิกค่ารักษาพยาบาลและเบี้ยเลี้ยงปฏิบัติงานนอกสถานที่?')" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 14px; font-size: 11px; color: #334155; cursor: pointer;">
+           เบิกค่ารักษา & เบี้ยเลี้ยง?
+        </button>
+      </div>
+
+      <!-- Messages Stream Body -->
+      <div id="hrChatMessages" style="flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #fcfdfd;">
+        <!-- Initial Bot Greeting -->
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: #e0f2fe; color: #0369a1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 18px;">smart_toy</span>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0 14px 14px 14px; padding: 12px 14px; font-size: 13px; color: #1e293b; line-height: 1.5; max-width: 85%; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            สวัสดีครับ! ผมเป็นผู้ช่วยตอบคำถามอัตโนมัติประจำฝ่ายทรัพยากรบุคคล ยินดีช่วยเหลือพนักงานทุกท่านเกี่ยวกับ <strong>นโยบายวันลา สิทธิสวัสดิการ กฎระเบียบบริษัท และการเบิกเงิน</strong> สามารถพิมพ์สอบถามได้ตลอด 24 ชั่วโมงเลยครับ 
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div style="padding: 12px 14px; background: #ffffff; border-top: 1px solid #e2e8f0; display: flex; gap: 8px; align-items: center;">
+        <input type="text" id="hrChatInput" placeholder="พิมพ์คำถามนโยบายหรือสวัสดิการ..." onkeydown="if(event.key==='Enter') sendHrChatMessage()" style="flex: 1; padding: 9px 14px; border: 1px solid #cbd5e1; border-radius: 20px; font-size: 13px; outline: none; transition: border-color 0.2s;">
+        <button type="button" id="hrChatSendBtn" onclick="sendHrChatMessage()" style="width: 38px; height: 38px; border-radius: 50%; background: #0d9488; color: #ffffff; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);">
+          <span class="material-symbols-outlined" style="font-size: 18px;">send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. สคริปต์ภายนอก -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <!-- 2. Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- 1. นำเข้า QRCode Library (ต้องใส่ไว้ด้านบนก่อน SDK) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  
+  <!-- ไฟล์ SDK และ CSS เดิมของคุณ -->
+  <script type="module" src="/js/supabase-config.js"></script>
+  <script type="module" src="/js/auth-guard.js"></script>
+  <script type="module" src="/js/system-settings.js"></script>
+  <script type="module" src="/js/company-news.js"></script>
+  <script type="module" src="/js/delegation-service.js"></script>
+  <script type="module" src="/js/index-user.js"></script>
+  <script type="module" src="/js/system-diagnostics.js"></script>
+
+  <!--  Navigation Controllers -->
+  <script>
+    // Filter User News by category
+    function filterUserNews(category, btn) {
+      document.querySelectorAll('#newsFilterChips .news-chip').forEach(c => c.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      if (window.CompanyNews) {
+        window.CompanyNews.renderUserNewsFeed('companyNewsFeed', category);
+      }
+    }
+
+    // Initialize News Feed on Load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.CompanyNews) {
+        window.CompanyNews.renderUserNewsFeed('companyNewsFeed');
+      }
+    });
+
+    function triggerBiometricHelp() {
+      if (window.SystemDiagnostics && typeof window.SystemDiagnostics.showUnifiedHelpPopup === 'function') {
+        window.SystemDiagnostics.showUnifiedHelpPopup();
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'คู่มือความปลอดภัยชีวมาตร',
+          text: 'ท่านสามารถตั้งค่าการลงทะเบียน Face/Fingerprint สแกนเพื่อเข้าใช้งานได้อย่างรวดเร็วในหน้าข้อมูลส่วนตัวค่ะ',
+          confirmButtonColor: '#06b6d4'
+        });
+      }
+    }
+  </script>
+</body>
+</html>

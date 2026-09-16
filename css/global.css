@@ -1,0 +1,2966 @@
+@import "./system-settings.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Noto+Sans+Myanmar:wght@300;400;500;600;700&display=swap');
+
+/* ==========================================================================
+   PVT WORKFORCE HUB - GLOBAL RESPONSIVE & SHARED UTILITIES
+   ========================================================================== */
+
+/* ==========================================================================
+   🛠️ GLOBAL RESET & MOBILE OVERFLOW FIX
+   ========================================================================== */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+:root {
+  --primary-teal: #0d9488;
+  --primary-blue: #3b82f6;
+  --primary-green: #10b981;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  font-family: 'Kanit', 'Sarabun', 'Noto Sans Lao', 'Noto Sans Myanmar', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   ⚡ ZERO-JITTER / ZERO-STUTTER INSTANT LANGUAGE SWITCH
+   ========================================================================== */
+html.pvt-translating,
+html.pvt-translating *,
+html.pvt-translating *::before,
+html.pvt-translating *::after {
+  transition: none !important;
+  animation-duration: 0.0001ms !important;
+  animation-delay: 0s !important;
+}
+
+/* ==========================================================================
+   🛡️ STRICT ICON & GLYPH INTEGRITY (PREVENT TRANSLATION & WARPING)
+   ========================================================================== */
+.material-symbols-outlined,
+.material-symbols-rounded,
+.material-symbols-sharp,
+.material-icons,
+.material-icons-outlined,
+[class*="material-symbols"] {
+  font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+  direction: ltr !important;
+  -webkit-font-feature-settings: 'liga' !important;
+  -webkit-font-smoothing: antialiased !important;
+  translate: no !important;
+  user-select: none !important;
+}
+
+.notranslate,
+[translate="no"] {
+  translate: no !important;
+}
+
+/* 🌐 Normalize any injected <font> elements so they never disrupt layout */
+font {
+  display: contents !important;
+  font: inherit !important;
+  color: inherit !important;
+  vertical-align: inherit !important;
+}
+
+/* ==========================================================================
+   ✨ SOPHISTICATED ANIMATION FRAMEWORK
+   ========================================================================== */
+
+/* 🚀 Entrance Transitions */
+@keyframes revealFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes revealSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealSlideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealScaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* 🧪 Utility Classes */
+.animate-fade { animation: revealFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-up { animation: revealSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-down { animation: revealSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-scale { animation: revealScaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ⏳ Staggered Entrance Delays (0-1s range) */
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* 🖱️ Interactive States */
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+.hover-lift:active {
+  transform: translateY(0);
+}
+
+.hover-glow:hover {
+  filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.4));
+}
+
+/* 🌫️ Skeleton Loading Shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* 🌫️ ฉากหลังสำหรับ SweetAlert2 - z-index สูงสุดเหนือทุกเลเยอร์ */
+.swal2-container {
+  background-color: rgba(15, 23, 42, 0.65) !important;
+  z-index: 2147483647 !important;
+  pointer-events: auto !important;
+}
+
+/* กล่องป๊อปอัป SweetAlert2 (Large, Accessible, High-Contrast UI Alerts) */
+.pvt-guard-popup, .swal2-popup, .pvt-sync-popup {
+  border-radius: 24px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.38) !important;
+  font-family: 'Sarabun', 'Kanit', sans-serif !important;
+  padding: 32px 28px !important;
+  font-size: 16px !important;
+  max-width: 95vw !important;
+  width: 32em !important;
+  pointer-events: auto !important;
+  overflow-x: hidden !important;
+}
+
+.swal2-title {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  line-height: 1.4 !important;
+  margin-bottom: 14px !important;
+  padding: 0 !important;
+}
+
+.swal2-icon {
+  margin: 10px auto 20px auto !important;
+  transform: scale(1.18) !important;
+}
+
+.swal2-html-container {
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  font-size: 16.5px !important;
+  line-height: 1.65 !important;
+  color: #334155 !important;
+  font-weight: 500 !important;
+  margin: 12px 0 20px 0 !important;
+  padding: 0 6px !important;
+}
+
+.swal2-actions {
+  margin-top: 24px !important;
+  gap: 12px !important;
+}
+
+.swal2-styled.swal2-confirm,
+.swal2-styled.swal2-cancel,
+.swal2-styled.swal2-deny {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  padding: 11px 24px !important;
+  border-radius: 12px !important;
+  min-height: 44px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-styled.swal2-confirm:hover,
+.swal2-styled.swal2-cancel:hover,
+.swal2-styled.swal2-deny:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* 🛡️ Strict Button Visibility Rules: Never display buttons that are marked hidden by SweetAlert2 */
+.swal2-actions button[style*="display: none"],
+.swal2-actions button.swal2-hide,
+.swal2-actions button[aria-hidden="true"],
+.pvt-sync-popup .swal2-deny,
+.pvt-sync-popup .swal2-cancel,
+.swal2-icon-success .swal2-deny,
+.swal2-icon-success .swal2-cancel,
+.swal2-icon-success .swal2-close,
+.swal2-icon-info .swal2-deny,
+.swal2-icon-info .swal2-cancel,
+.swal2-icon-info .swal2-close {
+  display: none !important;
+}
+
+/* 🎨 SweetAlert2 Textarea & Input Clean Styling */
+.swal2-textarea,
+.swal2-input {
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  font-family: inherit !important;
+  color: #1e293b !important;
+  background: #f8fafc !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-textarea:focus,
+.swal2-input:focus {
+  border-color: #ef4444 !important;
+  background: #ffffff !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3.5px rgba(239, 68, 68, 0.15) !important;
+}
+
+.swal-refined-popup {
+  border-radius: 20px !important;
+  padding: 24px 20px !important;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.2) !important;
+}
+
+.swal-btn-success {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  padding: 10px 20px !important;
+}
+
+.swal-btn-success:hover {
+  background-color: #059669 !important;
+}
+
+.swal-btn-danger {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  padding: 10px 20px !important;
+}
+
+.swal-btn-danger:hover {
+  background-color: #dc2626 !important;
+}
+
+.swal-btn-cancel {
+  background-color: #64748b !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  padding: 10px 20px !important;
+}
+
+.swal-btn-cancel:hover {
+  background-color: #475569 !important;
+}
+
+.swal2-html-container {
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.swal2-close {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.swal2-confirm,
+.swal2-cancel,
+.swal2-deny,
+.swal2-actions button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* 📱 Responsive Mobile Drawer Backdrop */
+.mobile-sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  z-index: 99990;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.mobile-sidebar-backdrop.active {
+  display: block !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+body.sidebar-open {
+  overflow: hidden !important;
+}
+
+/* 📱 Universal Menu Toggle Button (Desktop Collapse & Mobile Drawer) */
+.mobile-menu-btn,
+.desktop-menu-toggle,
+.btn-menu-toggle {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  z-index: 10;
+}
+
+.mobile-menu-btn:hover,
+.desktop-menu-toggle:hover,
+.btn-menu-toggle:hover {
+  background: #f8fafc;
+  border-color: #0fa472;
+  color: #0fa472;
+}
+
+.mobile-menu-btn:active,
+.desktop-menu-toggle:active,
+.btn-menu-toggle:active {
+  background: #f1f5f9;
+  transform: scale(0.95);
+}
+
+.mobile-menu-btn .material-symbols-outlined,
+.desktop-menu-toggle .material-symbols-outlined,
+.btn-menu-toggle .material-symbols-outlined {
+  font-size: 22px;
+  pointer-events: none;
+}
+
+/* 📱 Mobile Drawer Close Button */
+.btn-close-sidebar {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.btn-close-sidebar:hover, .btn-close-sidebar:active {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #fca5a5;
+  transform: scale(0.96);
+}
+
+.btn-close-sidebar .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* 📊 Responsive Table Wrappers & Touch Optimization */
+.table-wrap, .table-responsive, .table-container, .table-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  position: relative;
+  border-radius: 12px;
+}
+
+/* 📊 Modern Table Styles */
+table, table.styled-table, table.data-table, .table-responsive table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+table th, table.styled-table th, table.data-table th, .table-responsive table th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+table td, table.styled-table td, table.data-table td, .table-responsive table td {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s ease;
+}
+
+table tbody tr:hover td, table.styled-table tbody tr:hover td, table.data-table tbody tr:hover td, .table-responsive table tbody tr:hover td {
+  background: #f0fdfa;
+}
+
+/* 📱 Responsive Mobile Tables (< 768px) */
+@media (max-width: 768px) {
+  .table-wrap, .table-responsive, .table-container {
+    box-shadow: inset -8px 0 8px -8px rgba(0, 0, 0, 0.15); /* Shadow indicator for scrollable tables */
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse;
+  }
+
+  table th {
+    padding: 10px 8px !important;
+    font-size: 11.5px !important;
+    white-space: nowrap !important;
+  }
+
+  table td {
+    padding: 10px 8px !important;
+    font-size: 12.5px !important;
+  }
+
+  table .btn, table button, table .btn-act, table .status-badge, table .status, table .badge {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    gap: 4px !important;
+  }
+
+  table .action-btn-group {
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+  }
+
+  /* Fix language switcher to the top of the screen on mobile */
+  #globalLangSwitcherContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: transparent;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Adjust main content to not be covered by fixed switcher */
+  .main-content, .app {
+    padding-top: 50px !important;
+  }
+}
+
+/* Custom smooth scrollbar */
+.table-wrap::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar,
+.table-container::-webkit-scrollbar,
+.main-content::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.table-wrap::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb,
+.table-container::-webkit-scrollbar-thumb,
+.main-content::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.table-wrap::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track,
+.table-container::-webkit-scrollbar-track,
+.main-content::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+
+/* --------------------------------------------------------------------------
+   GLOBAL USER PROFILE (TOPBAR)
+   -------------------------------------------------------------------------- */
+.user-profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 50px;
+  padding: 6px 14px 6px 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+  margin-left: 6px;
+}
+
+.user-profile .avatar,
+.user-profile .avatar-badge,
+.user-profile img.avatar,
+#headerUserProfile .avatar,
+#headerUserProfile .avatar-badge {
+  position: relative;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 55%, #0f766e 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Prompt', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  user-select: none !important;
+}
+
+.user-profile .avatar *,
+.user-profile .avatar-badge *,
+#headerUserProfile .avatar *,
+#headerUserProfile .avatar-badge * {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: inherit !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+}
+
+.user-profile .avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.user-profile .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  min-width: 0;
+  flex: 1;
+}
+
+.user-profile .info strong {
+  font-size: 0.875rem;
+  color: var(--text-main, #1e293b);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+
+.user-profile .info span {
+  font-size: 0.72rem;
+  color: var(--text-muted, #64748b);
+  line-height: 1.2;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+
+.custom-input-consistent {
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 10px !important;
+  padding: 0 12px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+  transition: all 0.2s ease;
+  font-family: 'Sarabun', sans-serif !important;
+}
+
+.custom-input-consistent:focus {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1) !important;
+  outline: none !important;
+}
+
+/* ==========================================================================
+   📱 SUPER RESPONSIVE OVERRIDES - PERFECT MOBILE FIT WITHOUT HORIZONTAL SCROLL OR ZOOM
+   ========================================================================== */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+}
+
+/* ป้องกัน iOS Auto-Zoom เมื่อโฟกัสกล่องข้อความ (Force font-size >= 16px) */
+@media screen and (max-width: 768px) {
+  input, select, textarea, 
+  .swal2-input, .swal2-select, .swal2-textarea,
+  .text-input, .select-input, .custom-field-input {
+    font-size: 16px !important;
+  }
+}
+
+/* ป้องกันตารางและส่วนต่างๆ ล้นจอมือถือ */
+@media screen and (max-width: 768px) {
+  /* จัดการระเบียบกริดและการกะระยะ */
+  .main-content {
+    padding: 12px 8px 60px 8px !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .topbar {
+    padding: 12px 14px !important;
+    margin-bottom: 16px !important;
+    border-radius: 14px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .topbar-left > div,
+  .topbar-left-text {
+    min-width: 0 !important;
+  }
+
+  .topbar-left h1,
+  .topbar-left-text h1,
+  .page-title {
+    font-family: 'Kanit', 'Sarabun', -apple-system, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    text-align: left !important;
+    max-width: 280px !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    line-height: 1.4 !important;
+    padding: 3px 0 !important;
+    margin: 0 !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  /* ตารางแบบเลื่อนแนวนอนได้ ไม่ดันจอเบี้ยว */
+  .table-wrap, .table-responsive, .table-container, .table-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+  }
+
+  table {
+    display: table !important;
+    width: 100% !important;
+    min-width: 600px !important; /* ให้เลื่อนในกรอบ ไม่ดันกรอบหน้าจอพัง */
+  }
+
+  /* ปรับปรุงขนาด Modal ของจอมือถือแบบยืดหยุ่นตามความสูงหน้าจอ (Dynamic Viewport Height) */
+  .modal-dialog, .pvt-guard-popup {
+    width: min(96vw, 760px) !important;
+    max-width: 96vw !important;
+    max-height: min(92dvh, calc(100dvh - 16px)) !important;
+    margin: auto !important;
+    padding: clamp(12px, 3vw, 20px) !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .modal-body, .swal2-html-container {
+    max-height: calc(100dvh - 140px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 4px !important;
+    margin: 4px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ป้องกันกล่องข้อมูลภายใน Modal และฟอร์มดันล้นจอมือถือ */
+  .modal-body form,
+  .modal-body .detail-grid,
+  .modal-body [style*="display:grid"],
+  .modal-body [style*="display: grid"],
+  .swal2-html-container [style*="display:grid"],
+  .swal2-html-container [style*="display: grid"] {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-body [style*="grid-column: span 2"],
+  .modal-body [style*="grid-column:span 2"],
+  .modal-body [style*="grid-column: 1 / -1"],
+  .modal-body [style*="grid-column:1 / -1"],
+  .swal2-html-container [style*="grid-column: span 2"],
+  .swal2-html-container [style*="grid-column:span 2"],
+  .swal2-html-container [style*="grid-column: 1 / -1"],
+  .swal2-html-container [style*="grid-column:1 / -1"] {
+    grid-column: 1 / -1 !important;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .detail-item {
+    font-size: 13px !important;
+  }
+
+  /* ปรับแต่งปุ่มและกลุ่มควบคุม */
+  .btn:not(.lang-btn):not(#globalLangTh):not(#globalLangLo):not(#globalLangMy):not(#langThBtn):not(#langLoBtn):not(#langMyBtn):not(.btn-view):not(.toggle-sidebar-btn):not([class*="cal"]):not(.btn-hero-leave):not([class*="hero"]):not([class*="special"]),
+  .btn-primary:not(.lang-btn):not(.btn-hero-leave),
+  .btn-light:not(.lang-btn) {
+    height: auto !important;
+    padding: 8px 12px !important;
+    font-size: 13.5px !important;
+    border-radius: 6px !important;
+  }
+
+  .swal2-actions {
+    flex-direction: column-reverse !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: 8px !important;
+  }
+
+  .swal2-actions button {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* ปรับปรุงแผงข้อมูลการลาและการ์ดสรุป */
+  .summary-grid, .leave-balances-grid, .stats-grid, .balance-cards, .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+
+  /* แผงควบคุมตัวเลือกบนหัวเว็บ */
+  .filter-bar, .controls-row, .search-bar-container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .filter-bar select, .filter-bar input, .filter-bar button,
+  .controls-row select, .controls-row input, .controls-row button {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* สไตล์เพิ่มเติมสำหรับหน้าจอมือถือขนาดเล็กมาก (< 380px) */
+@media screen and (max-width: 380px) {
+  .summary-grid, .leave-balances-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   🌐 GLOBAL LANGUAGE SWITCHER CAPSULE (PILL) & BUTTONS
+   ========================================================================== */
+.lang-switcher {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: #f8fafc !important; /* Premium clean background */
+  padding: 3px !important;
+  border-radius: 9999px !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+  border: 1px solid #e2e8f0 !important; /* Soft slate-200 border */
+  gap: 3px !important;
+  box-sizing: border-box !important;
+  z-index: 99 !important;
+  position: relative !important;
+}
+
+.lang-switcher button,
+.lang-switcher .lang-btn,
+#globalLangTh, #globalLangLo, #globalLangMy,
+#langThBtn, #langLoBtn, #langMyBtn {
+  border: none !important;
+  padding: 4px 14px !important; /* Spacious padding for beautiful readability */
+  border-radius: 9999px !important; /* Always fully rounded pill matching container */
+  cursor: pointer !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  background: transparent !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.3px !important;
+  outline: none !important;
+}
+
+/* Active language button in pill capsule - perfectly matches outer radius */
+.lang-switcher button.active,
+.lang-switcher button[style*="background-color: rgb(255, 255, 255)"],
+.lang-switcher button[style*="background: rgb(255, 255, 255)"],
+.lang-switcher button[style*="#ffffff"],
+.lang-switcher button[style*="rgb(255, 255, 255)"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0d9488 !important; /* Main Teal branding */
+  border-radius: 9999px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  font-weight: 700 !important;
+}
+
+.lang-switcher button:hover:not(.active) {
+  color: #0f172a !important;
+  background: rgba(15, 23, 42, 0.03) !important;
+}
+
+/* ==========================================================================
+   🔔 GLOBAL NOTIFICATION & STACKING LAYER PROTECTION (DESKTOP & MOBILE)
+   ========================================================================== */
+.notif-wrapper {
+  position: relative !important;
+  display: inline-block !important;
+  z-index: 1001 !important;
+}
+
+.notif-btn {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+  user-select: none !important;
+}
+
+.notif-dropdown {
+  position: absolute !important;
+  top: calc(100% + 12px) !important;
+  right: 0 !important;
+  width: 440px !important;
+  max-width: 90vw !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.22), 0 10px 20px -5px rgba(0, 0, 0, 0.12) !important;
+  z-index: 999999 !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.notif-dropdown.show {
+  display: flex !important;
+}
+
+@media screen and (max-width: 768px) {
+  .notif-dropdown {
+    position: fixed !important;
+    top: 66px !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: auto !important;
+    width: auto !important;
+    max-width: calc(100vw - 20px) !important;
+    max-height: calc(100dvh - 80px) !important;
+    margin: 0 auto !important;
+    border-radius: 18px !important;
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.35), 0 0 0 100vmax rgba(15, 23, 42, 0.5) !important;
+    z-index: 999999 !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Global Animations & UX Improvements */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSoft {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.main-content, .panel, .stat-card, .quick-actions, .glass-panel {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggering for lists or grids if needed */
+.stat-card:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; opacity: 0; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; opacity: 0; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; opacity: 0; }
+
+/* ==========================================================================
+   ✨ HIGH-CRAFT PREMIUM GLOBAL BUTTON DESIGN SYSTEM
+   ========================================================================== */
+.btn:not(.btn-hero-leave):not([class*="hero"]), 
+button:not([class^="swal2-"]):not(.menu-item):not(.nav-item):not(.sidebar-cta-btn):not(.btn-close-sidebar):not(.mobile-menu-btn):not(.notif-btn):not(.btn-hero-leave):not([class*="hero"]), 
+.action-btn, 
+.btn-primary:not(.btn-hero-leave), 
+.btn-light, 
+.btn-secondary, 
+.btn-act,
+.btn-sm,
+.btn-table-act,
+.filter-btn,
+.btn-header-back {
+  font-family: 'Sarabun', 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.015em !important;
+  border-radius: 10px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  user-select: none !important;
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+
+/* 🎯 Universal Micro-Interactions (Hover Lift & Tactile Click) */
+.btn:hover, 
+button:not([class^="swal2-"]):not(.menu-item):not(.nav-item):not(.sidebar-cta-btn):not(.btn-close-sidebar):not(.mobile-menu-btn):not(.notif-btn):hover, 
+.action-btn:hover, 
+.btn-primary:hover, 
+.btn-light:hover,
+.btn-act:hover {
+  transform: translateY(-2px) !important;
+}
+
+.btn:active, 
+button:not([class^="swal2-"]):not(.menu-item):not(.nav-item):not(.sidebar-cta-btn):not(.btn-close-sidebar):not(.mobile-menu-btn):not(.notif-btn):active, 
+.action-btn:active, 
+.btn-primary:active, 
+.btn-light:active,
+.btn-act:active {
+  transform: translateY(0) scale(0.97) !important;
+}
+
+.btn:focus-visible,
+button:not([class^="swal2-"]):not(.menu-item):not(.nav-item):not(.sidebar-cta-btn):not(.btn-close-sidebar):not(.mobile-menu-btn):not(.notif-btn):focus-visible {
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.28) !important;
+}
+
+/* 🟢 1. Primary Action Buttons (Emerald Teal Gradient with Shimmer Highlight) */
+.btn-primary,
+button.btn-primary,
+.btn-pvt-refresh,
+.swal2-styled.swal2-confirm,
+.btn-settings-done,
+.btn-submit,
+.btn-save,
+.btn-create,
+.btn-line-cta,
+#btnSyncData {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 4px 14px -1px rgba(13, 148, 136, 0.35), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-primary:hover,
+button.btn-primary:hover,
+.btn-pvt-refresh:hover,
+.swal2-styled.swal2-confirm:hover,
+.btn-settings-done:hover,
+.btn-submit:hover,
+.btn-save:hover,
+.btn-create:hover,
+.btn-line-cta:hover,
+#btnSyncData:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #0f766e 0%, #115e59 100%) !important;
+  box-shadow: 0 8px 22px -2px rgba(13, 148, 136, 0.48), 0 3px 6px -1px rgba(0, 0, 0, 0.08) !important;
+  color: #ffffff !important;
+}
+
+/* 📊 Dedicated Excel Green Button Style */
+.btn-export-excel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #107c41 0%, #0c5e31 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 4px 14px -1px rgba(16, 124, 65, 0.35), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-export-excel:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #0e6b37 0%, #064321 100%) !important;
+  box-shadow: 0 8px 22px -2px rgba(16, 124, 65, 0.48), 0 3px 6px -1px rgba(0, 0, 0, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.btn-icon-graphic {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-icon-graphic.btn-icon-excel {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-pvt-refresh:hover .btn-icon-graphic:not(.btn-icon-excel) {
+  transform: rotate(180deg) scale(1.08);
+}
+
+.btn-export-excel:hover .btn-icon-graphic {
+  transform: translateY(-1px) scale(1.12);
+}
+
+/* ⚪ 2. Secondary & Light Buttons (Clean White Slate Card) */
+.btn-light,
+.btn-secondary,
+.btn-ghost,
+.btn-header-back,
+.btn-cancel,
+.btn-close,
+.btn-back,
+.btn-settings-reset {
+  background: #ffffff !important;
+  color: #334155 !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06) !important;
+}
+
+.btn-light:hover,
+.btn-secondary:hover,
+.btn-ghost:hover,
+.btn-header-back:hover,
+.btn-cancel:hover,
+.btn-close:hover,
+.btn-back:hover,
+.btn-settings-reset:hover {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* 🟢 3. Approve & Success Buttons (Emerald Green Glow) */
+.btn-act-approve,
+.btn-green,
+.btn-success,
+.btn-approve {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px -1px rgba(16, 185, 129, 0.35) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-act-approve:hover,
+.btn-green:hover,
+.btn-success:hover,
+.btn-approve:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 8px 20px -2px rgba(16, 185, 129, 0.48) !important;
+  color: #ffffff !important;
+}
+
+/* 🔴 4. Danger, Reject & Logout Buttons (Rose Crimson Glow) */
+.btn-logout,
+.btn-danger,
+.btn-act-reject,
+.btn-reject,
+.btn-delete {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px -1px rgba(225, 29, 72, 0.32) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-logout:hover,
+.btn-danger:hover,
+.btn-act-reject:hover,
+.btn-reject:hover,
+.btn-delete:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%),
+              linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  box-shadow: 0 8px 20px -2px rgba(225, 29, 72, 0.45) !important;
+  color: #ffffff !important;
+}
+
+/* 🟦 5. Info, Preview & Print Buttons (Sky Blue Elegance) */
+.btn-act-preview,
+.btn-act-print,
+.btn-info,
+.btn-view {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+  color: #0369a1 !important;
+  border: 1px solid #7dd3fc !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08) !important;
+}
+
+.btn-act-preview:hover,
+.btn-act-print:hover,
+.btn-info:hover,
+.btn-view:hover {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%) !important;
+  color: #0284c7 !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2) !important;
+}
+
+/* 🟧 6. Warning & Pending Cancel Buttons (Amber Soft Warmth) */
+.btn-act-cancel,
+.btn-warning {
+  background: linear-gradient(135deg, #fffbe3 0%, #fef3c7 100%) !important;
+  color: #b45309 !important;
+  border: 1px solid #fde68a !important;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08) !important;
+}
+
+.btn-act-cancel:hover,
+.btn-warning:hover {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+  color: #78350f !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.18) !important;
+}
+
+/* 🏷️ 7. Filter Pills & Category Tabs */
+.filter-btn,
+.tab-btn,
+.rule-tab,
+.notif-tab {
+  border-radius: 9999px !important;
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.filter-btn:hover,
+.tab-btn:hover,
+.rule-tab:hover,
+.notif-tab:hover {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+.filter-btn.active,
+.tab-btn.active,
+.rule-tab.active,
+.notif-tab.active {
+  background: linear-gradient(135deg, #0d9488, #0f766e) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 3px 10px rgba(13, 148, 136, 0.25) !important;
+}
+
+/* 🔔 8. Header Action & Bell Buttons */
+.notif-btn,
+.mobile-menu-btn {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+  border-radius: 12px !important;
+}
+
+.notif-btn:hover,
+.mobile-menu-btn:hover {
+  background: #f0fdfa !important;
+  border-color: #0d9488 !important;
+  color: #0f766e !important;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.18) !important;
+}
+
+/* Make icons larger and more prominent for universal design */
+.material-symbols-outlined {
+  vertical-align: middle;
+}
+
+/* Desktop Sidebar Toggle & Collapsed State Fix */
+@media (min-width: 1025px) {
+  .btn-close-sidebar {
+    display: none !important;
+  }
+
+  .sidebar, .sidebar-light, aside {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body.desktop-sidebar-collapsed .sidebar,
+  body.desktop-sidebar-collapsed .sidebar-light,
+  body.desktop-sidebar-collapsed aside {
+    width: 72px !important;
+    min-width: 72px !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 🚫 Hide all text labels when collapsed */
+  body.desktop-sidebar-collapsed .brand-name,
+  body.desktop-sidebar-collapsed .sidebar-brand-text,
+  body.desktop-sidebar-collapsed .sidebar-cta-label,
+  body.desktop-sidebar-collapsed .sidebar-section-title,
+  body.desktop-sidebar-collapsed .user-info,
+  body.desktop-sidebar-collapsed .nav-item span:not(.material-symbols-outlined),
+  body.desktop-sidebar-collapsed .menu-item span:not(.material-symbols-outlined),
+  body.desktop-sidebar-collapsed .btn-logout span:not(.material-symbols-outlined),
+  body.desktop-sidebar-collapsed .nav-label,
+  body.desktop-sidebar-collapsed .logout-text,
+  body.desktop-sidebar-collapsed .logo-text,
+  body.desktop-sidebar-collapsed .menu-text,
+  body.desktop-sidebar-collapsed .badge {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 🏢 Brand Zone Collapsed */
+  body.desktop-sidebar-collapsed .sidebar-brand,
+  body.desktop-sidebar-collapsed .brand-zone {
+    padding: 14px 0 !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+
+  /* 🚀 Primary CTA Collapsed */
+  body.desktop-sidebar-collapsed .sidebar-cta-wrap {
+    padding: 8px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  body.desktop-sidebar-collapsed .sidebar-cta-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    gap: 0 !important;
+  }
+
+  /* 🧭 Menu Items Collapsed */
+  body.desktop-sidebar-collapsed .sidebar-menu,
+  body.desktop-sidebar-collapsed .nav-menu {
+    padding: 8px 0 !important;
+    align-items: center !important;
+  }
+
+  body.desktop-sidebar-collapsed .nav-item,
+  body.desktop-sidebar-collapsed .menu-item {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    justify-content: center !important;
+    margin: 3px auto !important;
+    gap: 0 !important;
+  }
+
+  body.desktop-sidebar-collapsed .nav-item .material-symbols-outlined,
+  body.desktop-sidebar-collapsed .menu-item .material-symbols-outlined {
+    font-size: 22px !important;
+    margin: 0 !important;
+  }
+
+  /* 🚪 Footer & Logout Collapsed */
+  body.desktop-sidebar-collapsed .sidebar-footer {
+    padding: 12px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  body.desktop-sidebar-collapsed .btn-logout {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    gap: 0 !important;
+  }
+
+  body.desktop-sidebar-collapsed .main-content {
+    margin-left: 72px !important;
+    width: calc(100% - 72px) !important;
+  }
+}
+
+/* ==========================================================================
+   ✨ UNIVERSAL HIGHLIGHT SYSTEM & HIGH-READABILITY DESIGN TOKENS
+   Accessible across all HR and User views
+   ========================================================================== */
+
+/* 🌟 Universal Text Search & Keyword Highlight */
+mark, .text-highlight, .search-match-highlight {
+  background: linear-gradient(120deg, #fef08a 0%, #fde047 100%) !important;
+  color: #854d0e !important;
+  padding: 1.5px 5px !important;
+  border-radius: 4px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 2px rgba(234, 179, 8, 0.25) !important;
+  display: inline-block;
+  line-height: 1.3;
+}
+
+/* 🏷️ High-Legibility Badges & Highlights */
+.highlight-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.highlight-pill-teal {
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+}
+
+.highlight-pill-blue {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.highlight-pill-amber {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.highlight-pill-purple {
+  background: #f5f3ff;
+  color: #5b21b6;
+  border: 1px solid #ddd6fe;
+}
+
+.highlight-pill-rose {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+.highlight-pill-emerald {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+/* 🔢 Numerical and Data Highlights */
+.val-highlight {
+  font-weight: 700 !important;
+  color: #0f766e !important;
+  background: #f0fdfa;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccfbf1;
+  display: inline-block;
+}
+
+.num-highlight {
+  font-weight: 800 !important;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.code-highlight {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+}
+
+/* 📢 Informational & Warning Callouts (High Contrast, Easy to Scan) */
+.info-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%);
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  font-size: 13.5px;
+  line-height: 1.6;
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.04);
+}
+
+.info-callout .material-symbols-outlined {
+  color: #2563eb;
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.warning-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+  color: #78350f;
+  font-size: 13.5px;
+  line-height: 1.6;
+  box-shadow: 0 2px 6px rgba(120, 53, 15, 0.04);
+}
+
+.warning-callout .material-symbols-outlined {
+  color: #d97706;
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* 🔍 Search Input Highlight Focus */
+input[type="search"]:focus,
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18) !important;
+  outline: none !important;
+}
+
+/* 📊 Polished Card Elevate on Hover */
+.emp-card-item, .leave-card-item, .summary-card, .rule-box-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+}
+
+.emp-card-item:hover, .leave-card-item:hover, .summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* ==========================================================================
+   📱 CROSS-PLATFORM MOBILE & TABLET STABILITY (ANDROID & IOS TUNING)
+   ========================================================================== */
+
+/* 1. Prevent iOS Safari auto-zoom on input focus by guaranteeing 16px font size */
+@media screen and (max-width: 768px) {
+  input, select, textarea, .form-input, .form-select, .form-control {
+    font-size: 16px !important;
+  }
+}
+
+/* 2. Touch-action optimization to eliminate mobile tap latency */
+button, a, input, select, textarea, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* 3. iOS Safe Area support for edge-to-edge layouts */
+body {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 4. Fix height jumping on mobile address bars with 100dvh */
+.full-screen-modal, .mobile-fullscreen-view {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* 5. Smooth touch scrolling everywhere */
+.table-responsive, .modal-body, .scrollable-content, .drawer-content, .card-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* 6. Universal Container boundary enforcement to prevent horizontal scroll bugs */
+.main-content, .page-container, .container, .layout-wrapper, .app-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden;
+}
+
+/* 7. Word break safeguards for long Thai and English texts */
+p, span, div, td, th, label, .card-title, .badge {
+  overflow-wrap: break-word;
+}
+
+/* 8. Recharts responsive wrapper safeguards across all pages */
+.recharts-responsive-container {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* 9. Mobile modal constraints */
+@media screen and (max-width: 640px) {
+  .swal2-popup, .pvt-guard-popup {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    padding: 16px 14px !important;
+    margin: 12px auto !important;
+  }
+
+  .modal-dialog {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    margin: 10px auto !important;
+    padding: 14px !important;
+  }
+
+  /* Ensure touch targets meet Apple HIG & Android Material (min 44px) */
+  .btn, .action-btn, button.btn-primary, button.btn-secondary {
+    min-height: 44px;
+  }
+}
+
+/* ==========================================================================
+   🛠️ TOPBAR HEADER & LANGUAGE SWITCHER OVERLAP PREVENTION
+   ========================================================================== */
+.topbar-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+#globalLangSwitcherContainer,
+#globalLangSwitcherContainer .lang-switcher {
+  position: relative !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  z-index: 10 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.topbar-right .action-btn {
+  position: relative !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  z-index: 5 !important;
+}
+
+/* ==========================================================================
+   ✨ LUXURY SLEEK MODERN SCROLLBAR (Ultra-smooth & minimalist)
+   ========================================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(13, 148, 136, 0.28) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 148, 136, 0.25);
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 148, 136, 0.55);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #0f766e;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+
+/* ==========================================================================
+   🚫 CLEANED UNWANTED FOCUS FORCE RULES
+   ========================================================================== */
+
+/* Optimize space on mobile under 540px to prevent title truncation */
+@media screen and (max-width: 540px) {
+  .topbar-right .user-profile .info span,
+  .user-header .user-profile .info span {
+    display: none !important;
+  }
+  .topbar-right .user-profile .info,
+  .user-header .user-profile .info {
+    max-width: 70px !important;
+  }
+}
+
+/* 1. Colorful Accent Icons inside Light / Secondary / Back Buttons */
+.btn-light .material-symbols-outlined,
+.btn-secondary .material-symbols-outlined,
+.btn-ghost .material-symbols-outlined,
+.btn-header-back .material-symbols-outlined,
+.btn-back .material-symbols-outlined {
+  color: #0d9488 !important; /* Teal default accent */
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+/* Specific Action Icon Accents */
+.btn-act-preview .material-symbols-outlined,
+.btn-view .material-symbols-outlined,
+.btn-info .material-symbols-outlined {
+  color: #0284c7 !important; /* Sky Blue */
+}
+
+.btn-act-print .material-symbols-outlined {
+  color: #7c3aed !important; /* Royal Purple */
+}
+
+.btn-act-cancel .material-symbols-outlined,
+.btn-warning .material-symbols-outlined {
+  color: #d97706 !important; /* Amber Orange */
+}
+
+.btn-pvt-refresh .material-symbols-outlined,
+.btn-refresh-data .material-symbols-outlined {
+  color: #ffffff !important;
+}
+
+/* 2. Enhanced Button Borders & Hover Ring Highlights */
+.btn-light:hover,
+.btn-secondary:hover,
+.btn-ghost:hover,
+.btn-header-back:hover,
+.btn-back:hover {
+  border-color: #0d9488 !important;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.15) !important;
+  background: #f0fdfa !important;
+  color: #0f766e !important;
+}
+
+.btn-light:hover .material-symbols-outlined,
+.btn-secondary:hover .material-symbols-outlined,
+.btn-header-back:hover .material-symbols-outlined {
+  transform: scale(1.15) rotate(-4deg) !important;
+}
+
+/* 3. Colorful Card Header Icon Badges */
+.panel-header .material-symbols-outlined,
+.card-header .material-symbols-outlined,
+.section-header .material-symbols-outlined {
+  background: rgba(13, 148, 136, 0.1) !important;
+  color: #0d9488 !important;
+  padding: 6px !important;
+  border-radius: 10px !important;
+  font-size: 22px !important;
+  box-shadow: inset 0 0 0 1px rgba(13, 148, 136, 0.18) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 4. Distinct Sidebar Menu Icon Accents */
+.nav-item[href*="home"] .material-symbols-outlined,
+.menu-item[href*="home"] .material-symbols-outlined {
+  color: #0d9488 !important; /* Home - Emerald Teal */
+}
+
+.nav-item[href*="news"] .material-symbols-outlined,
+.menu-item[href*="news"] .material-symbols-outlined {
+  color: #d97706 !important; /* News - Warm Amber */
+}
+
+.nav-item[href*="user"] .material-symbols-outlined,
+.menu-item[href*="user"] .material-symbols-outlined {
+  color: #2563eb !important; /* Personnel - Royal Blue */
+}
+
+.nav-item[href*="settings"] .material-symbols-outlined,
+.menu-item[href*="settings"] .material-symbols-outlined {
+  color: #7c3aed !important; /* Settings - Vibrant Purple */
+}
+
+.nav-item[href*="leave"] .material-symbols-outlined,
+.menu-item[href*="leave"] .material-symbols-outlined {
+  color: #059669 !important; /* Leave Hub - Forest Green */
+}
+
+.menu-item.active .material-symbols-outlined,
+.nav-item.active .material-symbols-outlined {
+  color: #0f766e !important;
+}
+
+/* ✂️ DIVIDER & SECTION TITLE */
+.sidebar-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 4px 4px;
+  flex-shrink: 0;
+}
+
+.sidebar-section-title {
+  padding: 4px 10px 2px 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  white-space: nowrap !important;
+}
+
+/* 🔴 SIDEBAR BADGE */
+.sidebar-badge {
+  margin-left: auto;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.3);
+}
+
+/* 🦶 SIDEBAR FOOTER */
+.sidebar-footer {
+  padding: 10px 10px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.btn-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1px solid #fee2e2;
+  background: #fff5f5;
+  color: #ef4444;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-logout:hover {
+  background: #ef4444;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(239, 68, 68, 0.2);
+}
+
+.btn-logout .material-symbols-outlined {
+  font-size: 17px;
+}
+
+/* 🌟 ADMIN DASHBOARD POPUP MODAL */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+}
+
+.admin-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.admin-modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+
+.admin-modal-overlay.active .admin-modal-content {
+  transform: scale(1);
+}
+
+.admin-modal-header {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.admin-modal-iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ==========================================================================
+   ✨ PREMIUM ANIMATIONS & MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* 1️⃣ Keyframe Definitions */
+@keyframes pvtFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pvtFadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pvtFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pvtPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pvtBadgeGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(239, 68, 68, 0);
+  }
+}
+
+@keyframes pvtSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pvtBellWiggle {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-12deg); }
+  60% { transform: rotate(8deg); }
+  80% { transform: rotate(-4deg); }
+}
+
+@keyframes pvtFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* 2️⃣ Page & Layout Entrance Transitions */
+.main-content, 
+.dashboard-container, 
+.content-wrapper,
+.home-container,
+.management-container,
+.approval-page-container {
+  animation: pvtFadeIn 0.28s ease-out forwards;
+}
+
+.top-bar, 
+.page-header {
+  animation: pvtFadeInDown 0.3s ease-out forwards;
+}
+
+/* 3️⃣ Card & Button Micro-Interactions (Non-destructive) */
+.stat-card,
+.quick-card,
+.manage-card,
+.action-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease !important;
+}
+
+.stat-card:hover,
+.quick-card:hover,
+.manage-card:hover,
+.action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08) !important;
+}
+
+button:active, 
+.btn:active, 
+.action-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-item {
+  transition: background-color 0.2s ease, transform 0.18s ease;
+}
+
+.nav-item:hover {
+  transform: translateX(2px);
+}
+
+/* 4️⃣ Notification Bell & Floating Badge */
+.notif-btn,
+#notifBellBtn {
+  position: relative !important;
+}
+
+.notif-btn:hover .material-symbols-outlined,
+#notifBellBtn:hover .material-symbols-outlined {
+  animation: pvtBellWiggle 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.notif-badge,
+#notifBadge,
+span#notifBadge {
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  line-height: 18px !important;
+  padding: 0 4px !important;
+  border-radius: 999px !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4) !important;
+  z-index: 10 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  box-sizing: content-box !important;
+  pointer-events: none;
+}
+
+/* 5️⃣ Modal & Dialog Transitions */
+.modal.active .modal-content,
+.pvt-modal.active .pvt-modal-content,
+.dialog-content {
+  animation: pvtPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* 6️⃣ Focus & Form Interactions */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important;
+  outline: none;
+}
+
+/* 7️⃣ Smooth Refresh Icon Spin */
+.btn-refresh-data:hover .material-symbols-outlined,
+.refresh-spin-active .material-symbols-outlined {
+  animation: pvtSpin 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 8️⃣ Smooth Scrollbar */
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0d9488;
+}
+
+/* 🧭 COMPACT VIEW MODE OVERRIDES */
+html[data-compact-mode="true"] table th,
+html[data-compact-mode="true"] table td,
+html[data-compact-mode="true"] .table-responsive table th,
+html[data-compact-mode="true"] .table-responsive table td,
+body.compact-mode table th,
+body.compact-mode table td {
+  padding: 6px 10px !important;
+  font-size: 12.5px !important;
+}
+
+html[data-compact-mode="true"] .nav-item,
+body.compact-mode .nav-item,
+html[data-compact-mode="true"] .menu-item,
+body.compact-mode .menu-item {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+html[data-compact-mode="true"] .card-btn-group .action-btn,
+body.compact-mode .card-btn-group .action-btn {
+  padding: 8px 12px !important;
+}
+
+/* 🛡️ COMPLETE GOOGLE TRANSLATE BANNER SUPPRESSION */
+body > .skiptranslate,
+body > div.skiptranslate,
+body > iframe.skiptranslate,
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe.goog-te-banner-frame-escaped,
+iframe.skiptranslate,
+iframe[src*="translate.google.com"],
+iframe[id*="google_translate"],
+iframe[id*=":1.container"],
+iframe[id*=":2.container"],
+iframe[id*=":0.container"],
+iframe[class*="goog-te-banner-frame"],
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-xl07Ob-OEVmcd,
+.goog-te-menu-frame,
+iframe.goog-te-menu-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-te-spinner-pos,
+div[id*="goog-gt-"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  max-height: 0 !important;
+  max-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  top: -99999px !important;
+  left: -99999px !important;
+  z-index: -99999 !important;
+}
+
+html, body {
+  top: 0px !important;
+  margin-top: 0px !important;
+}
+
+/* 🖼️ Global Logo & Avatar Distortion Fix */
+.logo-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.logo-wrapper .brand-logo,
+.brand-logo {
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* ==========================================================================
+   ✨ GLOBAL MICRO-INTERACTIONS & ANIMATIONS
+   ========================================================================== */
+
+/* 🔘 1. Button Active Click Feedback */
+button:active, 
+.btn:active, 
+.action-btn:active, 
+.btn-table-act:active, 
+.menu-item:active,
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 💀 2. Skeleton Shimmer Loading Effect */
+@keyframes shimmerPulse {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-loader {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmerPulse 1.5s infinite ease-in-out;
+  border-radius: 6px;
+}
+
+/* 🔔 3. Pulsing Notification & Alert Aura */
+@keyframes softPulseAura {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.badge-pulse {
+  animation: softPulseAura 2s infinite;
+}
+
+/* 🌟 4. Smooth Page & Card Fade-Up Entrance */
+@keyframes pvtSmoothFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: pvtSmoothFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 🎴 5. Interactive Card Elevation */
+.interactive-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -6px rgba(13, 148, 136, 0.12);
+}
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   📱 COMPREHENSIVE MOBILE PHONE RESPONSIVENESS (EVERY PAGE SUPPORT)
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+  /* 1. Mobile Sidebar Drawer Overlay */
+  .sidebar, .sidebar-light, aside.sidebar, aside.sidebar-light, aside {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    max-width: 86vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    z-index: 100000 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 10px 0 40px rgba(15, 23, 42, 0.3) !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .sidebar.mobile-open,
+  .sidebar-light.mobile-open,
+  aside.sidebar.mobile-open,
+  aside.sidebar-light.mobile-open,
+  .sidebar.show-mobile,
+  aside.sidebar.show-mobile {
+    transform: translateX(0) !important;
+  }
+
+  .mobile-sidebar-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(15, 23, 42, 0.55) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    z-index: 99990 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.25s ease !important;
+  }
+
+  .mobile-sidebar-backdrop.active,
+  body.sidebar-open .mobile-sidebar-backdrop {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .main-content, main.main-content, .workspace, .app {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* 2. Responsive Grids & Layouts for Smartphones */
+  .grid, .stats-grid, .summary-grid, .card-grid, .dashboard-grid, 
+  .settings-grid, .leave-type-grid, .rules-grid, .menu-grid, .quick-actions-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* 3. Horizontal Scrollable Tables on Mobile */
+  .table-responsive, .table-container, .table-wrapper, 
+  div:has(> table), .data-table-container, .history-table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+    margin-bottom: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  table {
+    min-width: 600px !important;
+  }
+
+  /* 4. Touch Target Optimization */
+  button, select, input[type="text"], input[type="date"], input[type="number"], .btn {
+    min-height: 44px !important;
+    font-size: 14px !important;
+  }
+
+  /* 5. Header & Topbar Stacking */
+  .topbar, .user-header, .header-container, .page-header {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+  }
+
+  .user-header-right, .topbar-right, .header-actions {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  /* 6. Modal / Dialog Fitting for Mobile Screen */
+  .modal-content, .swal2-popup, .popup-card, .dialog-box {
+    max-width: 94vw !important;
+    width: 100% !important;
+    margin: 8px auto !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+    max-height: 88vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 13.5px !important;
+  }
+
+  h1, .page-title {
+    font-size: 20px !important;
+  }
+
+  h2, .section-title {
+    font-size: 17px !important;
+  }
+
+  .card, .card-panel, .panel {
+    padding: 14px !important;
+    border-radius: 14px !important;
+  }
+}
+
+/* ==========================================================================
+   🔔 GLOBAL ENLARGED NOTIFICATION COMPONENT STYLES (ACCESSIBLE & HIGH-CONTRAST)
+   ========================================================================== */
+.notif-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.notif-btn {
+  position: relative;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  border-radius: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.notif-btn img {
+  width: 26px !important;
+  height: 26px !important;
+  object-fit: contain !important;
+}
+
+.notif-btn .material-symbols-outlined {
+  font-size: 26px !important;
+}
+
+.notif-badge {
+  position: absolute !important;
+  top: -6px !important;
+  right: -6px !important;
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  border-radius: 11px !important;
+  padding: 0 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 2.5px solid #ffffff !important;
+  box-shadow: 0 3px 8px rgba(239, 68, 68, 0.5) !important;
+  z-index: 10 !important;
+}
+
+.notif-dropdown {
+  position: absolute !important;
+  top: calc(100% + 14px) !important;
+  right: 0 !important;
+  width: 460px !important;
+  max-width: calc(100vw - 20px) !important;
+  border-radius: 20px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.22), 0 10px 20px -5px rgba(0, 0, 0, 0.12) !important;
+  z-index: 999999 !important;
+  background: #ffffff !important;
+}
+
+.notif-header {
+  padding: 14px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+  background: #f8fafc !important;
+  gap: 8px !important;
+}
+
+.notif-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  flex: 1 1 auto !important;
+}
+
+.notif-header strong,
+.notif-title strong,
+.notif-title-text {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  color: #0f172a !important;
+  white-space: nowrap !important;
+}
+
+.notif-count-pill {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 12px !important;
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.notif-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-mark-read {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  background: #f0fdfa !important;
+  border: 1px solid #ccfbf1 !important;
+  color: #0f766e !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+}
+
+.btn-close-notif {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  border: 1px solid #cbd5e1 !important;
+  background: #ffffff !important;
+  color: #64748b !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  transition: all 0.2s !important;
+}
+
+/* 🎛️ Notification Filter Tabs */
+.notif-filter-tabs {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  min-height: 52px !important;
+  box-sizing: border-box !important;
+  background: #f8fafc !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.notif-filter-tabs::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.notif-filter-tab {
+  flex: 1 1 0% !important;
+  min-width: fit-content !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 0 12px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #475569 !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  line-height: normal !important;
+  flex-shrink: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.notif-filter-tab span {
+  white-space: nowrap !important;
+}
+
+.notif-filter-tab.active {
+  background: #0d9488 !important;
+  color: #ffffff !important;
+  border-color: #0d9488 !important;
+}
+
+.notif-filter-tab.tab-overdue.active {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
+}
+
+.notif-filter-tab.tab-urgent.active {
+  background: #ea580c !important;
+  color: #ffffff !important;
+  border-color: #ea580c !important;
+}
+
+.notif-filter-tab .tab-badge {
+  background: rgba(0, 0, 0, 0.08) !important;
+  padding: 2px 7px !important;
+  border-radius: 99px !important;
+  font-size: 11.5px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.notif-filter-tab.active .tab-badge {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.notif-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: 460px !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.notif-item {
+  padding: 16px 18px !important;
+  gap: 14px !important;
+}
+
+.notif-item .notif-icon,
+.notif-item > div:first-child {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 14px !important;
+}
+
+.notif-item .material-symbols-outlined {
+  font-size: 26px !important;
+}
+
+.notif-item strong,
+.notif-item .notif-title-text,
+.notif-item div[style*="font-weight: 700"],
+.notif-item div[style*="font-weight: 750"] {
+  font-size: 16px !important;
+  font-weight: 750 !important;
+  line-height: 1.4 !important;
+}
+
+.notif-item .notif-text,
+.notif-item .notif-parsed-list {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+.notif-item .notif-time,
+.notif-item span[style*="🕒"] {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.notif-footer {
+  padding: 14px 20px !important;
+}
+
+.notif-footer a {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .notif-dropdown {
+    position: fixed !important;
+    top: 64px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 76px) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 100vmax rgba(15, 23, 42, 0.5) !important;
+    z-index: 999999 !important;
+  }
+
+  .notif-header {
+    padding: 10px 12px !important;
+    gap: 4px !important;
+  }
+
+  .notif-title {
+    gap: 4px !important;
+  }
+
+  .notif-header strong,
+  .notif-title strong,
+  .notif-title-text {
+    font-size: 14px !important;
+  }
+
+  .notif-count-pill {
+    font-size: 10.5px !important;
+    padding: 2px 5px !important;
+  }
+
+  .btn-mark-read {
+    font-size: 11px !important;
+    padding: 5px 8px !important;
+  }
+
+  .btn-close-notif {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .btn-close-notif .material-symbols-outlined {
+    font-size: 15px !important;
+  }
+
+  .notif-filter-tabs {
+    flex-shrink: 0 !important;
+    padding: 6px 10px !important;
+    gap: 4px !important;
+    min-height: 44px !important;
+    height: auto !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .notif-filter-tab {
+    flex: 1 1 auto !important;
+    min-width: fit-content !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 8px !important;
+    font-size: 11.5px !important;
+    gap: 3px !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+    line-height: normal !important;
+  }
+
+  .notif-filter-tab .tab-badge {
+    font-size: 10px !important;
+    padding: 1px 4px !important;
+  }
+
+  .notif-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: calc(100dvh - 200px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  .notif-item {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .notif-item .notif-icon,
+  .notif-item > div:first-child {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .notif-item .material-symbols-outlined {
+    font-size: 18px !important;
+  }
+
+  .notif-item-title {
+    font-size: 12.5px !important;
+    font-weight: 750 !important;
+  }
+
+  .notif-sla-badge-tag {
+    font-size: 11px !important;
+    padding: 2px 6px !important;
+    margin-right: 4px !important;
+  }
+
+  .notif-sla-time-highlight {
+    font-size: 11px !important;
+    padding: 2px 6px !important;
+  }
+
+  .notif-time {
+    font-size: 11px !important;
+  }
+
+  .notif-parsed-list div {
+    font-size: 11.5px !important;
+  }
+}
+
+/* 🔄 ----------------------------------------------------------------------
+   Circular Blue Refresh Buttons (Matching Uploaded Image)
+   -------------------------------------------------------------------------- */
+#refreshBtn,
+#btnSyncData {
+  background: #0095ff !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 14px rgba(0, 149, 255, 0.35) !important;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+#refreshBtn:hover,
+#btnSyncData:hover {
+  background: #0082ec !important;
+  transform: scale(1.06) !important;
+  box-shadow: 0 6px 18px rgba(0, 149, 255, 0.5) !important;
+}
+
+#refreshBtn .material-symbols-outlined,
+#btnSyncData .material-symbols-outlined,
+#refreshBtn img,
+#btnSyncData img {
+  color: #ffffff !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+/* Inline / Graphic Text Refresh Buttons */
+.btn-pvt-refresh:not(.btn-export-excel),
+.btn-sla-refresh {
+  background: linear-gradient(135deg, #0095ff 0%, #0082ec 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(0, 149, 255, 0.3) !important;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.btn-pvt-refresh:not(.btn-export-excel):hover,
+.btn-sla-refresh:hover {
+  background: linear-gradient(135deg, #0082ec 0%, #006ec4 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(0, 149, 255, 0.45) !important;
+  color: #ffffff !important;
+}
+
+.btn-pvt-refresh:not(.btn-export-excel) span,
+.btn-sla-refresh span {
+  color: #ffffff !important;
+}

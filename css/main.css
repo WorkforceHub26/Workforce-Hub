@@ -1,0 +1,66 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM & OS SAFE AREAS (Variables)
+   ========================================================================== */
+:root {
+  --primary-color: #0d6efd;
+  --bg-color: #f8f9fa;
+  
+  /* รองรับขอบหน้าจอ รอยแหว่ง iPhone / Android Notch */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ==========================================================================
+   2. BASE & MOBILE-FIRST STYLES (สำหรับมือถือทุกระบบ - Default)
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-color);
+  
+  /* เว้นระยะรอยแหว่งกล้องบน-ล่าง ของ iOS และ Android อัตโนมัติ */
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* หน้าจอเต็มแบบไม่โดนแถบ URL มือถือบัง (ใช้ dvh แทน vh) */
+.full-screen-container {
+  min-height: 100dvh; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* Layout การ์ด/คอนเทนต์ สำหรับมือถือ (แนวตั้ง Stack ลงมา) */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* ==========================================================================
+   3. TABLET STYLES (ความกว้างหน้าจอตั้งแต่ 768px ขึ้นไป)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .main-layout {
+    grid-template-columns: repeat(2, 1fr); /* แบ่งเป็น 2 คอลัมน์ */
+    gap: 24px;
+    padding: 24px;
+  }
+}
+
+/* ==========================================================================
+   4. DESKTOP STYLES (ความกว้างหน้าจอตั้งแต่ 1024px ขึ้นไป)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 280px 1fr; /* Sidebar ซ้าย + เนื้อหาขวา */
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}

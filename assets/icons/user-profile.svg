@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Circular gradient background -->
+  <defs>
+    <linearGradient id="userGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="236" fill="url(#userGrad)" stroke="#0f172a" stroke-width="10" />
+
+  <!-- Avatar Head -->
+  <circle cx="256" cy="180" r="76" fill="#ffd1bc" stroke="#0f172a" stroke-width="14" />
+  <!-- Hair / Cap -->
+  <path d="M185 170 C185 110 220 95 256 95 C292 95 327 110 327 170 C305 155 285 150 256 150 C227 150 205 155 185 170 Z" fill="#334155" stroke="#0f172a" stroke-width="12" />
+
+  <!-- Avatar Torso / Suit -->
+  <path d="M130 430 C130 330 180 290 256 290 C332 290 382 330 382 430 Z" fill="#ffffff" stroke="#0f172a" stroke-width="14" stroke-linejoin="round" />
+
+  <!-- Shirt Collar & Coral Tie -->
+  <polygon points="256,340 236,290 276,290" fill="#0284c7" />
+  <polygon points="256,310 270,335 256,410 242,335" fill="#f43f5e" stroke="#0f172a" stroke-width="6" />
+
+  <!-- Verified Badge -->
+  <circle cx="360" cy="340" r="42" fill="#10b981" stroke="#ffffff" stroke-width="8" />
+  <path d="M344 340 L356 352 L380 326" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

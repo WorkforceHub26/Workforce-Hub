@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Shield Shape (Indigo/Royal Blue) -->
+  <path d="M256 36 L430 84 V236 C430 348 350 436 256 476 C162 436 82 348 82 236 V84 Z" fill="#3b82f6" stroke="#0f172a" stroke-width="16" stroke-linejoin="round" />
+  <!-- Shield Right Half Shading -->
+  <path d="M256 36 L430 84 V236 C430 348 350 436 256 476 V36 Z" fill="#1d4ed8" stroke-linejoin="round" />
+
+  <!-- Inner Gold Shield Border -->
+  <path d="M256 80 L388 116 V232 C388 316 328 386 256 418 C184 386 124 316 124 232 V116 Z" fill="none" stroke="#fbbf24" stroke-width="10" stroke-linejoin="round" />
+
+  <!-- White Rule Checklist Document in Center -->
+  <rect x="176" y="160" width="160" height="200" rx="14" fill="#ffffff" stroke="#0f172a" stroke-width="12" />
+  
+  <!-- Checkmark 1 (Green) -->
+  <path d="M196 205 L210 219 L232 195" fill="none" stroke="#10b981" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="246" y1="207" x2="310" y2="207" stroke="#0f172a" stroke-width="8" stroke-linecap="round" />
+
+  <!-- Checkmark 2 (Green) -->
+  <path d="M196 255 L210 269 L232 245" fill="none" stroke="#10b981" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="246" y1="257" x2="310" y2="257" stroke="#0f172a" stroke-width="8" stroke-linecap="round" />
+
+  <!-- Checkmark 3 (Green) -->
+  <path d="M196 305 L210 319 L232 295" fill="none" stroke="#10b981" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="246" y1="307" x2="295" y2="307" stroke="#0f172a" stroke-width="8" stroke-linecap="round" />
+
+  <!-- Golden Star on top -->
+  <polygon points="256,92 267,118 295,118 272,134 281,160 256,144 231,160 240,134 217,118 245,118" fill="#f59e0b" stroke="#0f172a" stroke-width="4" stroke-linejoin="round" />
+</svg>

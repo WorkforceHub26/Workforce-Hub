@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Lifebuoy / Support Ring Background -->
+  <circle cx="256" cy="256" r="220" fill="#f43f5e" stroke="#0f172a" stroke-width="16" />
+  
+  <!-- Lifebuoy White Quarters -->
+  <path d="M256 36 A 220 220 0 0 1 412 100 L345 167 A 125 125 0 0 0 256 131 Z" fill="#ffffff" stroke="#0f172a" stroke-width="12" />
+  <path d="M256 476 A 220 220 0 0 1 100 412 L167 345 A 125 125 0 0 0 256 381 Z" fill="#ffffff" stroke="#0f172a" stroke-width="12" />
+
+  <!-- Inner Center Hole -->
+  <circle cx="256" cy="256" r="125" fill="#f8fafc" stroke="#0f172a" stroke-width="16" />
+
+  <!-- Big Cyan/Navy Question Mark in Center -->
+  <path d="M230 190 C230 165 242 150 262 150 C280 150 294 162 294 180 C294 196 284 206 270 218 C256 230 250 240 250 258 V265" fill="none" stroke="#0f172a" stroke-width="16" stroke-linecap="round" />
+  <circle cx="250" cy="305" r="10" fill="#0f172a" />
+</svg>
