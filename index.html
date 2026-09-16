@@ -37,9 +37,9 @@
           <div class="logo-wrapper hover-glow">
             <img src="/assets/icons/PVTT_FLOW.png" alt="PVT Logo" class="brand-logo"/>
           </div>
-          <h1 id="pvtLoginHeader" class="animate-slide-down delay-300">PVT&T HR Leave</h1>
+          <h1 id="pvtLoginHeader" class="animate-slide-down delay-300">ระบบบริหารจัดการบุคลากรและงานบุคคล</h1>
           <div class="brand-badge">
-            <span id="i18nBadge">ระบบขออนุญาตลาออนไลน์</span>
+            <span id="i18nBadge">บริษัท พี.วี.ที.แอนด์ ที. พลาส จำกัด</span>
           </div>
 
         </section>
@@ -159,42 +159,56 @@
             </span>
           </button>
           
-          <div class="alt-login-group">
-            <button type="button" class="qr-btn hover-lift" onclick="loginByQr()">
-              <span class="material-symbols-outlined">qr_code_scanner</span>
-              <span id="i18nQrBtn">สแกนคิวอาร์โค้ดบัตรพนักงาน</span>
+          <!-- 🔗 ลิงก์และกลุ่มทางเลือกเข้าสู่ระบบวิธีอื่น (Grouped Alt Login Methods) -->
+          <div class="alt-login-wrapper">
+            <button type="button" id="altLoginToggleBtn" class="alt-login-toggle-btn" onclick="toggleAltLoginOptions()" aria-expanded="false" title="ดูตัวเลือกการเข้าสู่ระบบแบบอื่น">
+              <span class="material-symbols-outlined alt-toggle-icon">tune</span>
+              <span id="i18nAltLoginToggleText">เข้าสู่ระบบวิธีอื่น</span>
+              <span class="material-symbols-outlined toggle-chevron" id="altToggleChevron">expand_more</span>
             </button>
 
-            <button type="button" class="qr-guide-link-btn hover-lift" onclick="showQrGuideModal()" title="ดูวิธีแสดงบัตรพนักงานสำหรับสแกน">
-              <span class="material-symbols-outlined" style="font-size: 17px;">help_outline</span>
-              <span id="i18nQrGuideLink">วิธีถือบัตรสแกน (How-to Guide)</span>
-            </button>
+            <div id="altLoginGroup" class="alt-login-group collapsed">
+              <button type="button" class="qr-btn hover-lift" onclick="loginByQr()">
+                <span class="material-symbols-outlined">qr_code_scanner</span>
+                <span id="i18nQrBtn">สแกนคิวอาร์โค้ดบัตรพนักงาน</span>
+              </button>
 
-            <button type="button" id="biometricLoginBtn" class="biometric-btn" style="display: none;" onclick="loginByBiometrics()">
-              <span class="material-symbols-outlined">fingerprint</span>
-              <span id="i18nBiometricLoginBtn">เข้าสู่ระบบด้วยลายนิ้วมือ / ใบหน้า</span>
-            </button>
+              <button type="button" class="qr-guide-link-btn hover-lift" onclick="showQrGuideModal()" title="ดูวิธีแสดงบัตรพนักงานสำหรับสแกน">
+                <span class="material-symbols-outlined" style="font-size: 16px;">help_outline</span>
+                <span id="i18nQrGuideLink">วิธีถือบัตรสแกน (How-to Guide)</span>
+              </button>
 
-            <button type="button" id="biometricGuideBtn" class="biometric-guide-btn" style="display: none;" onclick="showBiometricGuideModal()" title="ดูวิธีตั้งค่าและใช้งานระบบสแกนนิ้ว/ใบหน้า">
-              <span class="material-symbols-outlined" style="font-size: 17px;">help_outline</span>
-              <span id="i18nBiometricGuideLink">วิธีใช้สแกนนิ้ว/ใบหน้า (Biometric Guide)</span>
-            </button>
+              <button type="button" id="biometricLoginBtn" class="biometric-btn" style="display: none;" onclick="loginByBiometrics()">
+                <span class="material-symbols-outlined">fingerprint</span>
+                <span id="i18nBiometricLoginBtn">เข้าสู่ระบบด้วยลายนิ้วมือ / ใบหน้า</span>
+              </button>
+
+              <button type="button" id="biometricGuideBtn" class="biometric-guide-btn" style="display: none;" onclick="showBiometricGuideModal()" title="ดูวิธีตั้งค่าและใช้งานระบบสแกนนิ้ว/ใบหน้า">
+                <span class="material-symbols-outlined" style="font-size: 16px;">help_outline</span>
+                <span id="i18nBiometricGuideLink">วิธีใช้สแกนนิ้ว/ใบหน้า (Biometric Guide)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 🌐 Language & Settings Switcher Pill (Above Divider Line) -->
+          <div class="lang-switcher-wrapper" style="display: flex; justify-content: center; width: 100%; margin-top: 2px;">
+            <div class="lang-switcher" style="display: flex; gap: 3px; align-items: center; background: #f1f5f9; padding: 2px; border-radius: 9999px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+              <button type="button" class="lang-btn" id="langThBtn" onclick="setLanguage('th')" title="ภาษาไทย">TH</button>
+              <!-- <button type="button" class="lang-btn" id="langLoBtn" onclick="setLanguage('lo')" title="ພາສາລາວ">LO</button> -->
+              <!-- <button type="button" class="lang-btn" id="langMyBtn" onclick="setLanguage('my')" title="မြန်မာစာ">MY</button> -->
+              <button type="button" class="lang-btn" id="langEnBtn" onclick="setLanguage('en')" title="English">EN</button>
+              <button type="button" class="lang-btn" id="langSettingsBtn" onclick="openSystemSettingsModal()" title="ตั้งค่าระบบ (ขนาดตัวอักษร, ธีมสี)">
+                <span class="material-symbols-outlined" style="font-size: 13px; line-height: 1;">settings</span>
+              </button>
+            </div>
           </div>
         </form>
-      </main>
 
-      <div class="login-footer-info" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 420px; margin-top: 20px; font-size: 13px; color: #64748b;">
-        <span>© 2026 PVT Workforce · Ver 2.5</span>
-        <div class="lang-switcher" style="display: flex; gap: 2px; align-items: center; background: #f1f5f9; padding: 3px; border-radius: 9999px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
-          <button type="button" class="lang-btn" id="langThBtn" onclick="setLanguage('th')" title="ภาษาไทย">TH</button>
-          <!-- <button type="button" class="lang-btn" id="langLoBtn" onclick="setLanguage('lo')" title="ພາສາລາວ">LO</button> -->
-          <!-- <button type="button" class="lang-btn" id="langMyBtn" onclick="setLanguage('my')" title="မြန်မာစာ">MY</button> -->
-          <button type="button" class="lang-btn" id="langEnBtn" onclick="setLanguage('en')" title="English">EN</button>
-          <button type="button" class="lang-btn" onclick="openSystemSettingsModal()" title="ตั้งค่าระบบ (ขนาดตัวอักษร, ธีมสี)" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; border: none; background: transparent; cursor: pointer; color: #475569;">
-            <span class="material-symbols-outlined" style="font-size: 16px;">settings</span>
-          </button>
+        <!-- 🏷️ Footer Copyright Line inside Main Card -->
+        <div class="login-footer-info" style="display: flex; align-items: center; justify-content: center; width: 100%; margin-top: 6px; padding-top: 10px; border-top: 1px solid #f1f5f9;">
+          <span style="font-size: 12.5px; color: #94a3b8; font-weight: 500; text-align: center; display: block; width: 100%;">© 2026 P.V.T.& T.Plas Group </span>
         </div>
-      </div>
+      </main>
     </div>
 
     <!-- PVT QR Scan Guide Modal (Statically defined for performance & accessibility) -->

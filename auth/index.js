@@ -164,6 +164,26 @@ async function autoSessionCheckAndRedirect() {
     }
   };
 
+  window.toggleAltLoginOptions = function() {
+    const group = document.getElementById("altLoginGroup");
+    const btn = document.getElementById("altLoginToggleBtn");
+    const chevron = document.getElementById("altToggleChevron");
+    if (!group || !btn) return;
+
+    const isCollapsed = group.classList.contains("collapsed");
+    if (isCollapsed) {
+      group.classList.remove("collapsed");
+      btn.setAttribute("aria-expanded", "true");
+      btn.classList.add("active");
+      if (chevron) chevron.style.transform = "rotate(180deg)";
+    } else {
+      group.classList.add("collapsed");
+      btn.setAttribute("aria-expanded", "false");
+      btn.classList.remove("active");
+      if (chevron) chevron.style.transform = "rotate(0deg)";
+    }
+  };
+
   window.checkAndToggleBiometricButton = checkAndToggleBiometricButton;
 
   const showSessionVerifyingUI = (show) => {
@@ -311,9 +331,10 @@ const loginTranslations = {
     userInputPlaceholder: "กรอกรหัสพนักงาน หรือ ชื่อพนักงาน",
     passLabel: "รหัสผ่าน (Password)",
     passInputPlaceholder: "กรอกรหัสผ่านเข้าสู่ระบบ",
-    remember: "จดจำรหัสพนักงาน (Remember Me)",
+    remember: "จำรหัสพนักงาน",
     loginBtn: "เข้าสู่ระบบ",
     loggingIn: "กำลังเข้าสู่ระบบ...",
+    altLoginToggle: "เข้าสู่ระบบวิธีอื่น",
     qrBtn: "สแกนคิวอาร์โค้ดบัตรพนักงาน",
     qrGuideLink: "วิธีถือบัตรสแกน (How-to Guide)",
     biometricLoginBtn: "เข้าสู่ระบบด้วยลายนิ้วมือ / ใบหน้า",
@@ -392,6 +413,7 @@ const loginTranslations = {
     remember: "Remember Me",
     loginBtn: "Sign In",
     loggingIn: "Signing in...",
+    altLoginToggle: "Other Sign-in Options",
     qrBtn: "Scan Employee Card QR Code",
     qrGuideLink: "How to scan employee card (Guide)",
     biometricLoginBtn: "Sign in with Fingerprint / Face ID",
@@ -534,6 +556,7 @@ function setLanguage(lang) {
   const rememberEl = document.getElementById("i18nRemember");
   const loginBtnEl = document.getElementById("i18nLoginBtn");
   const loggingInEl = document.getElementById("i18nLoggingInText");
+  const altLoginToggleEl = document.getElementById("i18nAltLoginToggleText");
   const qrBtnEl = document.getElementById("i18nQrBtn");
   const qrGuideLinkEl = document.getElementById("i18nQrGuideLink");
   const biometricLoginBtnText = document.getElementById("i18nBiometricLoginBtn");
@@ -547,6 +570,7 @@ function setLanguage(lang) {
   if (rememberEl) rememberEl.textContent = t.remember;
   if (loginBtnEl) loginBtnEl.textContent = t.loginBtn;
   if (loggingInEl && t.loggingIn) loggingInEl.textContent = t.loggingIn;
+  if (altLoginToggleEl && t.altLoginToggle) altLoginToggleEl.textContent = t.altLoginToggle;
   if (qrBtnEl) qrBtnEl.textContent = t.qrBtn;
   if (qrGuideLinkEl && t.qrGuideLink) qrGuideLinkEl.textContent = t.qrGuideLink;
   if (biometricLoginBtnText && t.biometricLoginBtn) biometricLoginBtnText.textContent = t.biometricLoginBtn;
